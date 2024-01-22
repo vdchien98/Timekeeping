@@ -3,14 +3,9 @@
 	pageEncoding="UTF-8"%>
 
 <%-- 
-<style>
-.portlet-layout .portlet-header {
-    margin-bottom: 1rem;
-    display: none;
-}
-</style>
 
- --%>
+
+ 
 <portlet:actionURL name="/login" var="loginURL">
 	<portlet:param name="mvcRenderCommandName" value="/login" />
 </portlet:actionURL>
@@ -33,6 +28,26 @@
 </aui:form>
 
 
+--%>
+
+<style>
+#wrapper {
+    justify-content: center;
+    margin-top: 5%;
+    }
+ div#home {
+    padding-left: 85px;
+    padding-right: 85px;
+}
+.container.register {
+    margin-top: 4%;
+}
+.register-title {
+    text-align: center;
+    color: white;
+    font-size: revert-layer;
+}
+</style>
 
 
 
@@ -40,33 +55,28 @@
 
 
 
-
-<%-- 
 <div class="container register">
 	<div class="row justify-content-center">
-		<h1 class="text-uppercase register-title font-weight-bold">Hệ
-			thống chấm công và giao việc</h1>
+		<h1 class="text-uppercase register-title font-weight-bold">Hệ thống chấm công và giao việc</h1>
 		<div class="col-md-8">
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active text-align" id="home"
 					role="tabpanel" aria-labelledby="home-tab">
-					<h3 class="register-heading text-uppercase text-center">Đăng
-						nhập</h3>
+					<h3 class="register-heading text-uppercase text-center">Đăng nhập</h3>
 					<div class="row register-form">
 						<div class="col-md-12">
-							<form method="POST"
-								action="https://chamcong.bacninh.gov.vn/login">
-								<input type="hidden" name="_token"
-									value="jB0ZUSCao15SkJDyAiMnscEts7ddkesios5Ltp58">
+						    <portlet:actionURL name="loginChamCong" var="login" />
+							<form method="POST" action="<%=login.toString()%>">
+								<input type="hidden" name="_token">
 								<div class="form-group">
-									<input type="text" class="form-control " name="email" value=""
+									<input type="text" class="form-control " name="<portlet:namespace />email" value=""
 										required="" autocomplete="email" autofocus=""
 										placeholder="Nhập tên đăng nhập *">
 
 								</div>
 
 								<div class="form-group">
-									<input type="password" class="form-control " name="password"
+									<input type="password" class="form-control " name="<portlet:namespace />password"
 										required="" autocomplete="current-password"
 										placeholder="Nhập mật khẩu *">
 
@@ -94,4 +104,3 @@
 	</div>
 </div>
 
- --%>

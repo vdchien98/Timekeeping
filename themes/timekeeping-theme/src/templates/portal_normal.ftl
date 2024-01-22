@@ -10,9 +10,30 @@
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
 	<@liferay_util["include"] page=top_head_include />
+
+	<@liferay.css file_name="${css_folder}/app.css" />
+	<@liferay.css file_name="${css_folder}/base.css" />
+	<@liferay.css file_name="${css_folder}/sb-admin-2.min.css" />
+	<@liferay.css file_name="${css_folder}/styles.css" />
+	<@liferay.css file_name="${css_folder}/style.css" />
+
+	<@liferay.css file_name="${css_folder}/bootstrap-datepicker.css" />
+	<@liferay.css file_name="${css_folder}/bootstrap-datetimepicker.css" />
+	<@liferay.css file_name="${css_folder}/bootstrap-datetimepicker.min.css" />
+	
+	<@liferay.js file_name="${javascript_folder}/jquery.js" />
+	<@liferay.js file_name="${javascript_folder}/style.js" />
+	<@liferay.js file_name="${javascript_folder}/bootstrap-datepicker.js" />
+	<@liferay.js file_name="${javascript_folder}/bootstrap-datetimepicker.js" />
+	<@liferay.js file_name="${javascript_folder}/bootstrap-datetimepicker.min.js" />
+	
 </head>
 
 <body class="${css_class}">
+
+
+
+
 
 <@liferay_ui["quick-access"] contentId="#main-content" />
 
@@ -21,46 +42,36 @@
 <@liferay.control_menu />
 
 <div class="container-fluid position-relative" id="wrapper">
-  
-
+   <#--
+   
+       <style>
+				body, html {
+				     width: 100%;
+				     height: 100%;
+				  }
+				  div#senna_surface1-default {
+					    height: 100%;
+				   }
+				  #wrapper {
+				    width: 100%;
+				    height: 100%;
+				    display: flex;
+				    padding-left: 0;
+                    padding-right: 0;
+				  }
+				  #content {
+				    width: 40%;
+				    height: 100%;
+				    /* Thêm các thuộc tính CSS khác tùy ý */
+				  }
+	 
+		</style>
+   
 	<header id="banner" role="banner">
 		<div id="heading">
 			<div aria-level="1" class="site-title" role="heading">
-			<#-- 
-			    ẩn Logo
-				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
-				</a>
-            -->
-            <#-- 
-               ẩn title
-				<#if show_site_name>
-					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-						${site_name}
-					</span>
-				</#if>
-			-->
-			</div>
-		</div>
-       <#--
-			<#if !is_signed_in>
-				<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
-			</#if>
-	     
-			<#if has_navigation && is_setup_complete>
-				<#include "${full_templates_path}/navigation.ftl" />
-			</#if>
-	    -->
 	</header>
-	
-	
-	
-	
-	
-	
-	
- 
- 
+	-->
 
 <#assign
     time_zone = user.getTimeZoneId()
@@ -70,7 +81,7 @@
     
 />
 
-<section id="content">
+
 	<#if is_signed_in>
 	    <!-- Kiểm tra và chuyển hướng nếu đang truy cập /login sau khi đã đăng nhập -->
 	    <#assign currentUrl = theme_display.getURLCurrent() />
@@ -81,9 +92,22 @@
 		        Liferay.Util.navigate('/home');
 		    </script>
 		</#if>
+		
 	    <!-- Bao gồm mẫu cho người dùng đã đăng nhập -->
-	    <@liferay_util["include"] page=content_include />
-	    <h1>Xin chào </h1>
+			${portletDisplay.recycle()}
+			${portletDisplay.setTitle(the_title)}
+			
+ 
+				<#include "${full_templates_path}/sidlebar.ftl" />
+			    <div id="noidung">
+			        <#include "${full_templates_path}/navbar.ftl" />
+					<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+						<@liferay_util["include"] page=content_include />
+					</@>			    
+			    </div>
+
+			
+			
 	<#else>
 	    <!-- Kiểm tra và chuyển hướng nếu không phải trang /login -->
 	    <#assign currentUrl = theme_display.getURLCurrent() />
@@ -96,66 +120,6 @@
 	    <!-- Bao gồm mẫu cho người dùng chưa đăng nhập -->
 	    <@liferay_util["include"] page=content_include />
 	</#if>
-	
-	
-</section>
-
-
-
-    
-	
-	
-
-
-
- <#-- 	
-<section id="content">
-    <#if !is_signed_in>
-        <script>
-            Liferay.on('allPortletsReady', function() {
-                // Kiểm tra nếu người dùng chưa đăng nhập
-                if (!Liferay.ThemeDisplay.isSignedIn()) {
-                    // Chuyển hướng đến trang đăng nhập
-                    if (window.location.pathname !== '/login') {
-                        Liferay.Util.navigate('/login');
-                    }
-                }
-            });
-        </script>
-         <section id="content">
-            <@liferay_util["include"] page=content_include />
-        </section>
-        
-    <#else>
-        <script>
-            Liferay.on('allPortletsReady', function() {
-                // Kiểm tra nếu người dùng đã đăng nhập và đang truy cập trang /login
-                var currentURL = new URL(window.location.href);
-                if (currentURL.pathname === '/login' && Liferay.ThemeDisplay.isSignedIn()) {
-                    // Chuyển hướng đến trang home
-                    Liferay.Util.navigate('/home');
-                }
-            });
-        </script>
-        
-        <h1>Xin chao</h1>
-
-        <section id="content">
-            <@liferay_util["include"] page=content_include />
-        </section>
-    </#if>
-</section>
-
- -->
-<#--
-<footer id="footer" role="contentinfo">
-	<p class="powered-by">
-	<@liferay.language_format 
-	            arguments='<a href="http://www.liferay.com" rel="external">Liferay</a>'
-				key="powered-by-x"/>
-	</p>
-</footer>
--->		
 	
 	
 	

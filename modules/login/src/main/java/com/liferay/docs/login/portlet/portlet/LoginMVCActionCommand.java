@@ -7,8 +7,11 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +22,8 @@ import com.liferay.docs.login.portlet.constants.LoginPortletKeys;
 @Component(property = { "javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login" }, service = MVCActionCommand.class)
 public class LoginMVCActionCommand extends BaseMVCActionCommand {
-
+	
+	
 	@Override
 	// viet lai ham doProcessAction trong MVCActionCommand de thuc hien cac action ( o day la action login) 
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
