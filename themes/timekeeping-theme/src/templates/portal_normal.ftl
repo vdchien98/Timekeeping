@@ -57,8 +57,8 @@
 				 .portlet-content.portlet-content-editable {
                        display: none;
                     }
+
                    div#vitri2 {
-					    background: chocolate;
 					    width: 100%;
 					}
 					.portlet-content {
@@ -103,12 +103,18 @@
 				  </div>
 				
 				  <div id="vitri2">
-						  <div class="vitri87">
+				       <div class="vitri4">
+				          <div class="vitri87">
 						      <#include "${full_templates_path}/navbar.ftl" />
 						  </div>
-					     <@liferay_theme["wrap-portlet"] page="portlet.ftl">
-				             <@liferay_util["include"] page=content_include />		   
-			              </@>
+						  <div class="vitri99">
+						     <@liferay_theme["wrap-portlet"] page="portlet.ftl">
+				                <@liferay_util["include"] page=content_include />		   
+			                 </@>
+						  </div>
+				       </div>
+						
+					     
                    </div>
 				</div >
 

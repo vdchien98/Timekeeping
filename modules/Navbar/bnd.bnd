@@ -1,0 +1,4 @@
+Bundle-Name: Navbar
+Bundle-SymbolicName: com.liferay.docs.navbar.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.navbar.portlet.constants
