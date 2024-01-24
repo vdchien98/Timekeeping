@@ -1,0 +1,4 @@
+Bundle-Name: AdminNhanVien
+Bundle-SymbolicName: com.liferay.docs.adminnhanvien.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.adminnhanvien.portlet.constants

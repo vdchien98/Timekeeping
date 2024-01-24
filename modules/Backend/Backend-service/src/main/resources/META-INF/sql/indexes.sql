@@ -1,0 +1,1 @@
+create index IX_B50C4CC3 on Timekeeping_Chucvu (groupId);

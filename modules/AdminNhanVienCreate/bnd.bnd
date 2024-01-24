@@ -1,0 +1,4 @@
+Bundle-Name: AdminNhanVienCreate
+Bundle-SymbolicName: com.liferay.docs.adminnhanviencreate.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.adminnhanviencreate.portlet.constants

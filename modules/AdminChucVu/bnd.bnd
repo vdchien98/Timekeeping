@@ -1,0 +1,4 @@
+Bundle-Name: AdminChucVu
+Bundle-SymbolicName: com.liferay.docs.adminchucvu.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.adminchucvu.portlet.constants

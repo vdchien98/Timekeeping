@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class SidebarPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-		
-		System.out.println(" xin chao da vao dc Theme");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		

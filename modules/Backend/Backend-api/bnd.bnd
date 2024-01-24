@@ -1,0 +1,10 @@
+Bundle-Name: Backend-api
+Bundle-SymbolicName: com.liferay.docs.backend.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.docs.backend.exception,\
+	com.liferay.docs.backend.model,\
+	com.liferay.docs.backend.service,\
+	com.liferay.docs.backend.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../Backend-service/service.xml

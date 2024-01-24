@@ -74,16 +74,16 @@ li.nav-item.vdchien {
 	            </a>
 	        </li>
 	         <li class="nav-item vdchien">
-	            <a class="nav-link banggiolam" href="#" data-toggle="collapse" id="toggleCollapseCauHinh">
+	            <a class="nav-link banggiolam"  data-toggle="collapse" id="toggleCollapseCauHinh">
 	                <i class="fa fa-cogs" aria-hidden="true"></i>
 	                <p class="chien1 chien33"> Cấu hình hệ Thống  </p>
 	                <i class="fa fa-chevron-right chien23" aria-hidden="true"></i> 
 	            </a>
 	            <div id="collapseUtilitiesCauHinh" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar" style="">
 					<div class="bg-white py-2 collapse-inner rounded">
-					            <a class="collapse-item " href="#">Nhân viên</a>
-					            <a class="collapse-item " href="#">Phòng ban</a>
-					            <a class="collapse-item " href="#">Chức vụ</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/nhan-vien">Nhân viên</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/phong-ban">Phòng ban</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/chuc-vu">Chức vụ</a>
 					            <a class="collapse-item " href="#">Ca làm việc</a>
 					            <a class="collapse-item " href="#">Ngày nghỉ lễ</a>
 					            <a class="collapse-item " href="#">Ngày làm việc</a>
