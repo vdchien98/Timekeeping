@@ -17,7 +17,15 @@ package com.liferay.docs.backend.service.base;
 import com.liferay.docs.backend.model.Chucvu;
 import com.liferay.docs.backend.service.ChucvuService;
 import com.liferay.docs.backend.service.ChucvuServiceUtil;
+import com.liferay.docs.backend.service.persistence.CalamviecPersistence;
 import com.liferay.docs.backend.service.persistence.ChucvuPersistence;
+import com.liferay.docs.backend.service.persistence.GioLamPersistence;
+import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
+import com.liferay.docs.backend.service.persistence.NgaynghilePersistence;
+import com.liferay.docs.backend.service.persistence.PhongbanPersistence;
+import com.liferay.docs.backend.service.persistence.UsersPersistence;
+import com.liferay.docs.backend.service.persistence.XinchamcongPersistence;
+import com.liferay.docs.backend.service.persistence.XinnghiPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -130,6 +138,9 @@ public abstract class ChucvuServiceBaseImpl
 	}
 
 	@Reference
+	protected CalamviecPersistence calamviecPersistence;
+
+	@Reference
 	protected com.liferay.docs.backend.service.ChucvuLocalService
 		chucvuLocalService;
 
@@ -137,6 +148,27 @@ public abstract class ChucvuServiceBaseImpl
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;
+
+	@Reference
+	protected GioLamPersistence gioLamPersistence;
+
+	@Reference
+	protected NgaylamviecPersistence ngaylamviecPersistence;
+
+	@Reference
+	protected NgaynghilePersistence ngaynghilePersistence;
+
+	@Reference
+	protected PhongbanPersistence phongbanPersistence;
+
+	@Reference
+	protected UsersPersistence usersPersistence;
+
+	@Reference
+	protected XinchamcongPersistence xinchamcongPersistence;
+
+	@Reference
+	protected XinnghiPersistence xinnghiPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

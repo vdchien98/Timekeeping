@@ -1,6 +1,12 @@
+<%@page import="com.liferay.portal.kernel.util.WebKeys"%>
+<%@page import="com.liferay.portal.kernel.theme.ThemeDisplay"%>
 <%@ include file="/init.jsp"%>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%
+	ThemeDisplay td = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+	%>
 
 <%-- 
 
@@ -53,7 +59,10 @@
 
 
 
-
+<portlet:actionURL name="/login/login" var="loginURL">
+			<portlet:param name="mvcRenderCommandName" value="/login/login" />
+			<portlet:param name="currentUrl" value="<%= td.getURLCurrent() %>"/>
+</portlet:actionURL>
 
 <div class="container register">
 	<div class="row justify-content-center">
@@ -65,8 +74,7 @@
 					<h3 class="register-heading text-uppercase text-center">Đăng nhập</h3>
 					<div class="row register-form">
 						<div class="col-md-12">
-						    <portlet:actionURL name="loginChamCong" var="login" />
-							<form method="POST" action="<%=login.toString()%>">
+							<form method="POST" action="<%=loginURL%>">
 								<input type="hidden" name="_token">
 								<div class="form-group">
 									<input type="text" class="form-control " name="<portlet:namespace />email" value=""

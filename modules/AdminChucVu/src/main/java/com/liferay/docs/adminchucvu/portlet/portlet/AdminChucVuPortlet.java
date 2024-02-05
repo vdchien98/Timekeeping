@@ -38,6 +38,7 @@ public class AdminChucVuPortlet extends MVCPortlet {
 		int idChucVu = ParamUtil.getInteger(request, "idChucVu");
 		String name = ParamUtil.getString(request, "name");
 		int roleChucVu = ParamUtil.getInteger(request, "roleChucVu");
+		System.out.println("roleChucVu ---------- "+ roleChucVu);
 
 		try {
 			if (idChucVu == 0) {

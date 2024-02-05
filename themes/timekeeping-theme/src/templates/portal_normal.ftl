@@ -71,7 +71,7 @@
 				    padding-bottom: 0;
 }
 	 
-		</style>
+</style>
    
 
 
@@ -84,19 +84,11 @@
 	/>
 	<#if is_signed_in>
 			<!-- Kiểm tra và chuyển hướng nếu đang truy cập /login sau khi đã đăng nhập -->
-			<#assign currentUrl = theme_display.getURLCurrent() />
-			<#assign redirectToLogin = false>
-			<#if currentUrl?contains("/login") && !redirectToLogin>
-				<#assign redirectToLogin = true>
-				<script>
-					Liferay.Util.navigate('/home');
-				</script>
-	        </#if>		
+	
 			<!-- Bao gồm mẫu cho người dùng đã đăng nhập -->
 			${portletDisplay.recycle()}
 			${portletDisplay.setTitle(the_title)}
 
-				
 				<div id="noidung">
 				  <div class="vitri98">
 				      <#include "${full_templates_path}/sidlebar.ftl" />

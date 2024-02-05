@@ -145,7 +145,7 @@
 								</label> 
                                 <select class="custom-select" id="roleChucVu" name="<portlet:namespace />roleChucVu" required="">
 
-											<option value="0 " >Nhân viên</option>
+											<option value="0" >Nhân viên</option>
 											<option value="1"  >Lãnh đạo phòng</option>
 											<option value="2" >Lãnh đạo đơn vị</option>
 								</select>

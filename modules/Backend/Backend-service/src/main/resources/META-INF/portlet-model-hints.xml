@@ -1,6 +1,24 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.docs.backend.model.Calamviec">
+		<field name="id" type="int" />
+		<field name="tencalamviec" type="String" />
+		<field name="gio_vao_chieu" type="String" />
+		<field name="gio_ra_chieu" type="String" />
+		<field name="vao_truoc_chieu" type="int" />
+		<field name="ra_sau_chieu" type="int" />
+		<field name="gio_vao_toi" type="String" />
+		<field name="gio_ra_toi" type="String" />
+		<field name="vao_truoc_toi" type="int" />
+		<field name="ra_sau_toi" type="int" />
+		<field name="gio_vao_sang" type="String" />
+		<field name="gio_ra_sang" type="String" />
+		<field name="vao_truoc_sang" type="int" />
+		<field name="ra_sau_sang" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.backend.model.Chucvu">
 		<field name="id" type="int" />
 		<field name="name" type="String" />
@@ -8,5 +26,106 @@
 		<field name="updated_at" type="Date" />
 		<field name="role" type="int" />
 		<field name="groupId" type="long" />
+	</model>
+	<model name="com.liferay.docs.backend.model.GioLam">
+		<field name="id" type="int" />
+		<field name="user_id" type="long" />
+		<field name="ngay_lam" type="Date" />
+		<field name="ip" type="String" />
+		<field name="check_in_sang" type="String" />
+		<field name="check_out_sang" type="String" />
+		<field name="di_muon_sang" type="int" />
+		<field name="ve_som_sang" type="int" />
+		<field name="gio_cham_cong_sang" type="int" />
+		<field name="check_in_chieu" type="String" />
+		<field name="check_out_chieu" type="String" />
+		<field name="di_muon_chieu" type="int" />
+		<field name="ve_som_chieu" type="int" />
+		<field name="gio_cham_cong_chieu" type="int" />
+		<field name="check_in_toi" type="String" />
+		<field name="check_out_toi" type="String" />
+		<field name="di_muon_toi" type="int" />
+		<field name="ve_som_toi" type="int" />
+		<field name="diem" type="double" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Ngaylamviec">
+		<field name="id" type="int" />
+		<field name="nam" type="int" />
+		<field name="thang" type="int" />
+		<field name="so_ngay_lam_viec" type="int" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Ngaynghile">
+		<field name="id" type="int" />
+		<field name="ten" type="String" />
+		<field name="ngay_nghi" type="Date" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Phongban">
+		<field name="id" type="int" />
+		<field name="tenphong" type="String" />
+		<field name="trangthai" type="int" />
+		<field name="nguoi_phu_trach" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Users">
+		<field name="id" type="int" />
+		<field name="hovaten" type="String" />
+		<field name="userId" type="long" />
+		<field name="email" type="String" />
+		<field name="chucvu_id" type="long" />
+		<field name="trangthai" type="long" />
+		<field name="phongban_id" type="long" />
+		<field name="ca_lam_id" type="long" />
+		<field name="ca_lam_toi" type="long" />
+		<field name="ma_xac_nhan" type="String" />
+		<field name="zalo_id" type="String" />
+		<field name="cham_cong_ngoai" type="long" />
+		<field name="so_ngay_nghi_phep" type="long" />
+		<field name="phu_trach_phong" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+		<field name="groupId" type="long" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Xinchamcong">
+		<field name="id" type="int" />
+		<field name="user_id" type="long" />
+		<field name="ly_do" type="String" />
+		<field name="ca_lam" type="String" />
+		<field name="check_in" type="String" />
+		<field name="check_out" type="String" />
+		<field name="ngay_lam" type="Date" />
+		<field name="nguoi_duyet" type="long" />
+		<field name="nguoi_huy" type="long" />
+		<field name="diem" type="double" />
+		<field name="trangthai" type="int" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+		<field name="phongban_id" type="long" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Xinnghi">
+		<field name="id" type="int" />
+		<field name="user_id" type="long" />
+		<field name="tu_ngay" type="Date" />
+		<field name="den_ngay" type="Date" />
+		<field name="ly_do" type="String" />
+		<field name="chon_ly_do" type="String" />
+		<field name="trangthai" type="int" />
+		<field name="nua_ngay" type="int" />
+		<field name="so_ngay" type="int" />
+		<field name="file_url" type="String" />
+		<field name="nguoi_huy" type="long" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+		<field name="phongban_id" type="long" />
 	</model>
 </model-hints>
