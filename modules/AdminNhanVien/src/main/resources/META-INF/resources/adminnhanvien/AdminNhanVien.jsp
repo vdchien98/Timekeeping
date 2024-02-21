@@ -63,14 +63,57 @@ i.fa.fa-user-circle-o {
 						<div class="row">
 							<div class="col-sm-12 col-md-6">
 								<div class="dataTables_length" id="dataTable_length">
-									<label>Hiển thị <select name="dataTable_length"
-										aria-controls="dataTable"
-										class="custom-select custom-select-sm form-control form-control-sm"><option
-												value="10">10</option>
-											<option value="25">25</option>
-											<option value="50">50</option>
-											<option value="100">100</option></select> kết quả
-									</label>
+									<portlet:actionURL name="dodaibang_dataTable"
+										var="formActionDataTableURL" />
+									<form id="dodai_dataTable" method="POST"
+										action="<%=formActionDataTableURL.toString()%>"
+										name="<portlet:namespace />fm">
+										<label>Hiển thị <c:choose>
+												<c:when test="${dodaibang>10}">
+													<select name="<portlet:namespace />dataTable_length"
+														aria-controls="dataTable"
+														class="custom-select custom-select-sm form-control form-control-sm"
+														onchange="submitForm()">
+														<c:if test="${dodaibang ==25}">
+															<option value="10">10</option>
+															<option value="25" selected="selected">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+														</c:if>
+														<c:if test="${dodaibang ==50}">
+															<option value="10">10</option>
+															<option value="25" selected="selected">25</option>
+															<option value="50" selected="selected">50</option>
+															<option value="100">100</option>
+														</c:if>
+														<c:if test="${dodaibang ==100}">
+															<option value="10">10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100" selected="selected">100</option>
+														</c:if>
+
+													</select> kết quả
+												</c:when>
+												<c:otherwise>
+													<select name="<portlet:namespace />dataTable_length"
+														aria-controls="dataTable"
+														class="custom-select custom-select-sm form-control form-control-sm"
+														onchange="submitForm()">
+														<option value="10">10</option>
+														<option value="25">25</option>
+														<option value="50">50</option>
+														<option value="100">100</option>
+													</select> kết quả
+                                               </c:otherwise>
+											</c:choose>
+
+
+
+
+
+										</label>
+									</form>
 								</div>
 							</div>
 
@@ -81,7 +124,8 @@ i.fa.fa-user-circle-o {
 									action="<%=formActionSearchURL.toString()%>"
 									name="<portlet:namespace />fm">
 									<div id="dataTable_filter" class="dataTables_filter">
-										<label>Tìm kiếm:<input type="search" id="searchInput" name="<portlet:namespace />timkkiemNhanVien"
+										<label>Tìm kiếm:<input type="search" id="searchInput"
+											name="<portlet:namespace />timkkiemNhanVien"
 											class="form-control form-control-sm" placeholder=""
 											aria-controls="dataTable"
 											onkeypress="return handleEnter(event)"></label>
@@ -130,7 +174,7 @@ i.fa.fa-user-circle-o {
 											</portlet:renderURL>
 
 											<tr role="row" class="odd">
-												<th class="sorting_1">${loop.index +1}</th>
+												<th class="sorting_1">${user.id }</th>
 												<th>
 													<div class="row">
 														<i class="fa fa-user-circle-o " aria-hidden="true"></i>
@@ -203,24 +247,31 @@ i.fa.fa-user-circle-o {
 											id="dataTable_previous"><a href="#"
 											aria-controls="dataTable" data-dt-idx="0" tabindex="0"
 											class="page-link">Quay lại</a></li>
-										<li class="paginate_button page-item active"><a href="#"
-											aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-											class="page-link">1</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-											class="page-link">2</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-											class="page-link">3</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-											class="page-link">4</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-											class="page-link">5</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="6" tabindex="0"
-											class="page-link">6</a></li>
+
+
+										<c:forEach var="phantutrang" items="${sotrang}">
+
+											<portlet:actionURL name="PhantrangUsers"
+												var="formActionPhanTrang" />
+											<form id="formPhanTrangUsers" method="POST"
+												action="<%=formActionPhanTrang.toString()%>"
+												name="<portlet:namespace />fm">
+												<li class="paginate_button page-item page-link" onclick="SunmitPhantrang(${phantutrang})">
+													 <input id="idphantrang" type="hidden" value=""
+													        name="<portlet:namespace />trangsocanlay"
+													 />
+													  ${phantutrang}
+													  
+												</li>
+
+											</form>
+
+
+										</c:forEach>
+
+
+
+
 										<li class="paginate_button page-item next" id="dataTable_next"><a
 											href="#" aria-controls="dataTable" data-dt-idx="7"
 											tabindex="0" class="page-link">Tiếp</a></li>
@@ -257,11 +308,27 @@ i.fa.fa-user-circle-o {
 
 
 <script>
-    function handleEnter(event) {
-        if (event.key === "Enter") {
-        	  document.getElementById("formTimKiem").submit();
-            return false; // Prevent the default form submission
-        }
-        return true;
-    }
+	function handleEnter(event) {
+		if (event.key === "Enter") {
+			document.getElementById("formTimKiem").submit();
+			return false; // Prevent the default form submission
+		}
+		return true;
+	}
 </script>
+<script>
+	// Biến lưu giữ giá trị mặc định
+
+	function submitForm() {
+		document.getElementById('dodai_dataTable').submit();
+	}
+</script>
+<script>
+	// Biến lưu giữ giá trị mặc định
+
+	function SunmitPhantrang(x) {
+		document.getElementById('idphantrang').value = x;
+		document.getElementById('formPhanTrangUsers').submit();
+	}
+</script>
+

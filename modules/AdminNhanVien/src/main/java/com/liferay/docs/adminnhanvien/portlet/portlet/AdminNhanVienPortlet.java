@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,9 +44,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class AdminNhanVienPortlet extends MVCPortlet {
-	 private boolean isTimKiem = false;
-	 private String keyTimKiem;
-	
+	private boolean isTimKiem = false;
+	private String keyTimKiem;
+	private int dodaibang_dataTable = 10;
+	private int trangsocanlay = 1;
+
 	public void saveNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -56,17 +60,15 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 		String hoTen = ParamUtil.getString(request, "hovaten");
 		String email = ParamUtil.getString(request, "email");
 		long chucvu = ParamUtil.getLong(request, "chucvu_id");
-		System.out.println("chucvu ----- "+ chucvu);
-		
-		
+		System.out.println("chucvu ----- " + chucvu);
+
 		long trangThai = ParamUtil.getLong(request, "trangthai");
 		long phongban_id = ParamUtil.getLong(request, "phongban_id");
-		
-		System.out.println("phongban_id ----- "+ phongban_id);
-		
-		
+
+		System.out.println("phongban_id ----- " + phongban_id);
+
 		long ca_lam_id = ParamUtil.getLong(request, "ca_lam_id");
-		
+
 		long caLamToi = ParamUtil.getLong(request, "ca_lam_toi");
 		String ma_xac_nhan = "chien";
 		String zaloId = ParamUtil.getString(request, "zalo_id");
@@ -106,8 +108,7 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 		}
 
 	}
-	
-	
+
 	public void TimKiem(ActionRequest request, ActionResponse response) throws PortalException {
 		try {
 			isTimKiem = true;
@@ -115,8 +116,8 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 			long userId = themeDisplay.getUserId();
 			keyTimKiem = ParamUtil.getString(request, "timkkiemNhanVien");
-			System.out.println("keyTimKiem ---- "+ keyTimKiem);
-			
+			System.out.println("keyTimKiem ---- " + keyTimKiem);
+
 			ServiceContext serviceContext = new ServiceContext();
 			response.sendRedirect("/admin/nhan-vien");
 		} catch (IOException e) {
@@ -126,14 +127,55 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 
 	}
 
+	public void dodaibang_dataTable(ActionRequest request, ActionResponse response) throws PortalException {
+
+		try {
+			dodaibang_dataTable = ParamUtil.getInteger(request, "dataTable_length");
+			System.out.println("dodaibang_dataTable " + dodaibang_dataTable);
+			response.sendRedirect("/admin/nhan-vien");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void PhantrangUsers(ActionRequest request, ActionResponse response) throws PortalException {
+		System.out.println("da vao day roi hihihihihihihihihihihihi");
+		try {
+			trangsocanlay = ParamUtil.getInteger(request, "trangsocanlay");
+			System.out.println("trangsocanlay )))))))))))))) " + trangsocanlay);
+			response.sendRedirect("/admin/nhan-vien");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public class UserNew {
+		private String name;
+
+		// Các getter và setter cho trường name
+
+		public UserNew(String name) {
+			this.name = name;
+		}
+	}
 
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
+		try {
+			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
+			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
+			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 		if (isTimKiem == false) {
-			List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-			httpServletRequest.setAttribute("usersList", usersList);
 			int id = ParamUtil.getInteger(renderRequest, "id");
 			System.out.println("id la ----- " + id);
 			if (id > 0) {
@@ -146,49 +188,64 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 				}
 			}
 
-			try {
-				List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-				renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
-			} catch (SystemException e) {
-				e.printStackTrace();
+			if (dodaibang_dataTable > 0) {
+				System.out.println("do dai dodaibang_dataTable in data " + dodaibang_dataTable);
+				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+
+				httpServletRequest.setAttribute("dodaibang", dodaibang_dataTable);
+				int sotrang = (int) (usersList.size() / dodaibang_dataTable) + 1;
+				System.out.println("so trang la ############# " + sotrang);
+				int[] mangSoNguyen = new int[sotrang];
+				for (int i = 0; i < sotrang; i++) {
+					mangSoNguyen[i] = i + 1;
+				}
+				httpServletRequest.setAttribute("sotrang", mangSoNguyen);
+
+				int vitridau = trangsocanlay * dodaibang_dataTable - dodaibang_dataTable ;
+				int vitricuoi = trangsocanlay * dodaibang_dataTable;
+				int vitricuoiChuan = (vitricuoi > usersList.size()) ? usersList.size() : vitricuoi;
+
+				List<Users> usersToDisplay = usersList.subList(vitridau, vitricuoiChuan);
+
+				for (int i = 0; i < usersToDisplay.size(); i++) {
+					Users user = usersToDisplay.get(i);
+					// Thiết lập giá trị mới cho trường id
+					user.setId(trangsocanlay * dodaibang_dataTable - dodaibang_dataTable + 1 +i);
+				}
+
+				System.out.println("usersToDisplay +++++++ " + usersToDisplay);
+				
+				// xử lý đoạn này -------------------------------------------
+				
+				Map<String, Object> userMap = new HashMap<>();
+				userMap.put("usersList", usersToDisplay);
+				userMap.put("otherValue", vitricuoi/10 - 1); // Thêm giá trị khác nếu cần
+				
+				// chưa xử lý xong ----------------------------------------------
+				
+				httpServletRequest.setAttribute("usersList", usersToDisplay);
+
+			} else {
+				// đoạn này đang thừa
+				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+				httpServletRequest.setAttribute("usersList", usersList);
 			}
 
-			try {
-				List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
-				renderRequest.setAttribute("selectChucVu", entitiesChucvus);
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
-
-		}else  {
+		} else {
 			System.out.println("keyTimKiem da vao dc day  ---- " + keyTimKiem);
-			isTimKiem=!isTimKiem;
+			isTimKiem = !isTimKiem;
 			String keyChuan = "%" + keyTimKiem + "%";
 			System.out.println("keyChuan  -++++++++++---------" + keyChuan);
 			List<Users> usersList = UsersLocalServiceUtil.getDuLieuTimKiem(keyChuan);
 			System.out.println("usersList  -++++++++++---------" + usersList);
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 			httpServletRequest.setAttribute("usersList", usersList);
-			try {
-				List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
-				renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
-				renderRequest.setAttribute("selectChucVu", entitiesChucvus);
-			} catch (SystemException e) {
-				e.printStackTrace();
-			}
 
 		}
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	
 //	public void addAllNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
 //	ServiceContext serviceContext = new ServiceContext();
 //	try {
