@@ -83,8 +83,7 @@
 	    
 	/>
 	<#if is_signed_in>
-			<!-- Kiểm tra và chuyển hướng nếu đang truy cập /login sau khi đã đăng nhập -->
-	
+
 			<!-- Bao gồm mẫu cho người dùng đã đăng nhập -->
 			${portletDisplay.recycle()}
 			${portletDisplay.setTitle(the_title)}

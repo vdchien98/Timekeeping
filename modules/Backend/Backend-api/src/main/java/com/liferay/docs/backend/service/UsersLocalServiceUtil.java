@@ -235,6 +235,10 @@ public class UsersLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<Users> getDuLieuTimKiem(String keytimkiem) {
+		return getService().getDuLieuTimKiem(keytimkiem);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

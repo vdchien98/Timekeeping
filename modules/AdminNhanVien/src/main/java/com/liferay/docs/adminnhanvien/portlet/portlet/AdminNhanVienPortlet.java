@@ -42,6 +42,9 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class AdminNhanVienPortlet extends MVCPortlet {
+	 private boolean isTimKiem = false;
+	 private String keyTimKiem;
+	
 	public void saveNhanVien(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -53,9 +56,17 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 		String hoTen = ParamUtil.getString(request, "hovaten");
 		String email = ParamUtil.getString(request, "email");
 		long chucvu = ParamUtil.getLong(request, "chucvu_id");
+		System.out.println("chucvu ----- "+ chucvu);
+		
+		
 		long trangThai = ParamUtil.getLong(request, "trangthai");
 		long phongban_id = ParamUtil.getLong(request, "phongban_id");
+		
+		System.out.println("phongban_id ----- "+ phongban_id);
+		
+		
 		long ca_lam_id = ParamUtil.getLong(request, "ca_lam_id");
+		
 		long caLamToi = ParamUtil.getLong(request, "ca_lam_toi");
 		String ma_xac_nhan = "chien";
 		String zaloId = ParamUtil.getString(request, "zalo_id");
@@ -95,59 +106,104 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 		}
 
 	}
+	
+	
+	public void TimKiem(ActionRequest request, ActionResponse response) throws PortalException {
+		try {
+			isTimKiem = true;
+			System.out.println("da vao dc day ");
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+			long userId = themeDisplay.getUserId();
+			keyTimKiem = ParamUtil.getString(request, "timkkiemNhanVien");
+			System.out.println("keyTimKiem ---- "+ keyTimKiem);
+			
+			ServiceContext serviceContext = new ServiceContext();
+			response.sendRedirect("/admin/nhan-vien");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-//	public void addAllNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
-//		ServiceContext serviceContext = new ServiceContext();
-//		try {
-//		//	 UsersLocalServiceUtil.addOneAllNhanVien(serviceContext);
-//			System.out.println("--------- da vao dc day kkkkkkkkkkkkkkkkkkkk---- ");
-//			 UsersLocalServiceUtil.UpdateAllNhanVien(serviceContext);
-//			
-//			 response.sendRedirect("/admin/nhan-vien");
-//		}
-//
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
+	}
+
 
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		httpServletRequest.setAttribute("usersList", usersList);
-		int id = ParamUtil.getInteger(renderRequest, "id");
-		System.out.println("id la ----- " + id);
-		if (id > 0) {
+		if (isTimKiem == false) {
+			List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+			httpServletRequest.setAttribute("usersList", usersList);
+			int id = ParamUtil.getInteger(renderRequest, "id");
+			System.out.println("id la ----- " + id);
+			if (id > 0) {
+				try {
+					Users useredit = UsersLocalServiceUtil.getUsers(id);
+					httpServletRequest.setAttribute("useredit", useredit);
+				} catch (Exception e) {
+					System.out.println("chạy vào đây******");
+					e.printStackTrace();
+				}
+			}
+
 			try {
-				Users useredit = UsersLocalServiceUtil.getUsers(id);
-				httpServletRequest.setAttribute("useredit", useredit);
-			} catch (Exception e) {
-				System.out.println("chạy vào đây******");
+				List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+				renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
+			} catch (SystemException e) {
 				e.printStackTrace();
 			}
-		}
 
-		try {
-			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+			try {
+				List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
+				renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
 
-			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		}else  {
+			System.out.println("keyTimKiem da vao dc day  ---- " + keyTimKiem);
+			isTimKiem=!isTimKiem;
+			String keyChuan = "%" + keyTimKiem + "%";
+			System.out.println("keyChuan  -++++++++++---------" + keyChuan);
+			List<Users> usersList = UsersLocalServiceUtil.getDuLieuTimKiem(keyChuan);
+			System.out.println("usersList  -++++++++++---------" + usersList);
+			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+			httpServletRequest.setAttribute("usersList", usersList);
+			try {
+				List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+				renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
 
-		try {
-			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
-			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
-		} catch (SystemException e) {
-			e.printStackTrace();
+			try {
+				List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
+				renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		super.render(renderRequest, renderResponse);
 	}
 
+	
+//	public void addAllNhanVien(ActionRequest request, ActionResponse response) throws PortalException {
+//	ServiceContext serviceContext = new ServiceContext();
+//	try {
+//	//	 UsersLocalServiceUtil.addOneAllNhanVien(serviceContext);
+//		System.out.println("--------- da vao dc day kkkkkkkkkkkkkkkkkkkk---- ");
+//		 UsersLocalServiceUtil.UpdateAllNhanVien(serviceContext);
+//		
+//		 response.sendRedirect("/admin/nhan-vien");
+//	}
+//
+//	catch (Exception e) {
+//		e.printStackTrace();
+//	}
+//
+//}
 //	 @ProcessAction(name = "redirectToCreate")
 //	    public void redirectToCreate(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException {
 //

@@ -64,7 +64,7 @@
 							class="col-form-label text-md-left col-md-2">Phòng/ban <span
 							class="text-danger">(*)</span></label> <select
 							class="custom-select col-md-6" id="phongban_id"
-							name="phongban_id" required="">
+							name="<portlet:namespace />phongban_id" required="">
 							<option value="">[-- Chọn phòng/ban --]</option>
 							<c:forEach items="${selectPhongBan}" var="item">
 								<option value="${item.id}"

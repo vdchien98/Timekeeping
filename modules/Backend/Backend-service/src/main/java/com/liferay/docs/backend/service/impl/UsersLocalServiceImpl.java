@@ -16,20 +16,42 @@ package com.liferay.docs.backend.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.Users;
+import com.liferay.docs.backend.model.impl.UsersModelImpl;
+import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.backend.service.base.UsersLocalServiceBaseImpl;
+import com.liferay.docs.backend.service.persistence.UsersFinder;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
+import com.liferay.portal.kernel.service.persistence.UserFinderUtil;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -283,6 +305,11 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		}
 		System.out.println("ket thuc----- ");
 		return user;
+	}
+
+	public List<Users> getDuLieuTimKiem(String keytimkiem) {
+		System.out.println("keytimkiem la ------- "+ keytimkiem);
+		return usersFinder.getDuLieuTimKiem(keytimkiem);
 	}
 
 }

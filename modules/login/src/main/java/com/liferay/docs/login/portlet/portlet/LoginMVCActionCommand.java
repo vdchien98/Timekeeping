@@ -44,35 +44,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	
 	// viet lai ham doProcessAction trong MVCActionCommand de thuc hien cac action (
 	// o day la action login)
-//	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
-//		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-//	            WebKeys.THEME_DISPLAY);
-//		try {
-//			HttpServletRequest request = PortalUtil
-//					.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));
-//			HttpServletResponse response = PortalUtil.getHttpServletResponse(actionResponse);
-//			String login = ParamUtil.getString(actionRequest, "email");
-//			String password = ParamUtil.getString(actionRequest, "password");
-//			boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
-//			String authType = CompanyConstants.AUTH_TYPE_EA;
-//			System.out.println("login la  ---------------- " + login);
-//			System.out.println("password la  ---------------- " + password);
-//			System.out.println("  themeDisplay.getPathMain() ---------------- " + themeDisplay.getPathMain());
-//			
-//			AuthenticatedSessionManagerUtil.login(request, response, login, password, rememberMe, authType);
-//
-//			String currentUrl = ParamUtil.getString(actionRequest, "currentUrl");
-//			if(Validator.isBlank(currentUrl)) {
-//				actionResponse.sendRedirect(themeDisplay.getURLPortal() + "/login");
-//			}else{
-//				actionResponse.sendRedirect(currentUrl);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		 actionResponse.sendRedirect("/home");
-//	}
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -90,14 +61,10 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		} else if (login.contains("@bacninh.gov.vn")) {
 			login = login;
 		}
-		System.out.println("login vao he thong cham conng hoan chinh  ------------ " + login);
 		String password = actionRequest.getParameter("password");
-		System.out.println("password vao he thong cham conng ------ " + password);
 		String emailName = checkLogin(login, password);
-		System.out.println("emailName ======= "+ emailName);
 		boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
 		String authType = CompanyConstants.AUTH_TYPE_EA;
-		System.out.println("themeDisplay.getCompanyId() "+ themeDisplay.getCompanyId());
 		long themeCompnay = themeDisplay.getCompanyId();
 		User userOld = UserLocalServiceUtil.getUserByEmailAddress(themeCompnay, login);
 		System.out.println("userOld 00000000000 " + userOld);
@@ -121,9 +88,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest.setAttribute("userId", String.valueOf(userId));
 			actionResponse.sendRedirect("/home");
 		} else if (login.contains("@bacninh.gov.vn")) {
-			System.out.println(" da vao day roi nhe hihihihihihii *********  ");
 			if (emailName.equals("")) {
-				System.out.println(" Tai Khoan Mat Khau sai *********  ");
 			} else {
 				// Mã hóa mật khẩu
 				String pw = PasswordEncryptorUtil.encrypt(password);
@@ -133,7 +98,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 //			    userOld.setLastFailedLoginDate(now);
 				userOld = UserLocalServiceUtil.updateUser(userOld);
 				AuthenticatedSessionManagerUtil.login(request, response, login, password, true, authType);
-				System.out.println("da qua day roi ======= ");
 				actionRequest.setAttribute("userId", String.valueOf(userId));
 				actionResponse.sendRedirect("/home");
 			}
@@ -164,14 +128,11 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 			// Đọc kết quả trả về
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			System.out.println("reader !!!!!!!!!!!!!!!!!!!!!! " + reader);
 			String line;
-			System.out.println("da tao dk cho get    ************* ");
 			StringBuilder response = new StringBuilder();
 			while ((line = reader.readLine()) != null) {
 				response.append(line);
 			}
-			System.out.println("response.toString() " + response.toString());
 			reader.close();
 			if (response.toString().trim().equals("{}")) {
 				System.out.println("Tai Khoan hoac mat khau sai 888888888888888  ");
@@ -180,7 +141,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(response.toString());
 				// Lấy giá trị của trường "screenName"
 				emailName = jsonObject.getJSONObject("user").getString("screenName") + "@bacninh.gov.vn";
-				System.out.println("emailName la----------------- " + emailName);
 
 			}
 

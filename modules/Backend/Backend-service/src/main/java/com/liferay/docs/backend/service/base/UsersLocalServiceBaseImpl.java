@@ -23,6 +23,7 @@ import com.liferay.docs.backend.service.persistence.GioLamPersistence;
 import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.backend.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.backend.service.persistence.PhongbanPersistence;
+import com.liferay.docs.backend.service.persistence.UsersFinder;
 import com.liferay.docs.backend.service.persistence.UsersPersistence;
 import com.liferay.docs.backend.service.persistence.XinchamcongPersistence;
 import com.liferay.docs.backend.service.persistence.XinnghiPersistence;
@@ -477,6 +478,9 @@ public abstract class UsersLocalServiceBaseImpl
 
 	@Reference
 	protected UsersPersistence usersPersistence;
+
+	@Reference
+	protected UsersFinder usersFinder;
 
 	@Reference
 	protected XinchamcongPersistence xinchamcongPersistence;

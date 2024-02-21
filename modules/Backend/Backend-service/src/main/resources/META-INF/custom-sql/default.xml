@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom-sql>
+	<sql id="com.liferay.docs.backend.service.persistence.UsersFinder.getDuLieuTimKiem"> 
+      <![CDATA[ 
+        SELECT * FROM `timekeeping_users`
+        LEFT JOIN `timekeeping_chucvu` ON timekeeping_users.chucvu_id = timekeeping_chucvu.id_
+        LEFT JOIN `timekeeping_phongban` ON timekeeping_users.phongban_id = timekeeping_phongban.id_
+        WHERE CONCAT_WS(' ', timekeeping_users.`hovaten`,timekeeping_users.`email`,timekeeping_chucvu.`name`
+        ,timekeeping_phongban.`tenphong`) LIKE  ? ;
+]]>
+	</sql>
+</custom-sql>

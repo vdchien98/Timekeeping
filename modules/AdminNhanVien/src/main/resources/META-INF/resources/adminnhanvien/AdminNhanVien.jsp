@@ -17,14 +17,18 @@ span.text-info.mr-3.chucvu {
 	margin-left: 10px;
 }
 
-i.fa.fa-user-circle-o {
-	font-size: x-large;
-	color: teal;
-	margin-bottom: 5px;
-}
-
 .iconnhanvien {
 	font-size: initial;
+}
+
+.styleChucVuHome {
+	margin-left: 11px;
+	margin-right: 10px;
+}
+
+i.fa.fa-user-circle-o {
+	font-size: 20px;
+	color: #2a838d;
 }
 </style>
 
@@ -69,13 +73,26 @@ i.fa.fa-user-circle-o {
 									</label>
 								</div>
 							</div>
+
+
 							<div class="col-sm-12 col-md-6">
-								<div id="dataTable_filter" class="dataTables_filter">
-									<label>Tìm kiếm:<input type="search"
-										class="form-control form-control-sm" placeholder=""
-										aria-controls="dataTable"></label>
-								</div>
+								<portlet:actionURL name="TimKiem" var="formActionSearchURL" />
+								<form id="formTimKiem" method="POST"
+									action="<%=formActionSearchURL.toString()%>"
+									name="<portlet:namespace />fm">
+									<div id="dataTable_filter" class="dataTables_filter">
+										<label>Tìm kiếm:<input type="search" id="searchInput" name="<portlet:namespace />timkkiemNhanVien"
+											class="form-control form-control-sm" placeholder=""
+											aria-controls="dataTable"
+											onkeypress="return handleEnter(event)"></label>
+									</div>
+								</form>
 							</div>
+
+
+
+
+
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
@@ -223,15 +240,28 @@ i.fa.fa-user-circle-o {
 
 
 
+<%-- 
+<portlet:actionURL name="addAllNhanVien" var="formActionURLALLNhanVien" />
+<form id="form" method="POST"
+	action="<%=formActionURLALLNhanVien.toString()%>"
+	name="<portlet:namespace />fm">
 
-			<portlet:actionURL name="addAllNhanVien" var="formActionURLALLNhanVien" />
-			<form id="form" method="POST" action="<%=formActionURLALLNhanVien.toString()%>"
-				name="<portlet:namespace />fm">
+	<div class="modal-footer justify-content-center">
+		<button type="submit" class="btn btn-primary">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
+		</button>
+	</div>
+</form>
 
-				<div class="modal-footer justify-content-center">
-					<button type="submit" class="btn btn-primary">
-						<i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu
-					</button>
-				</div>
-			</form>
+ --%>
 
+
+<script>
+    function handleEnter(event) {
+        if (event.key === "Enter") {
+        	  document.getElementById("formTimKiem").submit();
+            return false; // Prevent the default form submission
+        }
+        return true;
+    }
+</script>

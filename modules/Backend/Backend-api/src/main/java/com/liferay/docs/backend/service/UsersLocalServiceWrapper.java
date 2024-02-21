@@ -258,6 +258,13 @@ public class UsersLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.docs.backend.model.Users>
+		getDuLieuTimKiem(String keytimkiem) {
+
+		return _usersLocalService.getDuLieuTimKiem(keytimkiem);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
