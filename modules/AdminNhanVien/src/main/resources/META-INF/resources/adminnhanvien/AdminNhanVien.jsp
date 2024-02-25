@@ -165,8 +165,6 @@ i.fa.fa-user-circle-o {
 									</thead>
 									<tbody>
 										<c:forEach var="user" items="${usersList}" varStatus="loop">
-
-
 											<portlet:renderURL var="editURL">
 												<portlet:param name="id" value="${user.id }" />
 												<portlet:param name="mvcPath"
