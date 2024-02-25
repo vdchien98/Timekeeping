@@ -12,11 +12,20 @@
 <portlet:defineObjects />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%-- 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap4.css">
+ --%>
+
 <style>
 span.text-info.mr-3.chucvu {
 	margin-left: 10px;
 }
-
+.dt-length label {
+    display: none;
+}
 .iconnhanvien {
 	font-size: initial;
 }
@@ -49,10 +58,6 @@ i.fa.fa-user-circle-o {
 				<a href="<%=createUrl%>" class="btn btn-success float-right"> <i
 					class="fa fa-plus" aria-hidden="true"></i> Thêm mới
 				</a>
-
-
-
-
 			</h4>
 		</div>
 		<div class="card-body">
@@ -61,88 +66,9 @@ i.fa.fa-user-circle-o {
 					<div id="dataTable_wrapper"
 						class="dataTables_wrapper dt-bootstrap4 no-footer">
 						<div class="row">
-							<div class="col-sm-12 col-md-6">
-								<div class="dataTables_length" id="dataTable_length">
-									<portlet:actionURL name="dodaibang_dataTable"
-										var="formActionDataTableURL" />
-									<form id="dodai_dataTable" method="POST"
-										action="<%=formActionDataTableURL.toString()%>"
-										name="<portlet:namespace />fm">
-										<label>Hiển thị <c:choose>
-												<c:when test="${dodaibang>10}">
-													<select name="<portlet:namespace />dataTable_length"
-														aria-controls="dataTable"
-														class="custom-select custom-select-sm form-control form-control-sm"
-														onchange="submitForm()">
-														<c:if test="${dodaibang ==25}">
-															<option value="10">10</option>
-															<option value="25" selected="selected">25</option>
-															<option value="50">50</option>
-															<option value="100">100</option>
-														</c:if>
-														<c:if test="${dodaibang ==50}">
-															<option value="10">10</option>
-															<option value="25" selected="selected">25</option>
-															<option value="50" selected="selected">50</option>
-															<option value="100">100</option>
-														</c:if>
-														<c:if test="${dodaibang ==100}">
-															<option value="10">10</option>
-															<option value="25">25</option>
-															<option value="50">50</option>
-															<option value="100" selected="selected">100</option>
-														</c:if>
-
-													</select> kết quả
-												</c:when>
-												<c:otherwise>
-													<select name="<portlet:namespace />dataTable_length"
-														aria-controls="dataTable"
-														class="custom-select custom-select-sm form-control form-control-sm"
-														onchange="submitForm()">
-														<option value="10">10</option>
-														<option value="25">25</option>
-														<option value="50">50</option>
-														<option value="100">100</option>
-													</select> kết quả
-                                               </c:otherwise>
-											</c:choose>
-
-
-
-
-
-										</label>
-									</form>
-								</div>
-							</div>
-
-
-							<div class="col-sm-12 col-md-6">
-								<portlet:actionURL name="TimKiem" var="formActionSearchURL" />
-								<form id="formTimKiem" method="POST"
-									action="<%=formActionSearchURL.toString()%>"
-									name="<portlet:namespace />fm">
-									<div id="dataTable_filter" class="dataTables_filter">
-										<label>Tìm kiếm:<input type="search" id="searchInput"
-											name="<portlet:namespace />timkkiemNhanVien"
-											class="form-control form-control-sm" placeholder=""
-											aria-controls="dataTable"
-											onkeypress="return handleEnter(event)"></label>
-									</div>
-								</form>
-							</div>
-
-
-
-
-
-						</div>
-						<div class="row">
 							<div class="col-sm-12">
-								<table class="table table-hover dataTable no-footer"
-									id="dataTable" width="100%" cellspacing="0" role="grid"
-									aria-describedby="dataTable_info" style="width: 100%;">
+								<table id="example" class="table table-striped table-bordered"
+									style="width: 100%">
 									<thead>
 										<tr role="row">
 											<th style="width: 38px;" class="sorting_asc" tabindex="0"
@@ -172,7 +98,7 @@ i.fa.fa-user-circle-o {
 											</portlet:renderURL>
 
 											<tr role="row" class="odd">
-												<th class="sorting_1">${user.id }</th>
+												<th class="sorting_1">${loop.index +1 }</th>
 												<th>
 													<div class="row">
 														<i class="fa fa-user-circle-o " aria-hidden="true"></i>
@@ -226,57 +152,11 @@ i.fa.fa-user-circle-o {
 													</form></th>
 											</tr>
 										</c:forEach>
-
-
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-sm-12 col-md-5">
-								<div class="dataTables_info" id="dataTable_info" role="status"
-									aria-live="polite">Hiển thị 1 đến 10 của 54 kết quả</div>
-							</div>
-							<div class="col-sm-12 col-md-7">
-								<div class="dataTables_paginate paging_simple_numbers"
-									id="dataTable_paginate">
-									<ul class="pagination">
-										<li class="paginate_button page-item previous disabled"
-											id="dataTable_previous"><a href="#"
-											aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-											class="page-link">Quay lại</a></li>
-
-
-										<c:forEach var="phantutrang" items="${sotrang}">
-
-											<portlet:actionURL name="PhantrangUsers"
-												var="formActionPhanTrang" />
-											<form id="formPhanTrangUsers" method="POST"
-												action="<%=formActionPhanTrang.toString()%>"
-												name="<portlet:namespace />fm">
-												<li class="paginate_button page-item page-link" onclick="SunmitPhantrang(${phantutrang})">
-													 <input id="idphantrang" type="hidden" value=""
-													        name="<portlet:namespace />trangsocanlay"
-													 />
-													  ${phantutrang}
-													  
-												</li>
-
-											</form>
-
-
-										</c:forEach>
-
-
-
-
-										<li class="paginate_button page-item next" id="dataTable_next"><a
-											href="#" aria-controls="dataTable" data-dt-idx="7"
-											tabindex="0" class="page-link">Tiếp</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
+				
 					</div>
 				</div>
 			</div>
@@ -304,29 +184,18 @@ i.fa.fa-user-circle-o {
 
  --%>
 
-
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+<script
+	src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap4.js"></script>
 <script>
-	function handleEnter(event) {
-		if (event.key === "Enter") {
-			document.getElementById("formTimKiem").submit();
-			return false; // Prevent the default form submission
-		}
-		return true;
-	}
+new DataTable('#example');
 </script>
-<script>
-	// Biến lưu giữ giá trị mặc định
 
-	function submitForm() {
-		document.getElementById('dodai_dataTable').submit();
-	}
-</script>
-<script>
-	// Biến lưu giữ giá trị mặc định
 
-	function SunmitPhantrang(x) {
-		document.getElementById('idphantrang').value = x;
-		document.getElementById('formPhanTrangUsers').submit();
-	}
-</script>
+
 

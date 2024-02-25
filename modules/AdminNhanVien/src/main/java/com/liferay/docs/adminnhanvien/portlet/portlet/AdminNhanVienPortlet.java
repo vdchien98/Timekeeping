@@ -167,81 +167,85 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		try {
+			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+
 			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
 			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
 			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
 			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
+			List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+			httpServletRequest.setAttribute("usersList", usersList);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		if (isTimKiem == false) {
-			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-			int id = ParamUtil.getInteger(renderRequest, "id");
-			System.out.println("id la ----- " + id);
-			if (id > 0) {
-				try {
-					Users useredit = UsersLocalServiceUtil.getUsers(id);
-					httpServletRequest.setAttribute("useredit", useredit);
-				} catch (Exception e) {
-					System.out.println("chạy vào đây******");
-					e.printStackTrace();
-				}
-			}
-
-			if (dodaibang_dataTable > 0) {
-				System.out.println("do dai dodaibang_dataTable in data " + dodaibang_dataTable);
-				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
-
-				httpServletRequest.setAttribute("dodaibang", dodaibang_dataTable);
-				int sotrang = (int) (usersList.size() / dodaibang_dataTable) + 1;
-				System.out.println("so trang la ############# " + sotrang);
-				int[] mangSoNguyen = new int[sotrang];
-				for (int i = 0; i < sotrang; i++) {
-					mangSoNguyen[i] = i + 1;
-				}
-				httpServletRequest.setAttribute("sotrang", mangSoNguyen);
-
-				int vitridau = trangsocanlay * dodaibang_dataTable - dodaibang_dataTable ;
-				int vitricuoi = trangsocanlay * dodaibang_dataTable;
-				int vitricuoiChuan = (vitricuoi > usersList.size()) ? usersList.size() : vitricuoi;
-
-				List<Users> usersToDisplay = usersList.subList(vitridau, vitricuoiChuan);
-
-				for (int i = 0; i < usersToDisplay.size(); i++) {
-					Users user = usersToDisplay.get(i);
-					// Thiết lập giá trị mới cho trường id
-					user.setId(trangsocanlay * dodaibang_dataTable - dodaibang_dataTable + 1 +i);
-				}
-
-				System.out.println("usersToDisplay +++++++ " + usersToDisplay);
-				
-				// xử lý đoạn này -------------------------------------------
-				
-				Map<String, Object> userMap = new HashMap<>();
-				userMap.put("usersList", usersToDisplay);
-				userMap.put("otherValue", vitricuoi/10 - 1); // Thêm giá trị khác nếu cần
-				
-				// chưa xử lý xong ----------------------------------------------
-				
-				httpServletRequest.setAttribute("usersList", usersToDisplay);
-
-			} else {
-				// đoạn này đang thừa
-				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
-				httpServletRequest.setAttribute("usersList", usersList);
-			}
-
-		} else {
-			System.out.println("keyTimKiem da vao dc day  ---- " + keyTimKiem);
-			isTimKiem = !isTimKiem;
-			String keyChuan = "%" + keyTimKiem + "%";
-			System.out.println("keyChuan  -++++++++++---------" + keyChuan);
-			List<Users> usersList = UsersLocalServiceUtil.getDuLieuTimKiem(keyChuan);
-			System.out.println("usersList  -++++++++++---------" + usersList);
-			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-			httpServletRequest.setAttribute("usersList", usersList);
-
-		}
+//		if (isTimKiem == false) {
+//			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+//			int id = ParamUtil.getInteger(renderRequest, "id");
+//			System.out.println("id la ----- " + id);
+//			if (id > 0) {
+//				try {
+//					Users useredit = UsersLocalServiceUtil.getUsers(id);
+//					httpServletRequest.setAttribute("useredit", useredit);
+//				} catch (Exception e) {
+//					System.out.println("chạy vào đây******");
+//					e.printStackTrace();
+//				}
+//			}
+//
+//			if (dodaibang_dataTable > 0) {
+//				System.out.println("do dai dodaibang_dataTable in data " + dodaibang_dataTable);
+//				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+//
+//				httpServletRequest.setAttribute("dodaibang", dodaibang_dataTable);
+//				int sotrang = (int) (usersList.size() / dodaibang_dataTable) + 1;
+//				System.out.println("so trang la ############# " + sotrang);
+//				int[] mangSoNguyen = new int[sotrang];
+//				for (int i = 0; i < sotrang; i++) {
+//					mangSoNguyen[i] = i + 1;
+//				}
+//				httpServletRequest.setAttribute("sotrang", mangSoNguyen);
+//
+//				int vitridau = trangsocanlay * dodaibang_dataTable - dodaibang_dataTable ;
+//				int vitricuoi = trangsocanlay * dodaibang_dataTable;
+//				int vitricuoiChuan = (vitricuoi > usersList.size()) ? usersList.size() : vitricuoi;
+//
+//				List<Users> usersToDisplay = usersList.subList(vitridau, vitricuoiChuan);
+//
+//				for (int i = 0; i < usersToDisplay.size(); i++) {
+//					Users user = usersToDisplay.get(i);
+//					// Thiết lập giá trị mới cho trường id
+//					user.setId(trangsocanlay * dodaibang_dataTable - dodaibang_dataTable + 1 +i);
+//				}
+//
+//				System.out.println("usersToDisplay +++++++ " + usersToDisplay);
+//				
+//				// xử lý đoạn này -------------------------------------------
+//				
+//				Map<String, Object> userMap = new HashMap<>();
+//				userMap.put("usersList", usersToDisplay);
+//				userMap.put("otherValue", vitricuoi/10 - 1); // Thêm giá trị khác nếu cần
+//				
+//				// chưa xử lý xong ----------------------------------------------
+//				
+//				httpServletRequest.setAttribute("usersList", usersToDisplay);
+//
+//			} else {
+//				// đoạn này đang thừa
+//				List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+//				httpServletRequest.setAttribute("usersList", usersList);
+//			}
+//
+//		} else {
+//			System.out.println("keyTimKiem da vao dc day  ---- " + keyTimKiem);
+//			isTimKiem = !isTimKiem;
+//			String keyChuan = "%" + keyTimKiem + "%";
+//			System.out.println("keyChuan  -++++++++++---------" + keyChuan);
+//			List<Users> usersList = UsersLocalServiceUtil.getDuLieuTimKiem(keyChuan);
+//			System.out.println("usersList  -++++++++++---------" + usersList);
+//			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+//			httpServletRequest.setAttribute("usersList", usersList);
+//
+//		}
 
 		super.render(renderRequest, renderResponse);
 	}
