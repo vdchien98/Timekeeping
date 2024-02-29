@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.Ngaynghile;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -59,6 +60,15 @@ public class NgaynghileLocalServiceUtil {
 		return getService().addNgaynghile(ngaynghile);
 	}
 
+	public static Ngaynghile addNgayNghiLe(
+			String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().addNgayNghiLe(
+			ten, ngay_nghi, trangthai, serviceContext);
+	}
+
 	/**
 	 * Creates a new ngaynghile with the primary key. Does not add the ngaynghile to the database.
 	 *
@@ -92,6 +102,14 @@ public class NgaynghileLocalServiceUtil {
 	 */
 	public static Ngaynghile deleteNgaynghile(int id) throws PortalException {
 		return getService().deleteNgaynghile(id);
+	}
+
+	public static Ngaynghile deleteNgayNghiLe(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().deleteNgayNghiLe(id, serviceContext);
 	}
 
 	/**
@@ -271,6 +289,15 @@ public class NgaynghileLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static Ngaynghile updateNgayNghiLe(
+			int id, String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateNgayNghiLe(
+			id, ten, ngay_nghi, trangthai, serviceContext);
 	}
 
 	/**

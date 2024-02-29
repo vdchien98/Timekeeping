@@ -14,8 +14,15 @@
 
 package com.liferay.docs.backend.service.impl;
 
+import com.liferay.docs.backend.model.Calamviec;
+import com.liferay.docs.backend.service.CalamviecLocalServiceUtil;
 import com.liferay.docs.backend.service.base.CalamviecLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,4 +34,82 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class CalamviecLocalServiceImpl extends CalamviecLocalServiceBaseImpl {
+	public Calamviec addCaLamViec(
+			String tencalamviec, String gio_vao_chieu , String gio_ra_chieu, int vao_truoc_chieu,int ra_sau_chieu,
+			String gio_vao_toi, String gio_ra_toi, int vao_truoc_toi, int ra_sau_toi, 
+			String gio_vao_sang, String gio_ra_sang, int vao_truoc_sang, int ra_sau_sang ,      
+			ServiceContext serviceContext) throws PortalException, SystemException {
+    		//int idChucVu = (int) CounterLocalServiceUtil.increment();
+    		int idChucVu = 0; 
+    		idChucVu++; 
+
+    		System.out.println("id la " + idChucVu);
+    		Calamviec calamviec = calamviecPersistence.create(idChucVu);
+    		Date now = new Date();
+    		calamviec.setId(idChucVu);
+    		calamviec.setTencalamviec(tencalamviec);
+    		calamviec.setGio_vao_chieu(gio_vao_chieu);
+    		calamviec.setGio_ra_chieu(gio_ra_chieu);
+    		calamviec.setVao_truoc_chieu(vao_truoc_chieu);
+    		calamviec.setRa_sau_chieu(ra_sau_chieu);
+    		
+    		
+    		
+    		calamviec.setGio_vao_toi(gio_vao_toi);
+    		calamviec.setGio_ra_toi(gio_ra_toi);
+    		calamviec.setVao_truoc_toi(vao_truoc_toi);
+    		calamviec.setRa_sau_toi(ra_sau_toi);
+    		
+    		calamviec.setGio_vao_sang(gio_vao_sang);
+    		calamviec.setGio_ra_sang(gio_ra_sang);
+    		calamviec.setVao_truoc_sang(vao_truoc_sang);
+    		calamviec.setRa_sau_sang(ra_sau_sang);
+    		
+    		
+    		calamviec.setCreated_at(now);
+    		calamviec.setUpdated_at(now);
+    	
+       		CalamviecLocalServiceUtil.updateCalamviec(calamviec);
+    		return calamviec;
+	}
+	
+	
+	public Calamviec updateCaLamViec( int id,
+			String tencalamviec, String gio_vao_chieu , String gio_ra_chieu, int vao_truoc_chieu,int ra_sau_chieu,
+			String gio_vao_toi, String gio_ra_toi, int vao_truoc_toi, int ra_sau_toi, 
+			String gio_vao_sang, String gio_ra_sang, int vao_truoc_sang, int ra_sau_sang ,      
+			ServiceContext serviceContext) throws PortalException, SystemException {
+    		//int idChucVu = (int) CounterLocalServiceUtil.increment(); 
+		    Calamviec calamviec = getCalamviec(id);
+
+    		Date now = new Date();
+    		calamviec.setTencalamviec(tencalamviec);
+    		calamviec.setGio_vao_chieu(gio_vao_chieu);
+    		calamviec.setGio_ra_chieu(gio_ra_chieu);
+    		calamviec.setVao_truoc_chieu(vao_truoc_chieu);
+    		calamviec.setRa_sau_chieu(ra_sau_chieu);
+    		
+    		
+    		
+    		calamviec.setGio_vao_toi(gio_vao_toi);
+    		calamviec.setGio_ra_toi(gio_ra_toi);
+    		calamviec.setVao_truoc_toi(vao_truoc_toi);
+    		calamviec.setRa_sau_toi(ra_sau_toi);
+    		
+    		calamviec.setGio_vao_sang(gio_vao_sang);
+    		calamviec.setGio_ra_sang(gio_ra_sang);
+    		calamviec.setVao_truoc_sang(vao_truoc_sang);
+    		calamviec.setRa_sau_sang(ra_sau_sang);
+    		
+    		
+    		calamviec.setCreated_at(now);
+    		calamviec.setUpdated_at(now);
+    	
+       		CalamviecLocalServiceUtil.updateCalamviec(calamviec);
+    		return calamviec;
+	}
+	
+	
+	
+	
 }

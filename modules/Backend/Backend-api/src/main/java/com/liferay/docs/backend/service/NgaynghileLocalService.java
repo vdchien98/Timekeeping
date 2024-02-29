@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -75,6 +77,11 @@ public interface NgaynghileLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Ngaynghile addNgaynghile(Ngaynghile ngaynghile);
 
+	public Ngaynghile addNgayNghiLe(
+			String ten, Date ngay_nghi, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Creates a new ngaynghile with the primary key. Does not add the ngaynghile to the database.
 	 *
@@ -103,6 +110,9 @@ public interface NgaynghileLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Ngaynghile deleteNgaynghile(int id) throws PortalException;
+
+	public Ngaynghile deleteNgayNghiLe(int id, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Deletes the ngaynghile from the database. Also notifies the appropriate model listeners.
@@ -251,6 +261,11 @@ public interface NgaynghileLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public Ngaynghile updateNgayNghiLe(
+			int id, String ten, Date ngay_nghi, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the ngaynghile in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

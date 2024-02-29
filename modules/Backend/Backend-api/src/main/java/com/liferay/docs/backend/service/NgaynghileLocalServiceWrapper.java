@@ -53,6 +53,17 @@ public class NgaynghileLocalServiceWrapper
 		return _ngaynghileLocalService.addNgaynghile(ngaynghile);
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.Ngaynghile addNgayNghiLe(
+			String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _ngaynghileLocalService.addNgayNghiLe(
+			ten, ngay_nghi, trangthai, serviceContext);
+	}
+
 	/**
 	 * Creates a new ngaynghile with the primary key. Does not add the ngaynghile to the database.
 	 *
@@ -91,6 +102,15 @@ public class NgaynghileLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ngaynghileLocalService.deleteNgaynghile(id);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Ngaynghile deleteNgayNghiLe(
+			int id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ngaynghileLocalService.deleteNgayNghiLe(id, serviceContext);
 	}
 
 	/**
@@ -303,6 +323,17 @@ public class NgaynghileLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ngaynghileLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Ngaynghile updateNgayNghiLe(
+			int id, String ten, java.util.Date ngay_nghi, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _ngaynghileLocalService.updateNgayNghiLe(
+			id, ten, ngay_nghi, trangthai, serviceContext);
 	}
 
 	/**

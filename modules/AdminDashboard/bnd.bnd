@@ -1,0 +1,4 @@
+Bundle-Name: AdminDashboard
+Bundle-SymbolicName: com.liferay.docs.admindashboard.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.admindashboard.portlet.constants

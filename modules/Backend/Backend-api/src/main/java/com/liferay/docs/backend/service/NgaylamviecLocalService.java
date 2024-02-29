@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -251,6 +252,15 @@ public interface NgaylamviecLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public Ngaylamviec saveNgayLamViec(
+			int nam, int thang, int songaylamviec,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Ngaylamviec updateNgayLamViec(
+			int id, int thang, int songaylamviec, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the ngaylamviec in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

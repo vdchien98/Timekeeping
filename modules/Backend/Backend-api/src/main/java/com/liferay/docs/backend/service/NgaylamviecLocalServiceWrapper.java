@@ -308,6 +308,28 @@ public class NgaylamviecLocalServiceWrapper
 		return _ngaylamviecLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.Ngaylamviec saveNgayLamViec(
+			int nam, int thang, int songaylamviec,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _ngaylamviecLocalService.saveNgayLamViec(
+			nam, thang, songaylamviec, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Ngaylamviec updateNgayLamViec(
+			int id, int thang, int songaylamviec,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _ngaylamviecLocalService.updateNgayLamViec(
+			id, thang, songaylamviec, serviceContext);
+	}
+
 	/**
 	 * Updates the ngaylamviec in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

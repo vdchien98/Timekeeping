@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +75,14 @@ public interface CalamviecLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Calamviec addCalamviec(Calamviec calamviec);
+
+	public Calamviec addCaLamViec(
+			String tencalamviec, String gio_vao_chieu, String gio_ra_chieu,
+			int vao_truoc_chieu, int ra_sau_chieu, String gio_vao_toi,
+			String gio_ra_toi, int vao_truoc_toi, int ra_sau_toi,
+			String gio_vao_sang, String gio_ra_sang, int vao_truoc_sang,
+			int ra_sau_sang, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Creates a new calamviec with the primary key. Does not add the calamviec to the database.
@@ -264,5 +273,13 @@ public interface CalamviecLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Calamviec updateCalamviec(Calamviec calamviec);
+
+	public Calamviec updateCaLamViec(
+			int id, String tencalamviec, String gio_vao_chieu,
+			String gio_ra_chieu, int vao_truoc_chieu, int ra_sau_chieu,
+			String gio_vao_toi, String gio_ra_toi, int vao_truoc_toi,
+			int ra_sau_toi, String gio_vao_sang, String gio_ra_sang,
+			int vao_truoc_sang, int ra_sau_sang, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

@@ -53,6 +53,24 @@ public class CalamviecLocalServiceWrapper
 		return _calamviecLocalService.addCalamviec(calamviec);
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.Calamviec addCaLamViec(
+			String tencalamviec, String gio_vao_chieu, String gio_ra_chieu,
+			int vao_truoc_chieu, int ra_sau_chieu, String gio_vao_toi,
+			String gio_ra_toi, int vao_truoc_toi, int ra_sau_toi,
+			String gio_vao_sang, String gio_ra_sang, int vao_truoc_sang,
+			int ra_sau_sang,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _calamviecLocalService.addCaLamViec(
+			tencalamviec, gio_vao_chieu, gio_ra_chieu, vao_truoc_chieu,
+			ra_sau_chieu, gio_vao_toi, gio_ra_toi, vao_truoc_toi, ra_sau_toi,
+			gio_vao_sang, gio_ra_sang, vao_truoc_sang, ra_sau_sang,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new calamviec with the primary key. Does not add the calamviec to the database.
 	 *
@@ -320,6 +338,24 @@ public class CalamviecLocalServiceWrapper
 		com.liferay.docs.backend.model.Calamviec calamviec) {
 
 		return _calamviecLocalService.updateCalamviec(calamviec);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Calamviec updateCaLamViec(
+			int id, String tencalamviec, String gio_vao_chieu,
+			String gio_ra_chieu, int vao_truoc_chieu, int ra_sau_chieu,
+			String gio_vao_toi, String gio_ra_toi, int vao_truoc_toi,
+			int ra_sau_toi, String gio_vao_sang, String gio_ra_sang,
+			int vao_truoc_sang, int ra_sau_sang,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _calamviecLocalService.updateCaLamViec(
+			id, tencalamviec, gio_vao_chieu, gio_ra_chieu, vao_truoc_chieu,
+			ra_sau_chieu, gio_vao_toi, gio_ra_toi, vao_truoc_toi, ra_sau_toi,
+			gio_vao_sang, gio_ra_sang, vao_truoc_sang, ra_sau_sang,
+			serviceContext);
 	}
 
 	@Override

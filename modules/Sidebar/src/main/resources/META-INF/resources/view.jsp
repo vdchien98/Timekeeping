@@ -84,9 +84,9 @@ li.nav-item.vdchien {
 					            <a class="collapse-item " href="http://localhost:8080/admin/nhan-vien">Nhân viên</a>
 					            <a class="collapse-item " href="http://localhost:8080/admin/phong-ban">Phòng ban</a>
 					            <a class="collapse-item " href="http://localhost:8080/admin/chuc-vu">Chức vụ</a>
-					            <a class="collapse-item " href="#">Ca làm việc</a>
-					            <a class="collapse-item " href="#">Ngày nghỉ lễ</a>
-					            <a class="collapse-item " href="#">Ngày làm việc</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/ca-lam-viec">Ca làm việc</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/ngay-nghi-le">Ngày nghỉ lễ</a>
+					            <a class="collapse-item " href="http://localhost:8080/admin/ngay-lam-viec">Ngày làm việc</a>
 					
 					</div>
 	            </div>

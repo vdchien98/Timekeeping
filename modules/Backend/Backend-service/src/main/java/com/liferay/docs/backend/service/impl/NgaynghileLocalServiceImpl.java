@@ -14,8 +14,15 @@
 
 package com.liferay.docs.backend.service.impl;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.docs.backend.model.Ngaynghile;
 import com.liferay.docs.backend.service.base.NgaynghileLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,4 +34,46 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class NgaynghileLocalServiceImpl extends NgaynghileLocalServiceBaseImpl {
+	
+	public Ngaynghile addNgayNghiLe(String ten, Date ngay_nghi, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+       // System.out.println("da vao den day **********+++++++++++");
+		int idNgayNghile =(int) CounterLocalServiceUtil.increment();
+		//idNgayNghile++;
+		Ngaynghile ngaynghile = ngaynghilePersistence.create(idNgayNghile);
+		Date now = new Date();
+		ngaynghile.setId(idNgayNghile);
+		ngaynghile.setTen(ten);
+		ngaynghile.setNgay_nghi(ngay_nghi);
+		ngaynghile.setTrangthai(trangthai);
+		ngaynghile.setCreated_at(now);
+		ngaynghile.setUpdated_at(now);
+
+		ngaynghileLocalService.updateNgaynghile(ngaynghile);
+		return ngaynghile;
+	}
+	
+	
+	public Ngaynghile updateNgayNghiLe(int id, String ten, Date ngay_nghi, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+  
+	
+		Date now = new Date();
+		Ngaynghile ngaynghile = getNgaynghile(id);
+	
+		ngaynghile.setTen(ten);
+		ngaynghile.setNgay_nghi(ngay_nghi);
+		ngaynghile.setTrangthai(trangthai);
+		ngaynghile.setCreated_at(now);
+		ngaynghile.setUpdated_at(now);
+
+		ngaynghileLocalService.updateNgaynghile(ngaynghile);
+		return ngaynghile;
+	}
+	
+	public Ngaynghile deleteNgayNghiLe (int id, ServiceContext serviceContext) throws PortalException {
+		Ngaynghile ngaynghile = getNgaynghile(id);
+		ngaynghile = deleteNgaynghile(id);
+	    return ngaynghile;
+	}
 }

@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.Calamviec;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -57,6 +58,22 @@ public class CalamviecLocalServiceUtil {
 	 */
 	public static Calamviec addCalamviec(Calamviec calamviec) {
 		return getService().addCalamviec(calamviec);
+	}
+
+	public static Calamviec addCaLamViec(
+			String tencalamviec, String gio_vao_chieu, String gio_ra_chieu,
+			int vao_truoc_chieu, int ra_sau_chieu, String gio_vao_toi,
+			String gio_ra_toi, int vao_truoc_toi, int ra_sau_toi,
+			String gio_vao_sang, String gio_ra_sang, int vao_truoc_sang,
+			int ra_sau_sang,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().addCaLamViec(
+			tencalamviec, gio_vao_chieu, gio_ra_chieu, vao_truoc_chieu,
+			ra_sau_chieu, gio_vao_toi, gio_ra_toi, vao_truoc_toi, ra_sau_toi,
+			gio_vao_sang, gio_ra_sang, vao_truoc_sang, ra_sau_sang,
+			serviceContext);
 	}
 
 	/**
@@ -285,6 +302,22 @@ public class CalamviecLocalServiceUtil {
 	 */
 	public static Calamviec updateCalamviec(Calamviec calamviec) {
 		return getService().updateCalamviec(calamviec);
+	}
+
+	public static Calamviec updateCaLamViec(
+			int id, String tencalamviec, String gio_vao_chieu,
+			String gio_ra_chieu, int vao_truoc_chieu, int ra_sau_chieu,
+			String gio_vao_toi, String gio_ra_toi, int vao_truoc_toi,
+			int ra_sau_toi, String gio_vao_sang, String gio_ra_sang,
+			int vao_truoc_sang, int ra_sau_sang,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateCaLamViec(
+			id, tencalamviec, gio_vao_chieu, gio_ra_chieu, vao_truoc_chieu,
+			ra_sau_chieu, gio_vao_toi, gio_ra_toi, vao_truoc_toi, ra_sau_toi,
+			gio_vao_sang, gio_ra_sang, vao_truoc_sang, ra_sau_sang,
+			serviceContext);
 	}
 
 	public static CalamviecLocalService getService() {

@@ -1,0 +1,4 @@
+Bundle-Name: AdminNgayNghiLe
+Bundle-SymbolicName: com.liferay.docs.adminngaynghile.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.docs.adminngaynghile.portlet.constants
