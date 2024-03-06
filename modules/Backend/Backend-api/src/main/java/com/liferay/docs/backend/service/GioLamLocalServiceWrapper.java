@@ -51,6 +51,32 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.addGioLam(gioLam);
 	}
 
+	@Override
+	public void addGioLamVaoChieu(
+			long user_id, java.util.Date ngaylam, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.addGioLamVaoChieu(
+			user_id, ngaylam, check_in_chieu, di_muon_chieu, diem, trangthai,
+			serviceContext);
+	}
+
+	@Override
+	public void addGioLamVaoSang(
+			long user_id, java.util.Date ngaylam, String check_in_sang,
+			int di_muon_sang, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.addGioLamVaoSang(
+			user_id, ngaylam, check_in_sang, di_muon_sang, diem, trangthai,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
@@ -246,6 +272,14 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.getGioLam(id);
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.GioLam getGioLamByUserId(
+			long userId, java.util.Date NgayLam)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _gioLamLocalService.getGioLamByUserId(userId, NgayLam);
+	}
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -317,6 +351,45 @@ public class GioLamLocalServiceWrapper
 		com.liferay.docs.backend.model.GioLam gioLam) {
 
 		return _gioLamLocalService.updateGioLam(gioLam);
+	}
+
+	@Override
+	public void updateGioLamRaChieu(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamRaChieu(
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			serviceContext);
+	}
+
+	@Override
+	public void updateGioLamRaSang(
+			int idGioLam, long user_id, String check_out_sang, int ve_som_sang,
+			float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamRaSang(
+			idGioLam, user_id, check_out_sang, ve_som_sang, diem, trangthai,
+			serviceContext);
+	}
+
+	@Override
+	public void updateGioLamVaoChieu(
+			int idGioLam, long user_id, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamVaoChieu(
+			idGioLam, user_id, check_in_chieu, di_muon_chieu, diem, trangthai,
+			serviceContext);
 	}
 
 	@Override

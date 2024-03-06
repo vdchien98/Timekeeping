@@ -234,6 +234,9 @@ public interface UsersLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Users getUserbyUserId(long userId);
+
 	/**
 	 * Returns the users with the primary key.
 	 *

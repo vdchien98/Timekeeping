@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -74,6 +76,17 @@ public interface GioLamLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam addGioLam(GioLam gioLam);
+
+	public void addGioLamVaoChieu(
+			long user_id, Date ngaylam, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addGioLamVaoSang(
+			long user_id, Date ngaylam, String check_in_sang, int di_muon_sang,
+			float diem, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
@@ -212,6 +225,10 @@ public interface GioLamLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public GioLam getGioLam(int id) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public GioLam getGioLamByUserId(long userId, Date NgayLam)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -264,5 +281,22 @@ public interface GioLamLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam updateGioLam(GioLam gioLam);
+
+	public void updateGioLamRaChieu(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateGioLamRaSang(
+			int idGioLam, long user_id, String check_out_sang, int ve_som_sang,
+			float diem, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateGioLamVaoChieu(
+			int idGioLam, long user_id, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

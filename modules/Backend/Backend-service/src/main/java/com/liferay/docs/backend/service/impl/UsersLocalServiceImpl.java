@@ -311,5 +311,23 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		System.out.println("keytimkiem la ------- "+ keytimkiem);
 		return usersFinder.getDuLieuTimKiem(keytimkiem);
 	}
+	
+//	public Users getUserByUserId(long userId) {
+//		//System.out.println("keytimkiem la ------- "+ keytimkiem);
+//		return null ;
+//	}
+	
+	public Users getUserbyUserId(long userId) {
+		List<Users> userList = usersPersistence.findByGetUserId(userId);
+		Users user = null ;
+		if (userList.size() == 0) {
+			user = user ;
+		} else {
+			user = userList.get(0);
+		}
+		return user;
+		
+	}
+	
 
 }

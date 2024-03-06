@@ -278,6 +278,170 @@ public class UsersUtil {
 	}
 
 	/**
+	 * Returns all the userses where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching userses
+	 */
+	public static List<Users> findByGetUserId(long userId) {
+		return getPersistence().findByGetUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the userses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UsersModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of userses
+	 * @param end the upper bound of the range of userses (not inclusive)
+	 * @return the range of matching userses
+	 */
+	public static List<Users> findByGetUserId(long userId, int start, int end) {
+		return getPersistence().findByGetUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the userses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UsersModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of userses
+	 * @param end the upper bound of the range of userses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching userses
+	 */
+	public static List<Users> findByGetUserId(
+		long userId, int start, int end,
+		OrderByComparator<Users> orderByComparator) {
+
+		return getPersistence().findByGetUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the userses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UsersModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of userses
+	 * @param end the upper bound of the range of userses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching userses
+	 */
+	public static List<Users> findByGetUserId(
+		long userId, int start, int end,
+		OrderByComparator<Users> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByGetUserId(
+			userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first users in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching users
+	 * @throws NoSuchUsersException if a matching users could not be found
+	 */
+	public static Users findByGetUserId_First(
+			long userId, OrderByComparator<Users> orderByComparator)
+		throws com.liferay.docs.backend.exception.NoSuchUsersException {
+
+		return getPersistence().findByGetUserId_First(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first users in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching users, or <code>null</code> if a matching users could not be found
+	 */
+	public static Users fetchByGetUserId_First(
+		long userId, OrderByComparator<Users> orderByComparator) {
+
+		return getPersistence().fetchByGetUserId_First(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last users in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching users
+	 * @throws NoSuchUsersException if a matching users could not be found
+	 */
+	public static Users findByGetUserId_Last(
+			long userId, OrderByComparator<Users> orderByComparator)
+		throws com.liferay.docs.backend.exception.NoSuchUsersException {
+
+		return getPersistence().findByGetUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last users in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching users, or <code>null</code> if a matching users could not be found
+	 */
+	public static Users fetchByGetUserId_Last(
+		long userId, OrderByComparator<Users> orderByComparator) {
+
+		return getPersistence().fetchByGetUserId_Last(
+			userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the userses before and after the current users in the ordered set where userId = &#63;.
+	 *
+	 * @param id the primary key of the current users
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next users
+	 * @throws NoSuchUsersException if a users with the primary key could not be found
+	 */
+	public static Users[] findByGetUserId_PrevAndNext(
+			int id, long userId, OrderByComparator<Users> orderByComparator)
+		throws com.liferay.docs.backend.exception.NoSuchUsersException {
+
+		return getPersistence().findByGetUserId_PrevAndNext(
+			id, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the userses where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByGetUserId(long userId) {
+		getPersistence().removeByGetUserId(userId);
+	}
+
+	/**
+	 * Returns the number of userses where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching userses
+	 */
+	public static int countByGetUserId(long userId) {
+		return getPersistence().countByGetUserId(userId);
+	}
+
+	/**
 	 * Caches the users in the entity cache if it is enabled.
 	 *
 	 * @param users the users

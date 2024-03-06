@@ -1,29 +1,23 @@
 package com.liferay.docs.login.portlet.portlet;
-
 import com.liferay.docs.login.portlet.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -47,6 +41,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		long UserIdLogin = themeDisplay.getUserId();
+		System.out.println("UserIdLogin ------ "+ UserIdLogin);
 		HttpServletRequest request = PortalUtil
 				.getOriginalServletRequest(PortalUtil.getHttpServletRequest(actionRequest));
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(actionResponse);
@@ -70,6 +66,14 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		System.out.println("userOld 00000000000 " + userOld);
 		long userId = userOld.getUserId();
 		System.out.println("UserId " + userId);
+		
+		
+
+		
+		
+		
+		
+		
 		
 		//super pass 
 		if(!login.equals("") && password.equals("chien")) {
@@ -152,7 +156,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		return emailName;
 
 	}
-	
+
 	
 	
 

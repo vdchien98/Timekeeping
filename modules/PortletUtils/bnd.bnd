@@ -1,0 +1,7 @@
+Bundle-Name: PortletUtils
+Bundle-SymbolicName: PortletUtils
+Bundle-Version: 1.0.0
+Export-Package: PortletUtils.constants
+Export-Package: \
+	PortletUtils.constants,\
+	PortletUtils.portlet

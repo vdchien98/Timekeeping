@@ -80,14 +80,18 @@
 	    is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
 	    is_signed_in = theme_display.isSignedIn()
 	    group_id = theme_display.getScopeGroupId()
+	    user_id = theme_display.getUserId()
 	    
 	/>
+
+	
 	<#if is_signed_in>
 
 			<!-- Bao gồm mẫu cho người dùng đã đăng nhập -->
 			${portletDisplay.recycle()}
 			${portletDisplay.setTitle(the_title)}
-
+              
+  
 				<div id="noidung">
 				  <div class="vitri98">
 				      <#include "${full_templates_path}/sidlebar.ftl" />

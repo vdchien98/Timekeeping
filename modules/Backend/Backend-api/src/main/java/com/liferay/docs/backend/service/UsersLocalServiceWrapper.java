@@ -292,6 +292,11 @@ public class UsersLocalServiceWrapper
 		return _usersLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.Users getUserbyUserId(long userId) {
+		return _usersLocalService.getUserbyUserId(userId);
+	}
+
 	/**
 	 * Returns the users with the primary key.
 	 *

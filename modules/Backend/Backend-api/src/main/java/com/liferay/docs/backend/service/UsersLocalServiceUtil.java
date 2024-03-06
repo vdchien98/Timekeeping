@@ -264,6 +264,10 @@ public class UsersLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static Users getUserbyUserId(long userId) {
+		return getService().getUserbyUserId(userId);
+	}
+
 	/**
 	 * Returns the users with the primary key.
 	 *

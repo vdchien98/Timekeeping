@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.GioLam;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -57,6 +58,28 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam addGioLam(GioLam gioLam) {
 		return getService().addGioLam(gioLam);
+	}
+
+	public static void addGioLamVaoChieu(
+			long user_id, java.util.Date ngaylam, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addGioLamVaoChieu(
+			user_id, ngaylam, check_in_chieu, di_muon_chieu, diem, trangthai,
+			serviceContext);
+	}
+
+	public static void addGioLamVaoSang(
+			long user_id, java.util.Date ngaylam, String check_in_sang,
+			int di_muon_sang, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addGioLamVaoSang(
+			user_id, ngaylam, check_in_sang, di_muon_sang, diem, trangthai,
+			serviceContext);
 	}
 
 	/**
@@ -224,6 +247,12 @@ public class GioLamLocalServiceUtil {
 		return getService().getGioLam(id);
 	}
 
+	public static GioLam getGioLamByUserId(long userId, java.util.Date NgayLam)
+		throws PortalException {
+
+		return getService().getGioLamByUserId(userId, NgayLam);
+	}
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -285,6 +314,39 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam updateGioLam(GioLam gioLam) {
 		return getService().updateGioLam(gioLam);
+	}
+
+	public static void updateGioLamRaChieu(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamRaChieu(
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			serviceContext);
+	}
+
+	public static void updateGioLamRaSang(
+			int idGioLam, long user_id, String check_out_sang, int ve_som_sang,
+			float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamRaSang(
+			idGioLam, user_id, check_out_sang, ve_som_sang, diem, trangthai,
+			serviceContext);
+	}
+
+	public static void updateGioLamVaoChieu(
+			int idGioLam, long user_id, String check_in_chieu,
+			int di_muon_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamVaoChieu(
+			idGioLam, user_id, check_in_chieu, di_muon_chieu, diem, trangthai,
+			serviceContext);
 	}
 
 	public static GioLamLocalService getService() {
