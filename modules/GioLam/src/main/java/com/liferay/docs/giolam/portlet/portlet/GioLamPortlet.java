@@ -341,7 +341,7 @@ public class GioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=WII2Hl8jvtE09e16yIldSeGaWqRoChemtKE3LUeFwIFv08qNu7NkLlOIy0BdH9TGvWk7EyPSeMUuKeKxjIJcJ9jRZIMb6Unah7ly58yh_L2uHPSUcoAdAwnSbcEXBv1LlaBn7PCOzb61S98mZ1wsO85qrXEVB-1udq37JvOf-pldG-zKpZ-8Ozffuo2a7EvSraZfFVufv77vTjyOpJJbVUzyupdhVOLou3o58Vv-W7FH5UCmhq3fUAGMmqgnUViyX7V_LeyauIBwVO1CndAg8VaxZmh9DQn8uqk7ViqBk23eHRLoz0gWJF5tkoZS2OHixLcmFC8uq4hNGkasu5UDQkqbYn_wQe5t-m2Q7-aL_twPRvr9vY6SFCaff6_k8xW-ncoeLlCmbntNVOXBwpQjF-5_o65fLqOuKWRpCk9t"
+			String data = "refresh_token=4aF93hsIWJWJGSiElfI1EHT3o0wzZOTTRHgQOOAvenHz8wveiRQhDraCcGA1mRbHSnZpPRcdt2PNBCnWWgM6KKmYZXUCYwvOHHcs5REWhaX53UO7bi2iUrCMvaQydTWCOKd9JB2TtWvR3i0ujQVJMNq6xmMnqA5vN4YH1PNolqOw8RaryuIeUHCnZqlXWvPxEKwk4-MSWK0W4hq3rCRoLInEvWNKx_Gr8qZcLFZPwnqqVz5JxycPBWLBgHBO_-DXUaps4zJrqLiyLyaNqOFSNoSAbcwAigu_8Xc5Rlkxg1COFVfPjuBc4cWxuIIuilqIIHR1TOR2zmfbRRnBkDIS751-Xss1rg8_GK-mI8xY_0fpCBH9fxw8ENuKm5VKeTGT2JR5TUQLrKSn8ziM-l6JPp4crILJQfhWVmMyZOGy"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -476,11 +476,10 @@ public class GioLamPortlet extends MVCPortlet {
 				System.out.println("oki okiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ");
 				if (userGioLam == null) {
 					if (GioHienTaiTrongBuoiSang == true) {
-						int chenhLechPhutVaoSang = (int) gioChamCongVaoSangFormatted.until(gioHienTaiDate,
-								ChronoUnit.MINUTES);
+						int chenhLechPhutVaoSang = (int) ChronoUnit.MINUTES.between(gioVaoSang, gioHienTaiDate);
 						float diem = 0;
 						if (chenhLechPhutVaoSang < 0) {
-							diem += 1;
+							diem += 1.0;
 						} else if (chenhLechPhutVaoSang > 1 && chenhLechPhutVaoSang < 10) {
 							diem += 0.8;
 						} else if (chenhLechPhutVaoSang >= 10 && chenhLechPhutVaoSang < 15) {
@@ -490,18 +489,19 @@ public class GioLamPortlet extends MVCPortlet {
 						} else if (chenhLechPhutVaoSang >= 20 && chenhLechPhutVaoSang < 30) {
 							diem += 0.2;
 						} else {
-							diem += 0;
+							diem += 0.0;
 						}
 
 						GioLamLocalServiceUtil.addGioLamVaoSang(userId, ngayHienTaikieuDate, gioHienTai,
 								chenhLechPhutVaoSang, diem, 1, serviceContext);
 
 					} else if (GioHienTaiTrongBuoiChieu == true) {
-						int chenhLechPhutVaoChieu = (int) gioChamCongVaoChieuFormatted.until(gioHienTaiDate,
-								ChronoUnit.MINUTES);
+//						int chenhLechPhutVaoChieu = (int) gioHienTaiDate.until(gioChamCongVaoChieuFormatted,
+//								ChronoUnit.MINUTES);
+						int chenhLechPhutVaoChieu = (int) ChronoUnit.MINUTES.between(gioVaoChieu, gioHienTaiDate);
 						float diem = 0;
 						if (chenhLechPhutVaoChieu < 0) {
-							diem += 1;
+							diem += 1.0;
 						} else if (chenhLechPhutVaoChieu > 1 && chenhLechPhutVaoChieu < 10) {
 							diem += 0.8;
 						} else if (chenhLechPhutVaoChieu >= 10 && chenhLechPhutVaoChieu < 15) {
@@ -511,7 +511,7 @@ public class GioLamPortlet extends MVCPortlet {
 						} else if (chenhLechPhutVaoChieu >= 20 && chenhLechPhutVaoChieu < 30) {
 							diem += 0.2;
 						} else {
-							diem += 0;
+							diem += 0.0;
 						}
 
 						GioLamLocalServiceUtil.addGioLamVaoChieu(userId, ngayHienTaikieuDate, gioHienTai,
@@ -525,17 +525,18 @@ public class GioLamPortlet extends MVCPortlet {
 					// Thực hiện khi đã có dữ liệu
 
 					if (GioHienTaiTrongBuoiSang == true) {
-						String checkinSang = userGioLam.getCheck_in_sang();
+						// String checkinSang = userGioLam.getCheck_in_sang();
+						System.out.println("thoi diem hiẹn tai la -------***************************** ");
 						int idGioLam = userGioLam.getId();
 						long user_id = userGioLam.getUser_id();
 						System.out.println("idGioLam la---------- " + idGioLam);
 
-						int chenhLechPhutRaSang = (int) gioChamCongRaSangFormatted.until(gioHienTaiDate,
-								ChronoUnit.MINUTES);
+						int chenhLechPhutRaSang = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaSang);
 						System.out.println("chenhLechPhutRaSang ------ " + chenhLechPhutRaSang);
 						float diem = (float) userGioLam.getDiem();
+						System.out.println("diem hien tai la ------- " + diem);
 						if (chenhLechPhutRaSang < 0) {
-							diem += 1;
+							diem += 1.0;
 						} else if (chenhLechPhutRaSang > 1 && chenhLechPhutRaSang < 10) {
 							diem += 0.8;
 						} else if (chenhLechPhutRaSang >= 10 && chenhLechPhutRaSang < 15) {
@@ -545,48 +546,44 @@ public class GioLamPortlet extends MVCPortlet {
 						} else if (chenhLechPhutRaSang >= 20 && chenhLechPhutRaSang < 30) {
 							diem += 0.2;
 						} else {
-							diem += 0;
+							diem += 0.0;
 						}
 
-						if (checkinSang.equals("")) {
-							System.out.println("da cham cong nhung la quen cham cong sang");
-						} else {
-							System.out.println("da cham cong vao sang nhung chua cham cong ra ra");
-
-							GioLamLocalServiceUtil.updateGioLamRaSang(idGioLam, user_id, gioHienTai,
-									chenhLechPhutRaSang, diem, 1, serviceContext);
-
-						}
+						GioLamLocalServiceUtil.updateGioLamRaSang(idGioLam, user_id, gioHienTai, chenhLechPhutRaSang,
+								diem, 1, serviceContext);
 
 					} else if (GioHienTaiTrongBuoiChieu == true) {
 						String checkinchieu = userGioLam.getCheck_in_chieu();
 						String checkinSang = userGioLam.getCheck_in_sang();
+						String checkoutSang = userGioLam.getCheck_out_sang();
+						String checkoutchieu = userGioLam.getCheck_out_chieu();
 						long user_id = userGioLam.getUser_id();
 						int idGioLam = userGioLam.getId();
-						if (!checkinSang.equals("")) {
-							// trường hợp chấm công nhiều thường xuyên
-							int chenhLechPhutRaChieu = (int) gioChamCongRaChieuFormatted.until(gioHienTaiDate,
-									ChronoUnit.MINUTES);
+						if (checkinSang.equals("") == false && checkoutSang.equals("") == false
+								&& checkinchieu.equals("") == false) {
+
+							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
+
 							float diem = (float) userGioLam.getDiem();
 							if (chenhLechPhutRaChieu < 0) {
-								diem += 3;
+								diem += 1.0;
 							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
-								diem += 2.8;
+								diem += 0.8;
 							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
-								diem += 2.6;
+								diem += 0.6;
 							} else if (chenhLechPhutRaChieu >= 15 && chenhLechPhutRaChieu < 20) {
-								diem += 2.4;
+								diem += 0.4;
 							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
-								diem += 2.2;
+								diem += 0.2;
 							} else {
-								diem += 2;
+								diem += 0;
 							}
+
 							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
 									chenhLechPhutRaChieu, diem, 1, serviceContext);
-						} else if (checkinchieu.equals("")) {
+						} else if (checkinSang.equals("") == false && checkoutSang.equals("") == false) {
 							System.out.println("da cham cong sang nhưng chưa cham cong vao chieu");
-							int chenhLechPhutVaoChieu = (int) gioChamCongVaoChieuFormatted.until(gioHienTaiDate,
-									ChronoUnit.MINUTES);
+							int chenhLechPhutVaoChieu = (int) ChronoUnit.MINUTES.between(gioVaoChieu, gioHienTaiDate);
 
 							float diem = (float) userGioLam.getDiem();
 							if (chenhLechPhutVaoChieu < 0) {
@@ -600,20 +597,38 @@ public class GioLamPortlet extends MVCPortlet {
 							} else if (chenhLechPhutVaoChieu >= 20 && chenhLechPhutVaoChieu < 30) {
 								diem += 0.2;
 							} else {
-								diem += 0;
+								diem += 0.0;
 							}
 
 							GioLamLocalServiceUtil.updateGioLamVaoChieu(idGioLam, user_id, gioHienTai,
 									chenhLechPhutVaoChieu, diem, 1, serviceContext);
-
-						} else {
-							System.out.println("da cham cong chieu nhung chua cham cong ra chieu");
-							Boolean Chamcongrachieu = true;
-							int chenhLechPhutRaChieu = (int) gioChamCongRaChieuFormatted.until(gioHienTaiDate,
-									ChronoUnit.MINUTES);
+						} else if (checkinSang.equals("") == false) {
+							// trường hợp chấm công nhiều thường xuyên
+//							int chenhLechPhutRaChieu = (int) gioHienTaiDate.until(gioChamCongRaChieuFormatted,
+//									ChronoUnit.MINUTES);
+							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
 							float diem = (float) userGioLam.getDiem();
 							if (chenhLechPhutRaChieu < 0) {
-								diem += 1;
+								diem += 3.0;
+							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
+								diem += 2.8;
+							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
+								diem += 2.6;
+							} else if (chenhLechPhutRaChieu >= 15 && chenhLechPhutRaChieu < 20) {
+								diem += 2.4;
+							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
+								diem += 2.2;
+							} else {
+								diem += 2.0;
+							}
+							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
+									chenhLechPhutRaChieu, diem, 1, serviceContext);
+						} else if (checkinchieu.equals("") == false) {
+							System.out.println("da cham cong sang nhưng chưa cham cong vao chieu");
+							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
+							float diem = (float) userGioLam.getDiem();
+							if (chenhLechPhutRaChieu < 0) {
+								diem += 1.0;
 							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
 								diem += 0.8;
 							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
@@ -623,13 +638,13 @@ public class GioLamPortlet extends MVCPortlet {
 							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
 								diem += 0.2;
 							} else {
-								diem += 0;
+								diem += 0.0;
 							}
 
 							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
 									chenhLechPhutRaChieu, diem, 1, serviceContext);
 
-						}
+						} 
 
 					} else {
 						// renderRequest.setAttribute("khongchamcong", true);
@@ -707,6 +722,20 @@ public class GioLamPortlet extends MVCPortlet {
 		boolean GioHienTaiTrongBuoiChieu = gioHienTaiDate.isAfter(gioChamCongVaoChieuFormatted)
 				&& gioHienTaiDate.isBefore(gioChamCongRaChieuFormatted);
 
+		//
+
+		int chenhLechPhutVaoChieu = (int) gioHienTaiDate.until(gioVaoChieu, ChronoUnit.MINUTES);
+		System.out.println("chenhLechPhutVaoChieu ------)))))))))))))) " + chenhLechPhutVaoChieu);
+		
+		
+		
+		int chenhLechPhutRaSang = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaSang);
+		System.out.println("chenhLechPhutRaSang ------+++++ " + chenhLechPhutRaSang);
+		
+		
+		
+		
+
 		try {
 			GioLam userGioLam = GioLamLocalServiceUtil.getGioLamByUserId(userId, dateNgayHienTai);
 			System.out.println("userGioLam render-- " + userGioLam);
@@ -727,31 +756,35 @@ public class GioLamPortlet extends MVCPortlet {
 				}
 			} else {
 				if (GioHienTaiTrongBuoiSang == true) {
-					renderRequest.setAttribute("Chamcongsang", GioHienTaiTrongBuoiSang);
 					String checkinSang = userGioLam.getCheck_in_sang();
-					if (checkinSang.equals("")) {
-						System.out.println("da cham cong nhung la quen cham cong sang");
-						renderRequest.setAttribute("Chamcongchieu", GioHienTaiTrongBuoiChieu);
-					} else {
-						System.out.println("da cham cong vao sang nhung chua cham cong ra ra");
-						Boolean Chamcongrasang = true;
-						renderRequest.setAttribute("Chamcongrasang", Chamcongrasang);
+					String checkoutSang = userGioLam.getCheck_out_sang();
+					if (checkinSang.equals("") == false && checkoutSang.equals("") == false) {
+						renderRequest.setAttribute("khongchamcong", true);
+					} else if (checkinSang.equals("") == false) {
+						System.out.println("da cham cong vao sang nhung chua cham cong ra ra --------------------- ");
+						renderRequest.setAttribute("Chamcongrasang", true);
+					} else if (checkoutSang.equals("") == false) {
+						renderRequest.setAttribute("khongchamcong", true);
 					}
 
 				} else if (GioHienTaiTrongBuoiChieu == true) {
 					String checkinchieu = userGioLam.getCheck_in_chieu();
 					String checkinSang = userGioLam.getCheck_in_sang();
-                    String checkoutchieu = userGioLam.getCheck_out_chieu();
-					if (!checkinSang.equals("")) {
+					String checkoutSang = userGioLam.getCheck_out_sang();
+					String checkoutchieu = userGioLam.getCheck_out_chieu();
+					if (!checkoutchieu.equals("")) {
+						renderRequest.setAttribute("khongchamcong", true);
+					} else if (checkinSang.equals("") == false && checkoutSang.equals("") == false
+							&& checkinchieu.equals("") == false) {
+						System.out.println("da cham cong sang nhưng chưa cham cong chieu");
+						renderRequest.setAttribute("Chamcongrachieu", true);
+					} else if (checkinSang.equals("") == false && checkoutSang.equals("") == false) {
+						System.out.println("da cham cong sang nhưng chưa cham cong chieu");
+						renderRequest.setAttribute("Chamcongchieu", GioHienTaiTrongBuoiChieu);
+					} else if (checkinSang.equals("") == false) {
 						// trường hợp chấm công nhiều thường xuyên
 						Boolean Chamcongrachieu = true;
 						renderRequest.setAttribute("Chamcongrachieu", Chamcongrachieu);
-					} else if (checkinchieu.equals("")) {
-						System.out.println("da cham cong sang nhưng chưa cham cong chieu");
-						renderRequest.setAttribute("Chamcongchieu", GioHienTaiTrongBuoiChieu);
-					}else if (!checkoutchieu.equals("")) {
-						System.out.println("da cham cong sang nhưng chưa cham cong chieu");
-						renderRequest.setAttribute("khongchamcong", true);
 					} else {
 						System.out.println("da cham cong chieu nhung chua cham cong ra chieu");
 						Boolean Chamcongrachieu = true;

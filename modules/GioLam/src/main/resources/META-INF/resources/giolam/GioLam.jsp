@@ -96,20 +96,20 @@ label.col-form-label.mxn {
 							vào buổi sáng
 						</button>
 					</c:when>
-					<c:when test="${Chamcongchieu == true}">
-						<button type="button" class="btn btn-success custom-modal"
-							onclick="guimazalochamcong(${userId})" data-toggle="modal"
-							data-target="#exampleModal" data-whatever="@mdo">
-							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công
-							vào buổi chiều
-						</button>
-					</c:when>
 					<c:when test="${Chamcongrasang == true}">
 						<button type="button" class="btn btn-danger custom-modal"
 							onclick="guimazalochamcong(${userId})" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">
 							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công
 							ra buổi sáng
+						</button>
+					</c:when>
+					<c:when test="${Chamcongchieu == true}">
+						<button type="button" class="btn btn-success custom-modal"
+							onclick="guimazalochamcong(${userId})" data-toggle="modal"
+							data-target="#exampleModal" data-whatever="@mdo">
+							<i class="fa fa-check-square" aria-hidden="true"></i> Chấm công
+							vào buổi chiều
 						</button>
 					</c:when>
 					<c:when test="${Chamcongrachieu == true}">
