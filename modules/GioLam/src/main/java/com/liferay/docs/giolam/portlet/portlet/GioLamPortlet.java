@@ -681,6 +681,32 @@ public class GioLamPortlet extends MVCPortlet {
 
 		System.out.println("userId****** " + userId);
 		Users user = UsersLocalServiceUtil.getUserbyUserId(userId);
+		System.out.println("user ------ "+ user);
+		
+		//check quyền user
+		
+		long quyenquanlygiolam = 0;
+		
+		long chucvu_id = user.getChucvu_id();
+		long phongban_id= user.getPhongban_id();
+		long phu_trach_phong = user.getPhu_trach_phong();
+		System.out.println(" chucvu_id "+ chucvu_id);
+		System.out.println(" phongban_id "+ phongban_id);
+		System.out.println(" phu_trach_phong "+ phu_trach_phong);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		// System.out.println("user****** " + user);
 		// XỬ LÝ NÚT CHẤM CÔNG ///
 		// Lấy ca làm việc lưu trong db
@@ -718,7 +744,7 @@ public class GioLamPortlet extends MVCPortlet {
 		LocalDate ngayHienTai = LocalDate.now();
 		DateTimeFormatter ngayHienTaiformatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String ngayHienTaiDinhDang = ngayHienTai.format(ngayHienTaiformatter);
-		System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
+		//System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
 
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		LocalTime currentTime = LocalTime.now(zoneId);
@@ -800,9 +826,9 @@ public class GioLamPortlet extends MVCPortlet {
 
 		year = renderRequest.getParameter("year");
 		month = renderRequest.getParameter("thang");
-		System.out.println("Lay dc year la  --------------------++++++ "+ year);
-		System.out.println("Lay dc month la  -------------------++++++ "+ month);
-
+//		System.out.println("Lay dc year la  --------------------++++++ "+ year);
+//		System.out.println("Lay dc month la  -------------------++++++ "+ month);
+		
 		if (year == null) {
 			LocalDate ngayHienTai22 = LocalDate.now();
 			int namHienTai = ngayHienTai22.getYear();
@@ -820,12 +846,12 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 		String keyyear = year;
 		String keymonth = month;
-		System.out.println("keyyear ------2024-- "+ keyyear);
-		System.out.println("keymonth ------20224--  "+ keymonth);
+		renderRequest.setAttribute("monthhienthi", month);
+		renderRequest.setAttribute("yearhienthi", year);
 		List<GioLam> GioLamByUserIdYearAndMonthList = GioLamLocalServiceUtil.getGioLamByYearAndMonth( keymonth,keyyear,
 				userId);
  
-		System.out.println("GioLamByUserIdYearAndMonthList ************************** "+ GioLamByUserIdYearAndMonthList);
+	//	System.out.println("GioLamByUserIdYearAndMonthList ************************** "+ GioLamByUserIdYearAndMonthList);
 		
 		
 		int mothInt = Integer.parseInt(month);
@@ -835,7 +861,7 @@ public class GioLamPortlet extends MVCPortlet {
 		//LocalDate ngayDauTienCuaThang = ngayHienTai.withDayOfMonth(1);
 		LocalDate ngayDauTienCuaThang = LocalDate.of(yearInt, mothInt, 1);
 		DayOfWeek thuMay = ngayDauTienCuaThang.getDayOfWeek();
-        System.out.println("thuMay --+++---++++ "+ thuMay);
+       // System.out.println("thuMay --+++---++++ "+ thuMay);
 		List<GioLam> monthList = new ArrayList<>(daysInMonth);
 		for (int i = 1; i <= daysInMonth; i++) {
 			int ngay = 0;
@@ -865,7 +891,7 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		System.out.println("monthList " + monthList);
+		//System.out.println("monthList " + monthList);
 
 		List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 		for (GioLam x : monthList) {
@@ -937,18 +963,18 @@ public class GioLamPortlet extends MVCPortlet {
 		} else if (thuMay == DayOfWeek.SUNDAY) {
 			ngaydautien = 8;
 		}
-        System.out.println("ngaydautien ----------------- "+ ngaydautien);
+      //  System.out.println("ngaydautien ----------------- "+ ngaydautien);
 		int soLuongNull = ngaydautien - 2;
 
 		List<Map<String, Object>> danhSachNgayTrongThangMoi = new ArrayList<>();
 		for (int i = 0; i < soLuongNull; i++) {
 			danhSachNgayTrongThangMoi.add(null);
-			System.out.println("da vao dc day ------ ");
+			//System.out.println("da vao dc day ------ ");
 		}
 		danhSachNgayTrongThangMoi.addAll(newgioLamMapListNhanVien);
 
 		renderRequest.setAttribute("danhSachNgayTrongThang", danhSachNgayTrongThangMoi);
-		System.out.println("danhSachNgayTrongThang ---- " + danhSachNgayTrongThangMoi);
+		//System.out.println("danhSachNgayTrongThang ---- " + danhSachNgayTrongThangMoi);
 		super.render(renderRequest, renderResponse);
 	}
 

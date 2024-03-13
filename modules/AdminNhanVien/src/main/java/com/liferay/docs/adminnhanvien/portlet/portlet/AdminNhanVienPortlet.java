@@ -153,28 +153,38 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 
 	}
 
-	public class UserNew {
-		private String name;
-
-		// Các getter và setter cho trường name
-
-		public UserNew(String name) {
-			this.name = name;
-		}
-	}
+//	public class UserNew {
+//		private String name;
+//
+//		// Các getter và setter cho trường name
+//
+//		public UserNew(String name) {
+//			this.name = name;
+//		}
+//	}
 
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		try {
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-
 			List<Phongban> entitiesPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
 			renderRequest.setAttribute("selectPhongBan", entitiesPhongBan);
 			List<Chucvu> entitiesChucvus = ChucvuLocalServiceUtil.getChucvus(-1, -1);
 			renderRequest.setAttribute("selectChucVu", entitiesChucvus);
 			List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
 			httpServletRequest.setAttribute("usersList", usersList);
+			int id = ParamUtil.getInteger(renderRequest, "id");
+			if (id > 0) {
+				try {
+					Users useredit = UsersLocalServiceUtil.getUsers(id);
+					httpServletRequest.setAttribute("useredit", useredit);
+				} catch (Exception e) {
+					System.out.println("chạy vào đây******");
+					e.printStackTrace();
+				}
+			} 
+
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}

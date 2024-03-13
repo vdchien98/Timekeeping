@@ -23,9 +23,11 @@
 span.text-info.mr-3.chucvu {
 	margin-left: 10px;
 }
+
 .dt-length label {
-    display: none;
+	display: none;
 }
+
 .iconnhanvien {
 	font-size: initial;
 }
@@ -120,9 +122,25 @@ i.fa.fa-user-circle-o {
 														</c:forEach>
 													</div>
 													<div class="row">
-														<span class="mr-3">Tên đăng nhập: </span>${user.email} <span
-															class="ml-5 text-info">Có làm ca tối</span> <span
-															class="ml-5 text-primary"></span>
+														<c:set var="lamcatoi" value="${user.ca_lam_toi}" />
+														<c:set var="chamcongngoai" value="${user.cham_cong_ngoai}" />
+														<span class="mr-3">Tên đăng nhập: </span>${user.email}
+														<c:choose>
+															<c:when test="${lamcatoi == 1}">
+																<span class="ml-5 text-info">Có làm ca tối </span>
+															</c:when>
+															<c:when test="${lamcatoi == 0}">
+																<span class="ml-5 text-info"></span>
+															</c:when>
+														</c:choose>
+														<c:choose>
+															<c:when test="${chamcongngoai == 1}">
+																<span class="ml-5 text-info">Có chấm công ngoài </span>
+															</c:when>
+															<c:when test="${chamcongngoai == 0}">
+																<span class="ml-5 text-info"></span>
+															</c:when>
+														</c:choose>
 													</div>
 													<div class="row">
 														<span class="mr-3">Số ngày nghỉ phép trong năm: </span><span
@@ -130,8 +148,20 @@ i.fa.fa-user-circle-o {
 													</div>
 
 												</th>
-												<th><span class="btn btn-success btn-sm">Hoạt
-														động</span></th>
+												<th><c:set var="trangthai" value="${user.trangthai}" />
+													<c:choose>
+
+														<c:when test="${trangthai == 1}">
+															<span class="btn btn-success btn-sm">Hoạt động</span></th>
+												</c:when>
+												<c:when test="${trangthai == 0}">
+													<span class="btn btn-light btn-sm">Không Hoạt động</span>
+													</th>
+												</c:when>
+
+												</c:choose>
+
+
 												<th><a class="btn btn-success btn-circle mr-1 btn-sm"
 													href="${editURL }"> <i
 														class="fa fa-pencil-square-o iconnhanvien"
@@ -156,7 +186,7 @@ i.fa.fa-user-circle-o {
 								</table>
 							</div>
 						</div>
-				
+
 					</div>
 				</div>
 			</div>
@@ -193,7 +223,7 @@ i.fa.fa-user-circle-o {
 <script
 	src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap4.js"></script>
 <script>
-new DataTable('#example');
+	new DataTable('#example');
 </script>
 
 

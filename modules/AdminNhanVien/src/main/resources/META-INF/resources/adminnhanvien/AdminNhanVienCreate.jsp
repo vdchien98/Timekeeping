@@ -24,11 +24,10 @@
 					<div class="form-group row mt-4">
 						<label for="hovaten" class="col-form-label text-md-left col-md-2">Họ
 							và tên <span class="text-danger">(*)</span>
-						</label> 
-						<input id="idUserEdit" type="hidden" class="form-control"
-									name="<portlet:namespace />idUserEdit" required autofocus
-									placeholder="ID" value="${useredit.id}"> 
-						<input id="hovaten" type="text" class="form-control col-md-9"
+						</label> <input id="idUserEdit" type="hidden" class="form-control"
+							name="<portlet:namespace />idUserEdit" required autofocus
+							placeholder="ID" value="${useredit.id}"> <input
+							id="hovaten" type="text" class="form-control col-md-9"
 							name="<portlet:namespace />hovaten" required="" autofocus=""
 							placeholder="Nhập họ và tên" value="${useredit.hovaten} ">
 					</div>
@@ -86,29 +85,44 @@
 							class="col-form-label text-md-left col-md-2">Số ngày nghỉ
 							phép trong năm <span class="text-danger">(*)</span>
 						</label> <input id="so_ngay_nghi_phep" type="number"
-							class="form-control col-md-2" name="<portlet:namespace />so_ngay_nghi_phep"
-							placeholder="Nhập số ngày nghỉ phép trong năm" value="">
+							class="form-control col-md-2"
+							name="<portlet:namespace />so_ngay_nghi_phep"
+							placeholder="Nhập số ngày nghỉ phép trong năm"
+							value="${useredit.so_ngay_nghi_phep}">
 					</div>
 					<div class="form-group row mt-4 ml-5">
 						<div class="custom-control custom-checkbox">
-							<input type="checkbox" name="<portlet:namespace />trangthai" value="1"
-								class="custom-control-input" id="trangthai"> <label
+							<input type="checkbox" name="<portlet:namespace />trangthai"
+								value="${useredit.trangthai}"
+								${useredit.trangthai == 1 ? 'checked' : ''}
+								class="custom-control-input" id="trangthai"
+								onclick="updateValuehoatdong()"> <label
 								class="custom-control-label" for="trangthai">Hoạt động</label>
 						</div>
+
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="<portlet:namespace />ca_lam_toi" value="1"
-								class="custom-control-input" id="ca_lam_toi"> <label
+							<input type="checkbox" name="<portlet:namespace />ca_lam_toi"
+								value="${useredit.ca_lam_toi}"
+								${useredit.ca_lam_toi == 1 ? 'checked' : ''}
+								class="custom-control-input" id="ca_lam_toi"
+								onclick="updateValuecalamtoi()"> <label
 								class="custom-control-label" for="ca_lam_toi">Làm ca tối</label>
 						</div>
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="<portlet:namespace />cham_cong_ngoai" value="1"
-								class="custom-control-input" id="cham_cong_ngoai"> <label
+							<input type="checkbox"
+								name="<portlet:namespace />cham_cong_ngoai"
+								value="${useredit.cham_cong_ngoai}"
+								${useredit.cham_cong_ngoai == 1 ? 'checked' : ''}
+								class="custom-control-input" id="cham_cong_ngoai" onclick="updateValuechamcongngoai()"> <label
 								class="custom-control-label" for="cham_cong_ngoai">Chấm
 								công ngoài</label>
 						</div>
 						<div class="custom-control custom-checkbox ml-5">
-							<input type="checkbox" name="<portlet:namespace />phu_trach_phong" value="1"
-								class="custom-control-input" id="phu_trach_phong"> <label
+							<input type="checkbox"
+								name="<portlet:namespace />phu_trach_phong"
+								value="${useredit.phu_trach_phong}"
+								${useredit.phu_trach_phong == 1 ? 'checked' : ''}
+								class="custom-control-input" id="phu_trach_phong" onclick="updateValuephutrachphong()"> <label
 								class="custom-control-label" for="phu_trach_phong">Phụ
 								trách phòng</label>
 						</div>
@@ -126,3 +140,53 @@
 		</div>
 	</div>
 </div>
+<script>
+	function updateValuehoatdong() {
+		var checkbox = document.getElementById("trangthai");
+		var valueInput = document
+				.getElementsByName("<portlet:namespace />trangthai")[0];
+
+		if (checkbox.checked) {
+			valueInput.value = 1; // Giá trị mới khi checkbox được chọn
+		} else {
+			valueInput.value = 0; // Giá trị mới khi checkbox không được chọn
+		}
+	}
+	function updateValuecalamtoi() {
+		var checkbox = document.getElementById("ca_lam_toi");
+		var valueInput = document
+				.getElementsByName("<portlet:namespace />ca_lam_toi")[0];
+
+		if (checkbox.checked) {
+			valueInput.value = 1; // Giá trị mới khi checkbox được chọn
+		} else {
+			valueInput.value = 0; // Giá trị mới khi checkbox không được chọn
+		}
+	}
+	function updateValuechamcongngoai() {
+		var checkbox = document.getElementById("cham_cong_ngoai");
+		var valueInput = document
+				.getElementsByName("<portlet:namespace />cham_cong_ngoai")[0];
+
+		if (checkbox.checked) {
+			valueInput.value = 1; // Giá trị mới khi checkbox được chọn
+		} else {
+			valueInput.value = 0; // Giá trị mới khi checkbox không được chọn
+		}
+	}
+	function updateValuephutrachphong() {
+		var checkbox = document.getElementById("phu_trach_phong");
+		var valueInput = document
+				.getElementsByName("<portlet:namespace />phu_trach_phong")[0];
+
+		if (checkbox.checked) {
+			valueInput.value = 1; // Giá trị mới khi checkbox được chọn
+		} else {
+			valueInput.value = 0; // Giá trị mới khi checkbox không được chọn
+		}
+	}
+	
+</script>
+
+
+

@@ -148,6 +148,15 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 			long so_ngay_nghi_phep, int phu_trach_phong, ServiceContext serviceContext)
 			throws PortalException, SystemException {
 		Date now = new Date();
+		System.out.println("hovaten ----1 " + hovaten);
+		System.out.println("emai -----1 " + email);
+		System.out.println("chucvu_id ----1 " + chucvu_id);
+		System.out.println("trangthai ----1 " + trangthai);
+		System.out.println("phongban_id ---- 1 " + phongban_id);
+		System.out.println("so_ngay_nghi_phep ----1 " + so_ngay_nghi_phep);
+		System.out.println("phu_trach_phong ----1 " + phu_trach_phong);
+		System.out.println("ca_lam_toi ----1 " + ca_lam_toi);
+		
 		long groupId = serviceContext.getScopeGroupId();
 		Users user = getUsers(id);
 		user.setHovaten(hovaten);

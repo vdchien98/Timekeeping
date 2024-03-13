@@ -70,6 +70,26 @@ p.box3 {
 label.col-form-label.mxn {
 	font-size: 20px;
 }
+
+.input-group.mb-3.row.justify-content-center.thangnam {
+    /* display: contents; */
+    display: flex;
+    /* justify-content: space-between; */
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    }
+    form#search-year {
+    margin-left: -75px;
+    padding: 0;
+}
+
+
+
+
+
+
+
 </style>
 
 
@@ -229,8 +249,10 @@ label.col-form-label.mxn {
 
 			<%-- Xem gio làm của nhân viên theo tháng và năm  --%>
 
-			<div class="input-group mb-3 row justify-content-center">
-				<form class="pl-5" id="search-year" method="get">
+			<div class="input-group mb-3 row justify-content-center thangnam">
+				<label class="col-form-label font-weight-bold text-info">Tháng
+					: ${monthhienthi} Năm : ${yearhienthi}</label>
+				<form class="pl-5 formxemgio" id="search-year" method="get">
 					<input type="hidden" name="p_p_id"
 						value="<%=themeDisplay.getPortletDisplay().getId()%>" /> <input
 						type="hidden" name="p_p_auth"
@@ -245,15 +267,7 @@ label.col-form-label.mxn {
 						</div>
 					</div>
 				</form>
-
 			</div>
-
-
-
-
-
-
-
 			<div class="row mb-3 ">
 				<span class="btn btn-success">Đúng giờ</span> <span
 					class="btn btn-warning">Đi muộn/Về sớm</span> <span
