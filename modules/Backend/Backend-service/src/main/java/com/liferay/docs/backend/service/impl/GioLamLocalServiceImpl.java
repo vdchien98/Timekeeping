@@ -16,6 +16,7 @@ package com.liferay.docs.backend.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.GioLam;
+import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.GioLamLocalServiceUtil;
 import com.liferay.docs.backend.service.base.GioLamLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -143,7 +144,13 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		
 	}
 	
-	
+	public List<GioLam> getGioLamByYearAndMonth(String Month,String Year, long userId) {
+	     System.out.println("Year ---- "+ Year);
+	     System.out.println("Month ---- "+ Month);
+	     System.out.println("userId ---- "+ userId);
+		return gioLamFinder.getGioLamByYearAndMonth(Month,Year, userId);
+		
+	}
 	
 	
 	
@@ -157,7 +164,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 				.filter(n -> n.getNgay_lam().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().equals(localDate)
 						&& n.getUser_id() == userId)
 				.findFirst();
-		System.out.println("employeeGioLam: " + employeeGioLam);
+		//System.out.println("employeeGioLam: " + employeeGioLam);
 		GioLam gioLam = null; // Khởi tạo giá trị mặc định là null
 		if (employeeGioLam.isPresent()) {
 			gioLam = employeeGioLam.get();
@@ -166,5 +173,7 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		return gioLam;
 
 	}
+	
+
 	
 }

@@ -1,12 +1,23 @@
+<%@page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil"%>
 <%@ include file="../init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <portlet:defineObjects />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<%-- nhúng đoạn này vào để thêm giây trong popup --%>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+<%-- nhúng đoạn này vào để thêm giây trong popup
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
@@ -18,6 +29,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
+ --%>
+
+
 
 <style>
 /* đây là css Popup mở ra  */
@@ -130,7 +144,6 @@ label.col-form-label.mxn {
 				</c:choose>
 
 				<%-- Thực Hiện chức năng gửi Zalo về máy  --%>
-
 				<portlet:actionURL var="sendMaZaloURL" name="sendMaZalo" />
 				<form id="check-in" class="float-right" action="<%=sendMaZaloURL%>"
 					method="POST"></form>
@@ -139,7 +152,7 @@ label.col-form-label.mxn {
 
 
 
-
+				<%-- Xác thực về mã zalo về máy --%>
 
 				<portlet:actionURL name="ActionChamCong" var="ActionChamCong" />
 				<form id="form" method="POST"
@@ -185,35 +198,15 @@ label.col-form-label.mxn {
 
 				</form>
 
-
-				<%-- kết thúc chức năng chấm công  --%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				<form id="check-out" class="float-right" action="" method="POST">
 					<input type="hidden" name="_token" value=""> <input
 						type="hidden" name="ca_lam" value="sang"> <input
 						type="hidden" name="capcha" id="capcha">
 				</form>
 
+				<%-- kết thúc chức năng chấm công  --%>
 
-
-
+				<%-- báo cáo tháng chưa xử lý --%>
 				<form id="export-excel" class="float-right"
 					action="https://chamcong.bacninh.gov.vn/export-xep-loai"
 					method="GET">
@@ -226,22 +219,41 @@ label.col-form-label.mxn {
 					</button>
 				</form>
 			</div>
+
+
+
+			<%-- thực hiện hiển thị giờ làm của user  --%>
+
+
+
+
+			<%-- Xem gio làm của nhân viên theo tháng và năm  --%>
+
 			<div class="input-group mb-3 row justify-content-center">
-				<form class="form-inline"
-					action="https://chamcong.bacninh.gov.vn/gio-lam" id="searchMonth">
-					<input type="hidden" name="_token"
-						value="Mf1O36nHU1Oett1jj1R0MIW0oCelkz9kI3zPSPGF">
-					<div class="input-group">
-						<input type="text" class="form-control datepicker"
-							name="searchDate" id="searchDate" placeholder="yyyy-mm"
-							value="2024-03">
-						<div class="input-group-append">
-							<span class="input-group-text" id="basic-addon2"><i
-								class="fas fa-calendar-alt"></i></span>
+				<form class="pl-5" id="search-year" method="get">
+					<input type="hidden" name="p_p_id"
+						value="<%=themeDisplay.getPortletDisplay().getId()%>" /> <input
+						type="hidden" name="p_p_auth"
+						value="<%=AuthTokenUtil.getToken(request, themeDisplay.getPlid(), themeDisplay.getPpid())%>" />
+					<div class="form-group row">
+						<div class="form-group row">
+							<input type="hidden" class="" name="<portlet:namespace />thang"
+								id="thang" value=""> <input type="text"
+								class="form-control datepicker col-md-6 ml-6"
+								name="<portlet:namespace />year" id="year" placeholder="Năm"
+								value="">
 						</div>
 					</div>
 				</form>
+
 			</div>
+
+
+
+
+
+
+
 			<div class="row mb-3 ">
 				<span class="btn btn-success">Đúng giờ</span> <span
 					class="btn btn-warning">Đi muộn/Về sớm</span> <span
@@ -261,8 +273,153 @@ label.col-form-label.mxn {
 						phòng/đơn vị</a></li>
 			</ul>
 
+			<%--  --%>
 
-			<div class="tab-content" id="myTabContent"></div>
+			<div class="tab-content" id="myTabContent">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="text-center text-white">
+							<th style="padding: 0;" class="bg-info">T2</th>
+							<th style="padding: 0;" class="bg-info">T3</th>
+							<th style="padding: 0;" class="bg-info">T4</th>
+							<th style="padding: 0;" class="bg-info">T5</th>
+							<th style="padding: 0;" class="bg-info">T6</th>
+							<th style="padding: 0;" class="bg-warning">T7</th>
+							<th style="padding: 0;" class="bg-warning">CN</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="NgayTrongThang" items="${danhSachNgayTrongThang}"
+							varStatus="loop">
+							<c:if test="${loop.index % 7 == 0}">
+								<tr>
+							</c:if>
+							<c:choose>
+								<c:when test="${NgayTrongThang == null}">
+									<td class="text-center" style="padding: 0;"></td>
+								</c:when>
+								<c:when test="${NgayTrongThang != null}">
+									<c:set var="cophaingayNghi"
+										value="${NgayTrongThang.get('cophaingayNghi')}" />
+									<c:set var="calamsang"
+										value="${NgayTrongThang.get('calamsang')}" />
+									<c:set var="calamchieu"
+										value="${NgayTrongThang.get('calamchieu')}" />
+									<c:set var="CoPhaiThu7orChuNhat"
+										value="${NgayTrongThang.get('CoPhaiThu7orChuNhat')}" />
+									<td class="text-center"
+										style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+										${NgayTrongThang.get("ngay_lam_trongthang")} <br> <c:choose>
+											<c:when test="${cophaingayNghi == true}">
+												<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+												<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+											</c:when>
+											<c:when test="${CoPhaiThu7orChuNhat == true}">
+												<div class="text-center" style="padding: 0;"></div>
+												<div class="text-center" style="padding: 0;"></div>
+											</c:when>
+											<c:otherwise>
+												<c:choose>
+													<c:when test="${calamsang == 1}">
+														<div class="bg-success border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamsang == 2}">
+														<div class="bg-secondary border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamsang == 3}">
+														<div class="bg-warning border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamsang == 4}">
+														<div class="bg-danger border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Nghỉ không phép">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamsang == 0}">
+														<div class="text-center" style="padding: 0;"></div>
+													</c:when>
+													<c:otherwise>
+														<div class="text-center" style="padding: 0;"></div>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${calamchieu == 1}">
+
+														<div class="bg-success border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamchieu == 2}">
+														<div class="bg-secondary border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamchieu == 3}">
+														<div class="bg-warning border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamchieu == 4}">
+														<div class="bg-danger border" style="height: 10px"
+															data-toggle="tooltip" data-html="true" title=""
+															data-original-title="Nghỉ không phép">&nbsp;</div>
+													</c:when>
+													<c:when test="${calamchieu == 0}">
+														<div class="text-center" style="padding: 0;"></div>
+													</c:when>
+													<c:otherwise>
+														<div class="text-center" style="padding: 0;"></div>
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td style="padding: 0;">${NgayTrongThang}</td>
+								</c:otherwise>
+							</c:choose>
+							<c:if test="${loop.index % 7 == 6}">
+								</tr>
+							</c:if>
+						</c:forEach>
+
+					</tbody>
+				</table>
+
+
+
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -315,6 +472,36 @@ label.col-form-label.mxn {
 		</div>
 	</div>
 </div>
+<script>
+!(function($){
+	$.fn.datepicker.dates['vi'] = {
+		days: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
+		daysShort: ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "CN"],
+		daysMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7", "CN"],
+		months: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+		monthsShort: ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"],
+		today: "Hôm nay",
+		clear: "Xóa",
+		format: "dd/mm/yyyy"
+	};
+}(jQuery));
+$(document).ready(function() {
+	  $('.datepicker').datepicker({
+	    language: 'vi',
+	    format: "mm/yyyy",
+		startView : "months",
+		minViewMode : "months"
+	  }).on('changeDate', function(e) {
+		  var selectedMonth = e.date.getMonth()+1; // Tháng được chọn (0-11)
+		    var selectedYear = e.date.getFullYear(); // Năm được chọn
+		    console.log("selectedYear "+selectedYear)
+		    $('#year').val(selectedYear);
+		    $('#thang').val(selectedMonth);
+		    $('#search-year').submit();
+	  });
+	});
+</script>
+
 
 
 <script>

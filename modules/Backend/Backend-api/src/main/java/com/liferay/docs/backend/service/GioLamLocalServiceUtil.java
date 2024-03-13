@@ -253,6 +253,12 @@ public class GioLamLocalServiceUtil {
 		return getService().getGioLamByUserId(userId, NgayLam);
 	}
 
+	public static List<GioLam> getGioLamByYearAndMonth(
+		String Month, String Year, long userId) {
+
+		return getService().getGioLamByYearAndMonth(Month, Year, userId);
+	}
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -314,6 +320,17 @@ public class GioLamLocalServiceUtil {
 	 */
 	public static GioLam updateGioLam(GioLam gioLam) {
 		return getService().updateGioLam(gioLam);
+	}
+
+	public static void updateGioLamCaNgay(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamCaNgay(
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			serviceContext);
 	}
 
 	public static void updateGioLamRaChieu(

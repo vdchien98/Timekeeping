@@ -280,6 +280,13 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.getGioLamByUserId(userId, NgayLam);
 	}
 
+	@Override
+	public java.util.List<com.liferay.docs.backend.model.GioLam>
+		getGioLamByYearAndMonth(String Month, String Year, long userId) {
+
+		return _gioLamLocalService.getGioLamByYearAndMonth(Month, Year, userId);
+	}
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -351,6 +358,19 @@ public class GioLamLocalServiceWrapper
 		com.liferay.docs.backend.model.GioLam gioLam) {
 
 		return _gioLamLocalService.updateGioLam(gioLam);
+	}
+
+	@Override
+	public void updateGioLamCaNgay(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamCaNgay(
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			serviceContext);
 	}
 
 	@Override

@@ -229,6 +229,10 @@ public interface GioLamLocalService
 	public GioLam getGioLamByUserId(long userId, Date NgayLam)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<GioLam> getGioLamByYearAndMonth(
+		String Month, String Year, long userId);
+
 	/**
 	 * Returns a range of all the gio lams.
 	 *
@@ -281,6 +285,12 @@ public interface GioLamLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public GioLam updateGioLam(GioLam gioLam);
+
+	public void updateGioLamCaNgay(
+			int idGioLam, long user_id, String check_out_chieu,
+			int ve_som_chieu, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	public void updateGioLamRaChieu(
 			int idGioLam, long user_id, String check_out_chieu,

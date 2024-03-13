@@ -19,6 +19,7 @@ import com.liferay.docs.backend.service.NgaylamviecService;
 import com.liferay.docs.backend.service.NgaylamviecServiceUtil;
 import com.liferay.docs.backend.service.persistence.CalamviecPersistence;
 import com.liferay.docs.backend.service.persistence.ChucvuPersistence;
+import com.liferay.docs.backend.service.persistence.GioLamFinder;
 import com.liferay.docs.backend.service.persistence.GioLamPersistence;
 import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.backend.service.persistence.NgaynghilePersistence;
@@ -147,6 +148,9 @@ public abstract class NgaylamviecServiceBaseImpl
 
 	@Reference
 	protected GioLamPersistence gioLamPersistence;
+
+	@Reference
+	protected GioLamFinder gioLamFinder;
 
 	@Reference
 	protected com.liferay.docs.backend.service.NgaylamviecLocalService

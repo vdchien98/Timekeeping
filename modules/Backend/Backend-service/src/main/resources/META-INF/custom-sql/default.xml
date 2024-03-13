@@ -10,4 +10,13 @@
         ,timekeeping_phongban.`tenphong`) LIKE  ? ;
 ]]>
 	</sql>
+	
+	<sql id="com.liferay.docs.backend.service.persistence.GioLamFinder.getGioLamByYearAndMonth"> 
+      <![CDATA[ 
+        SELECT * FROM `timekeeping_giolam`
+        WHERE MONTH(ngay_lam) = ? AND YEAR(ngay_lam) = ? AND user_id = ?;
+]]>
+	</sql>
+	
+	
 </custom-sql>
