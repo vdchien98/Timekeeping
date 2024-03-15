@@ -4,12 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.Calamviec;
+import com.liferay.docs.backend.model.Chucvu;
 import com.liferay.docs.backend.model.GioLam;
 import com.liferay.docs.backend.model.Ngaynghile;
+import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.CalamviecLocalServiceUtil;
+import com.liferay.docs.backend.service.ChucvuLocalServiceUtil;
 import com.liferay.docs.backend.service.GioLamLocalServiceUtil;
 import com.liferay.docs.backend.service.NgaynghileLocalServiceUtil;
+import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.giolam.portlet.constants.GioLamPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -681,32 +685,13 @@ public class GioLamPortlet extends MVCPortlet {
 
 		System.out.println("userId****** " + userId);
 		Users user = UsersLocalServiceUtil.getUserbyUserId(userId);
-		System.out.println("user ------ "+ user);
-		
-		//check quyền user
-		
-		long quyenquanlygiolam = 0;
-		
-		long chucvu_id = user.getChucvu_id();
-		long phongban_id= user.getPhongban_id();
-		long phu_trach_phong = user.getPhu_trach_phong();
-		System.out.println(" chucvu_id "+ chucvu_id);
-		System.out.println(" phongban_id "+ phongban_id);
-		System.out.println(" phu_trach_phong "+ phu_trach_phong);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		System.out.println("user ------ " + user);
+
+		// check quyền user
+
+		// hàm check có phải trưởng phòng ko ???
+		int quyenxemgiolam = checkQuyenTruongPhong(user);
+		renderRequest.setAttribute("quyenxemgiolam", quyenxemgiolam);
 		// System.out.println("user****** " + user);
 		// XỬ LÝ NÚT CHẤM CÔNG ///
 		// Lấy ca làm việc lưu trong db
@@ -744,7 +729,7 @@ public class GioLamPortlet extends MVCPortlet {
 		LocalDate ngayHienTai = LocalDate.now();
 		DateTimeFormatter ngayHienTaiformatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String ngayHienTaiDinhDang = ngayHienTai.format(ngayHienTaiformatter);
-		//System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
+		// System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
 
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		LocalTime currentTime = LocalTime.now(zoneId);
@@ -828,7 +813,7 @@ public class GioLamPortlet extends MVCPortlet {
 		month = renderRequest.getParameter("thang");
 //		System.out.println("Lay dc year la  --------------------++++++ "+ year);
 //		System.out.println("Lay dc month la  -------------------++++++ "+ month);
-		
+
 		if (year == null) {
 			LocalDate ngayHienTai22 = LocalDate.now();
 			int namHienTai = ngayHienTai22.getYear();
@@ -848,20 +833,49 @@ public class GioLamPortlet extends MVCPortlet {
 		String keymonth = month;
 		renderRequest.setAttribute("monthhienthi", month);
 		renderRequest.setAttribute("yearhienthi", year);
-		List<GioLam> GioLamByUserIdYearAndMonthList = GioLamLocalServiceUtil.getGioLamByYearAndMonth( keymonth,keyyear,
+		List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear, userId);
+		renderRequest.setAttribute("danhSachNgayTrongThang", danhSachNgayTrongThangMoi);
+		List<List<Map<String, Object>>> danhSachNgayTrongThangcaPhong = new ArrayList<>();
+		if (quyenxemgiolam == 1) {
+			// Xử lý hiện thị cho trưởng phòng và phụ trách phòng và giám đốc
+			System.out.println("quyenTruongPhong  --- " + quyenxemgiolam);
+			List<Users> TatCaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
+			for (Users tungthanhvien : TatCaNhanVien) {
+				List<Map<String, Object>> danhSachNgayTrongThangTungThanvien = laydulieugiolamofmotnhanvien(keymonth,
+						keyyear, tungthanhvien.getUserId());
+				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
+
+			}
+
+		} else if (quyenxemgiolam == 2) {
+			// xử lý trưởng phòng
+			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(user.getPhongban_id());
+
+			for (Users tungthanhvien : ThanhvienPhong) {
+				List<Map<String, Object>> danhSachNgayTrongThangTungThanvien = laydulieugiolamofmotnhanvien(keymonth,
+						keyyear, tungthanhvien.getUserId());
+				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
+
+			}
+			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
+
+		}
+		super.render(renderRequest, renderResponse);
+	}
+
+	public List<Map<String, Object>> laydulieugiolamofmotnhanvien(String keyyear, String keymonth, long userId) {
+		// xử lý giờ làm của 1 người
+
+		List<GioLam> GioLamByUserIdYearAndMonthList = GioLamLocalServiceUtil.getGioLamByYearAndMonth(keymonth, keyyear,
 				userId);
- 
-	//	System.out.println("GioLamByUserIdYearAndMonthList ************************** "+ GioLamByUserIdYearAndMonthList);
-		
-		
 		int mothInt = Integer.parseInt(month);
 		int yearInt = Integer.parseInt(year);
 		int daysInMonth = getDaysInMonth(mothInt, yearInt);
 
-		//LocalDate ngayDauTienCuaThang = ngayHienTai.withDayOfMonth(1);
+		// LocalDate ngayDauTienCuaThang = ngayHienTai.withDayOfMonth(1);
 		LocalDate ngayDauTienCuaThang = LocalDate.of(yearInt, mothInt, 1);
 		DayOfWeek thuMay = ngayDauTienCuaThang.getDayOfWeek();
-       // System.out.println("thuMay --+++---++++ "+ thuMay);
+		// System.out.println("thuMay --+++---++++ "+ thuMay);
 		List<GioLam> monthList = new ArrayList<>(daysInMonth);
 		for (int i = 1; i <= daysInMonth; i++) {
 			int ngay = 0;
@@ -891,7 +905,7 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		//System.out.println("monthList " + monthList);
+		// System.out.println("monthList " + monthList);
 
 		List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 		for (GioLam x : monthList) {
@@ -914,18 +928,18 @@ public class GioLamPortlet extends MVCPortlet {
 					x.getVe_som_chieu(), DateTruocSauNgayHienTai);
 
 			if (x == null) {
-//				gioLamMap.put("ngay_lam", x.getNgay_lam());
-//				gioLamMap.put("ngay_lam_trongthang", dayOfMonth);
-//				gioLamMap.put("cophaingayNghi", CoPhaiNgayNghileKo);
-//				gioLamMap.put("CoPhaiThu7orChuNhat", CoPhaiThu7orChuNhatKo);
-//			    gioLamMap.put("ngaytrcNgayHienTaiKo", DateTruocSauNgayHienTai); // trường hợp để giới hạn những ngày
-//																				// ngày đã chấm công
-//				gioLamMap.put("calamsang", trangthaicasang);
-//				gioLamMap.put("calamchieu", trangthaicachieu);
-//				gioLamMap.put("checkinsang", x.getCheck_in_sang());
-//				gioLamMap.put("checkoutsang", x.getCheck_out_sang());
-//				gioLamMap.put("checkinchieu", x.getCheck_in_chieu());
-//				gioLamMap.put("checkoutchieu", x.getCheck_out_chieu());
+//							gioLamMap.put("ngay_lam", x.getNgay_lam());
+//							gioLamMap.put("ngay_lam_trongthang", dayOfMonth);
+//							gioLamMap.put("cophaingayNghi", CoPhaiNgayNghileKo);
+//							gioLamMap.put("CoPhaiThu7orChuNhat", CoPhaiThu7orChuNhatKo);
+//						    gioLamMap.put("ngaytrcNgayHienTaiKo", DateTruocSauNgayHienTai); // trường hợp để giới hạn những ngày
+//																							// ngày đã chấm công
+//							gioLamMap.put("calamsang", trangthaicasang);
+//							gioLamMap.put("calamchieu", trangthaicachieu);
+//							gioLamMap.put("checkinsang", x.getCheck_in_sang());
+//							gioLamMap.put("checkoutsang", x.getCheck_out_sang());
+//							gioLamMap.put("checkinchieu", x.getCheck_in_chieu());
+//							gioLamMap.put("checkoutchieu", x.getCheck_out_chieu());
 				newgioLamMapListNhanVien.add(null);
 			} else {
 				gioLamMap.put("user_id", x.getUser_id());
@@ -963,19 +977,19 @@ public class GioLamPortlet extends MVCPortlet {
 		} else if (thuMay == DayOfWeek.SUNDAY) {
 			ngaydautien = 8;
 		}
-      //  System.out.println("ngaydautien ----------------- "+ ngaydautien);
+		// System.out.println("ngaydautien ----------------- "+ ngaydautien);
 		int soLuongNull = ngaydautien - 2;
 
 		List<Map<String, Object>> danhSachNgayTrongThangMoi = new ArrayList<>();
 		for (int i = 0; i < soLuongNull; i++) {
 			danhSachNgayTrongThangMoi.add(null);
-			//System.out.println("da vao dc day ------ ");
+			// System.out.println("da vao dc day ------ ");
 		}
 		danhSachNgayTrongThangMoi.addAll(newgioLamMapListNhanVien);
 
-		renderRequest.setAttribute("danhSachNgayTrongThang", danhSachNgayTrongThangMoi);
-		//System.out.println("danhSachNgayTrongThang ---- " + danhSachNgayTrongThangMoi);
-		super.render(renderRequest, renderResponse);
+		return danhSachNgayTrongThangMoi;
+		// System.out.println("danhSachNgayTrongThang ---- " +
+		// danhSachNgayTrongThangMoi);
 	}
 
 	// Hàm lấy số ngày của 1 tháng
@@ -1016,19 +1030,19 @@ public class GioLamPortlet extends MVCPortlet {
 	// tại trả về 1 ; Sau ngày hiện tại trả về 2, ngay hien tại tra ve 3
 
 	public int DateTruocSau(Date ngay_lam) {
-	    int isDateTruocSau = 0;
+		int isDateTruocSau = 0;
 
-	    LocalDate localDatengay_lam = ngay_lam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate localDatengay_lam = ngay_lam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-	    if (localDatengay_lam.isBefore(currentDate)) {
-	        isDateTruocSau = 1;
-	    } else if (localDatengay_lam.isAfter(currentDate)) {
-	        isDateTruocSau = 2;
-	    } else {
-	        isDateTruocSau = 3;
-	    }
+		if (localDatengay_lam.isBefore(currentDate)) {
+			isDateTruocSau = 1;
+		} else if (localDatengay_lam.isAfter(currentDate)) {
+			isDateTruocSau = 2;
+		} else {
+			isDateTruocSau = 3;
+		}
 
-	    return isDateTruocSau;
+		return isDateTruocSau;
 	}
 
 	// Ham check ngày có phải ngày hiện đ
@@ -1107,10 +1121,10 @@ public class GioLamPortlet extends MVCPortlet {
 			} else if ((inChieu == false) && dimuonchieu <= 0 && (inSang == false || outSang == false)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
 				DataCaChieu = 2;
-			}else if ((inSang == true && outSang == true) && inChieu == true && outChieu == true) {
+			} else if ((inSang == true && outSang == true) && inChieu == true && outChieu == true) {
 				// trường hợp ca sáng nghỉ ko phép
 				DataCaChieu = 2;
-			}else if ((inSang == false) && dimuonsang <= 0 && (inChieu == true )) {
+			} else if ((inSang == false) && dimuonsang <= 0 && (inChieu == true)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
 				DataCaChieu = 2;
 			} else if (inChieu == false && outChieu == true) {
@@ -1148,6 +1162,32 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 
 		return DataCaChieu;
+	}
+
+	// Hàm check có phải trưởng phòng ko ???
+	// Hàm lấy số ngày của 1 tháng
+	public int checkQuyenTruongPhong(Users user) {
+		long chucvu_id = user.getChucvu_id();
+		long phongban_id = user.getPhongban_id();
+		long phu_trach_phong = user.getPhu_trach_phong();
+		System.out.println(" chucvu_id " + chucvu_id);
+		System.out.println(" phongban_id " + phongban_id);
+		System.out.println(" phu_trach_phong " + phu_trach_phong);
+		int checkQuyenTruongPhong = 0;
+		if ((chucvu_id == 42602 && phongban_id == 42527) || (phu_trach_phong == 1 && phongban_id == 42527)
+				|| (phongban_id == 42528)) {
+			// xem toàn bộ nhân viên
+			checkQuyenTruongPhong = 1;
+		} else if (chucvu_id == 42602 || phu_trach_phong == 1) {
+			// xem nhân viên trong phòng quản lý
+			checkQuyenTruongPhong = 2;
+		} else {
+			// nhân viên bình thường
+			checkQuyenTruongPhong = 3;
+
+		}
+
+		return checkQuyenTruongPhong;
 	}
 
 }

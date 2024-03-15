@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <custom-sql>
-	<sql id="com.liferay.docs.backend.service.persistence.UsersFinder.getDuLieuTimKiem"> 
+	<sql
+		id="com.liferay.docs.backend.service.persistence.UsersFinder.getDuLieuTimKiem"> 
       <![CDATA[ 
         SELECT * FROM `timekeeping_users`
         LEFT JOIN `timekeeping_chucvu` ON timekeeping_users.chucvu_id = timekeeping_chucvu.id_
@@ -10,13 +11,22 @@
         ,timekeeping_phongban.`tenphong`) LIKE  ? ;
 ]]>
 	</sql>
-	
-	<sql id="com.liferay.docs.backend.service.persistence.GioLamFinder.getGioLamByYearAndMonth"> 
+
+	<sql
+		id="com.liferay.docs.backend.service.persistence.UsersFinder.getNhanVienPhongBan"> 
+      <![CDATA[ 
+        SELECT * FROM `timekeeping_users` 
+        WHERE `phongban_id` = ?;
+]]>
+	</sql>
+
+	<sql
+		id="com.liferay.docs.backend.service.persistence.GioLamFinder.getGioLamByYearAndMonth"> 
       <![CDATA[ 
         SELECT * FROM `timekeeping_giolam`
         WHERE MONTH(ngay_lam) = ? AND YEAR(ngay_lam) = ? AND user_id = ?;
 ]]>
 	</sql>
-	
-	
+
+
 </custom-sql>

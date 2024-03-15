@@ -246,6 +246,10 @@ public class UsersLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<Users> getNhanVienPhongBan(long phongbanid) {
+		return getService().getNhanVienPhongBan(phongbanid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

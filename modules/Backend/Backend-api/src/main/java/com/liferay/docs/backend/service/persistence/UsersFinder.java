@@ -26,4 +26,7 @@ public interface UsersFinder {
 	public java.util.List<com.liferay.docs.backend.model.Users>
 		getDuLieuTimKiem(String keytimkiem);
 
+	public java.util.List<com.liferay.docs.backend.model.Users>
+		getNhanVienPhongBan(long phongbanid);
+
 }

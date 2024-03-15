@@ -320,11 +320,11 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		System.out.println("keytimkiem la ------- "+ keytimkiem);
 		return usersFinder.getDuLieuTimKiem(keytimkiem);
 	}
-	
-//	public Users getUserByUserId(long userId) {
-//		//System.out.println("keytimkiem la ------- "+ keytimkiem);
-//		return null ;
-//	}
+	public List<Users> getNhanVienPhongBan(long phongbanid) {
+		System.out.println("keytimkiem la ------- "+ phongbanid);
+		return usersFinder.getNhanVienPhongBan(phongbanid);
+	}
+
 	
 	public Users getUserbyUserId(long userId) {
 		List<Users> userList = usersPersistence.findByGetUserId(userId);

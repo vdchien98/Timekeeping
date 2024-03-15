@@ -72,24 +72,18 @@ label.col-form-label.mxn {
 }
 
 .input-group.mb-3.row.justify-content-center.thangnam {
-    /* display: contents; */
-    display: flex;
-    /* justify-content: space-between; */
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    }
-    form#search-year {
-    margin-left: -75px;
-    padding: 0;
+	/* display: contents; */
+	display: flex;
+	/* justify-content: space-between; */
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
 }
 
-
-
-
-
-
-
+form#search-year {
+	margin-left: -75px;
+	padding: 0;
+}
 </style>
 
 
@@ -278,215 +272,652 @@ label.col-form-label.mxn {
 					class="btn btn-light">M: số lần đi muộn, S: số lần về sớm</span>
 			</div>
 			<ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-				<li class="nav-item"><a class="nav-link text-dark active"
-					id="home-tab" data-toggle="tab" href="#home" role="tab"
-					aria-controls="home" aria-selected="true">Chấm công của tôi</a></li>
-				<li class="nav-item"><a class="nav-link text-dark"
-					id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-					aria-controls="profile" aria-selected="false">Chấm công của
-						phòng/đơn vị</a></li>
+				<c:choose>
+					<c:when test="${quyenxemgiolam == 1 }">
+						<li class="nav-item"><a class="nav-link text-dark active"
+							id="home-tab" data-toggle="tab" href="#home" role="tab"
+							aria-controls="home" aria-selected="true">Chấm công của tôi</a></li>
+						<li class="nav-item"><a class="nav-link text-dark"
+							id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+							aria-controls="profile" aria-selected="false">Chấm công của
+								phòng/đơn vị</a></li>
+					</c:when>
+					<c:when test="${quyenxemgiolam == 2 }">
+						<li class="btn btn-info nav-item "><a
+							class="nav-link text-dark active" id="home-tab" data-toggle="tab"
+							href="#home" role="tab" aria-controls="home" aria-selected="true">Chấm
+								công của tôi</a></li>
+						<li class="nav-item"><a class="nav-link text-dark"
+							id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+							aria-controls="profile" aria-selected="false">Chấm công của
+								phòng/đơn vị</a></li>
+					</c:when>
+					<c:when test="${quyenxemgiolam == 3 }">
+						<li class="nav-item"><a class="nav-link text-dark active"
+							id="home-tab" data-toggle="tab" href="#home" role="tab"
+							aria-controls="home" aria-selected="true">Chấm công của tôi</a></li>
+					</c:when>
+				</c:choose>
 			</ul>
-
-			<%--  --%>
-
 			<div class="tab-content" id="myTabContent">
-				<table class="table table-bordered">
-					<thead>
-						<tr class="text-center text-white">
-							<th style="padding: 0;" class="bg-info">T2</th>
-							<th style="padding: 0;" class="bg-info">T3</th>
-							<th style="padding: 0;" class="bg-info">T4</th>
-							<th style="padding: 0;" class="bg-info">T5</th>
-							<th style="padding: 0;" class="bg-info">T6</th>
-							<th style="padding: 0;" class="bg-warning">T7</th>
-							<th style="padding: 0;" class="bg-warning">CN</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="NgayTrongThang" items="${danhSachNgayTrongThang}"
-							varStatus="loop">
-							<c:if test="${loop.index % 7 == 0}">
-								<tr>
-							</c:if>
-							<c:choose>
-								<c:when test="${NgayTrongThang == null}">
-									<td class="text-center" style="padding: 0;"></td>
-								</c:when>
-								<c:when test="${NgayTrongThang != null}">
-									<c:set var="cophaingayNghi"
-										value="${NgayTrongThang.get('cophaingayNghi')}" />
-									<c:set var="calamsang"
-										value="${NgayTrongThang.get('calamsang')}" />
-									<c:set var="calamchieu"
-										value="${NgayTrongThang.get('calamchieu')}" />
-									<c:set var="CoPhaiThu7orChuNhat"
-										value="${NgayTrongThang.get('CoPhaiThu7orChuNhat')}" />
-									<td class="text-center"
-										style="margin: 1px; padding-left: 4px; padding-right: 4px;">
-										${NgayTrongThang.get("ngay_lam_trongthang")} <br> <c:choose>
-											<c:when test="${cophaingayNghi == true}">
-												<div class="bg-primary border" style="height: 10px">&nbsp;</div>
-												<div class="bg-primary border" style="height: 10px">&nbsp;</div>
-											</c:when>
-											<c:when test="${CoPhaiThu7orChuNhat == true}">
-												<div class="text-center" style="padding: 0;"></div>
-												<div class="text-center" style="padding: 0;"></div>
-											</c:when>
-											<c:otherwise>
-												<c:choose>
-													<c:when test="${calamsang == 1}">
-														<div class="bg-success border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamsang == 2}">
-														<div class="bg-secondary border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamsang == 3}">
-														<div class="bg-warning border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamsang == 4}">
-														<div class="bg-danger border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Nghỉ không phép">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamsang == 0}">
-														<div class="text-center" style="padding: 0;"></div>
-													</c:when>
-													<c:otherwise>
-														<div class="text-center" style="padding: 0;"></div>
-													</c:otherwise>
-												</c:choose>
-												<c:choose>
-													<c:when test="${calamchieu == 1}">
-
-														<div class="bg-success border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamchieu == 2}">
-														<div class="bg-secondary border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamchieu == 3}">
-														<div class="bg-warning border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamchieu == 4}">
-														<div class="bg-danger border" style="height: 10px"
-															data-toggle="tooltip" data-html="true" title=""
-															data-original-title="Nghỉ không phép">&nbsp;</div>
-													</c:when>
-													<c:when test="${calamchieu == 0}">
-														<div class="text-center" style="padding: 0;"></div>
-													</c:when>
-													<c:otherwise>
-														<div class="text-center" style="padding: 0;"></div>
-													</c:otherwise>
-												</c:choose>
-											</c:otherwise>
-										</c:choose>
-									</td>
-								</c:when>
-								<c:otherwise>
-									<td style="padding: 0;">${NgayTrongThang}</td>
-								</c:otherwise>
-							</c:choose>
-							<c:if test="${loop.index % 7 == 6}">
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade active show" id="home" role="tabpanel"
+						aria-labelledby="home-tab">
+						<table class="table table-bordered">
+							<thead>
+								<tr class="text-center text-white">
+									<th style="padding: 0;" class="bg-info">T2</th>
+									<th style="padding: 0;" class="bg-info">T3</th>
+									<th style="padding: 0;" class="bg-info">T4</th>
+									<th style="padding: 0;" class="bg-info">T5</th>
+									<th style="padding: 0;" class="bg-info">T6</th>
+									<th style="padding: 0;" class="bg-warning">T7</th>
+									<th style="padding: 0;" class="bg-warning">CN</th>
 								</tr>
-							</c:if>
-						</c:forEach>
+							</thead>
+							<tbody>
+								<c:forEach var="NgayTrongThang"
+									items="${danhSachNgayTrongThang}" varStatus="loop">
+									<c:if test="${loop.index % 7 == 0}">
+										<tr>
+									</c:if>
+									<c:choose>
+										<c:when test="${NgayTrongThang == null}">
+											<td class="text-center" style="padding: 0;"></td>
+										</c:when>
+										<c:when test="${NgayTrongThang != null}">
+											<c:set var="cophaingayNghi"
+												value="${NgayTrongThang.get('cophaingayNghi')}" />
+											<c:set var="calamsang"
+												value="${NgayTrongThang.get('calamsang')}" />
+											<c:set var="calamchieu"
+												value="${NgayTrongThang.get('calamchieu')}" />
+											<c:set var="CoPhaiThu7orChuNhat"
+												value="${NgayTrongThang.get('CoPhaiThu7orChuNhat')}" />
+											<td class="text-center"
+												style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+												${NgayTrongThang.get("ngay_lam_trongthang")} <br> <c:choose>
+													<c:when test="${cophaingayNghi == true}">
+														<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+														<div class="bg-primary border" style="height: 10px">&nbsp;</div>
+													</c:when>
+													<c:when test="${CoPhaiThu7orChuNhat == true}">
+														<div class="text-center" style="padding: 0;"></div>
+														<div class="text-center" style="padding: 0;"></div>
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${calamsang == 1}">
+																<div class="bg-success border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamsang == 2}">
+																<div class="bg-secondary border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamsang == 3}">
+																<div class="bg-warning border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamsang == 4}">
+																<div class="bg-danger border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Nghỉ không phép">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamsang == 0}">
+																<div class="text-center" style="padding: 0;"></div>
+															</c:when>
+															<c:otherwise>
+																<div class="text-center" style="padding: 0;"></div>
+															</c:otherwise>
+														</c:choose>
+														<c:choose>
+															<c:when test="${calamchieu == 1}">
 
-					</tbody>
-				</table>
+																<div class="bg-success border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamchieu == 2}">
+																<div class="bg-secondary border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamchieu == 3}">
+																<div class="bg-warning border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamchieu == 4}">
+																<div class="bg-danger border" style="height: 10px"
+																	data-toggle="tooltip" data-html="true" title=""
+																	data-original-title="Nghỉ không phép">&nbsp;</div>
+															</c:when>
+															<c:when test="${calamchieu == 0}">
+																<div class="text-center" style="padding: 0;"></div>
+															</c:when>
+															<c:otherwise>
+																<div class="text-center" style="padding: 0;"></div>
+															</c:otherwise>
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</td>
+										</c:when>
+										<c:otherwise>
+											<td style="padding: 0;">${NgayTrongThang}</td>
+										</c:otherwise>
+									</c:choose>
+									<c:if test="${loop.index % 7 == 6}">
+										</tr>
+									</c:if>
+								</c:forEach>
+							</tbody>
+						</table>
 
-
-
-			</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			<!-- Hiển thị box điểm và phần trăm -->
-			<div class="row justify-content-center">
-				<div class="col-md-6">
-					<div class="card border-left-info shadow h-100 py-2">
-						<div class="card-body">
-							<div class="row ml-2">
-								<strong>Điểm hiện tại của tháng: <span
-									class="text-danger">5</span></strong>
-							</div>
-							<div class="row ml-2">
-								<strong>Điểm tối đa của tháng: <span
-									class="text-danger">84</span></strong>
-							</div>
-							<div class="row ml-2">
-								<strong>Xếp loại hiện tại của bạn: <span
-									class="text-danger">D</span></strong>
-							</div>
-							<div class="row no-gutters align-items-center">
-								<div class="col mr-2">
-									<div class="text-info text-uppercase">
-										<i class="fas fa-running fa-2x"></i> <span
-											class="font-weight-bold">Cố lên nào !!!</span>
-									</div>
-									<div class="row no-gutters align-items-center">
-										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6%</div>
+						<!-- Hiển thị box điểm và phần trăm -->
+						<div class="row justify-content-center">
+							<div class="col-md-6">
+								<div class="card border-left-info shadow h-100 py-2">
+									<div class="card-body">
+										<div class="row ml-2">
+											<strong>Điểm hiện tại của tháng: <span
+												class="text-danger">5</span></strong>
 										</div>
-										<div class="col">
-											<div class="progress progress-sm mr-2">
-												<div class="progress-bar bg-info" role="progressbar"
-													style="width: 6%" aria-valuenow="6" aria-valuemin="0"
-													aria-valuemax="100"></div>
+										<div class="row ml-2">
+											<strong>Điểm tối đa của tháng: <span
+												class="text-danger">84</span></strong>
+										</div>
+										<div class="row ml-2">
+											<strong>Xếp loại hiện tại của bạn: <span
+												class="text-danger">D</span></strong>
+										</div>
+										<div class="row no-gutters align-items-center">
+											<div class="col mr-2">
+												<div class="text-info text-uppercase">
+													<i class="fas fa-running fa-2x"></i> <span
+														class="font-weight-bold">Cố lên nào !!!</span>
+												</div>
+												<div class="row no-gutters align-items-center">
+													<div class="col-auto">
+														<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6%</div>
+													</div>
+													<div class="col">
+														<div class="progress progress-sm mr-2">
+															<div class="progress-bar bg-info" role="progressbar"
+																style="width: 6%" aria-valuenow="6" aria-valuemin="0"
+																aria-valuemax="100"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-auto">
+												<i class="fas fa-trophy fa-2x text-warning"></i>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-auto">
-									<i class="fas fa-trophy fa-2x text-warning"></i>
-								</div>
 							</div>
 						</div>
+						<!-- End box điểm và phần trăm -->
+					</div>
+				</div>
+				<%-- xử lý bảng 2  --%>
+
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+	<div class="tab-pane fade active" id="profile" role="tabpanel"
+		aria-labelledby="home-tab">
+		<div id="example_wrapper"
+			class="dataTables_wrapper dt-bootstrap4 no-footer">
+			<div class="row">
+				<div class="col-sm-12 col-md-6"></div>
+				<div class="col-sm-12 col-md-6">
+					<div id="example_filter" class="dataTables_filter">
+						<label>Tìm kiếm:<input type="search"
+							class="form-control form-control-sm" placeholder=""
+							aria-controls="example"></label>
 					</div>
 				</div>
 			</div>
-			<!-- End box điểm và phần trăm -->
-			<!-- End tab content -->
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered table-hover dataTable no-footer"
+						id="example" role="grid">
+						<thead>
+							<tr role="row">
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting_asc" rowspan="1" colspan="1"
+									aria-label="STT">STT</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting_disabled" rowspan="1" colspan="1"
+									aria-label="Họ và tên">Họ và tên</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting_disabled" rowspan="1" colspan="1"
+									aria-label="
+                                        01
+                                    ">
+									01</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting_disabled" rowspan="1"
+									colspan="1"
+									aria-label="
+                                        02
+                                    ">
+									02</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting_disabled" rowspan="1"
+									colspan="1"
+									aria-label="
+                                        03
+                                    ">
+									03</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        04
+                                    : activate to sort column ascending">
+									04</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        05
+                                    : activate to sort column ascending">
+									05</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        06
+                                    : activate to sort column ascending">
+									06</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        07
+                                    : activate to sort column ascending">
+									07</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        08
+                                    : activate to sort column ascending">
+									08</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        09
+                                    : activate to sort column ascending">
+									09</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        10
+                                    : activate to sort column ascending">
+									10</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        11
+                                    : activate to sort column ascending">
+									11</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        12
+                                    : activate to sort column ascending">
+									12</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        13
+                                    : activate to sort column ascending">
+									13</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        14
+                                    : activate to sort column ascending">
+									14</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        15
+                                    : activate to sort column ascending">
+									15</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        16
+                                    : activate to sort column ascending">
+									16</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        17
+                                    : activate to sort column ascending">
+									17</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        18
+                                    : activate to sort column ascending">
+									18</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        19
+                                    : activate to sort column ascending">
+									19</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        20
+                                    : activate to sort column ascending">
+									20</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        21
+                                    : activate to sort column ascending">
+									21</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        22
+                                    : activate to sort column ascending">
+									22</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        23
+                                    : activate to sort column ascending">
+									23</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        24
+                                    : activate to sort column ascending">
+									24</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        25
+                                    : activate to sort column ascending">
+									25</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        26
+                                    : activate to sort column ascending">
+									26</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        27
+                                    : activate to sort column ascending">
+									27</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        28
+                                    : activate to sort column ascending">
+									28</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        29
+                                    : activate to sort column ascending">
+									29</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        30
+                                    : activate to sort column ascending">
+									30</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center bg-warning sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="
+                                        31
+                                    : activate to sort column ascending">
+									31</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="Đ: activate to sort column ascending">Đ</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="M: activate to sort column ascending">M</th>
+								<th style="padding: 0px; width: 0px;"
+									class="text-center sorting" tabindex="0"
+									aria-controls="example" rowspan="1" colspan="1"
+									aria-label="S: activate to sort column ascending">S</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Nguyễn Văn Định<br> Xếp loại hiện tại: D<br>
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-success border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Ca sáng <br> Giờ vào: 07:37:07 | Giờ ra: 11:15:00">&nbsp;</div>
+									<div class="bg-success border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Ca chiều <br> Giờ vào: 13:15:00 | Giờ ra: 16:30:49">&nbsp;</div>
+									<!--  -->
+								</td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div>
+									<div class="bg-danger border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Nghỉ không phép">&nbsp;</div> <!--  -->
+								</td>
+
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;">
+									<div class="bg-secondary border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Ca sáng <br> Giờ vào:  | Giờ ra: ">&nbsp;</div>
+									<div class="bg-secondary border" style="height: 10px"
+										data-toggle="tooltip" data-html="true" title=""
+										data-original-title="Ca chiều <br> Giờ vào:  | Giờ ra: ">&nbsp;</div>
+									<!--  -->
+								</td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td style="margin: 1px; padding-left: 4px; padding-right: 4px;"></td>
+								<td>4</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-5"></div>
+				<div class="col-sm-12 col-md-7"></div>
+			</div>
 		</div>
 	</div>
+
+
+
+
+	<!-- End tab content -->
 </div>
+</div>
+</div>
+
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tabLinks = document.querySelectorAll('.nav-link');
+        tabLinks.forEach(function(tabLink) {
+            tabLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Xác định id của tab được click
+                var tabId = this.getAttribute('href');
+                // Xóa class btn btn-info từ tất cả các tab
+                var allTabs = document.querySelectorAll('.nav-item');
+                allTabs.forEach(function(tab) {
+                    tab.classList.remove('btn', 'btn-info');
+                });
+
+                // Thêm class btn btn-info cho tab được click
+                this.parentElement.classList.add('btn', 'btn-info');
+                // Loại bỏ lớp active và show từ tất cả các tab-pane
+                var tabPanes = document.querySelectorAll('.tab-pane');
+                tabPanes.forEach(function(tabPane) {
+                    tabPane.classList.remove('active');
+                    tabPane.classList.remove('show');
+                });
+                // Thêm lớp active và show vào tab-pane tương ứng
+                var targetPane = document.querySelector(tabId);
+                targetPane.classList.add('active');
+                targetPane.classList.add('show');
+                
+            });
+        });
+    });
+</script>
+
+
+
+<script>
+
+
 !(function($){
 	$.fn.datepicker.dates['vi'] = {
 		days: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
@@ -588,4 +1019,3 @@ function sendMaZalo() {
   }
 
 </script>
-

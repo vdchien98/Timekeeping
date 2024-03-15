@@ -219,6 +219,9 @@ public interface UsersLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Users> getNhanVienPhongBan(long phongbanid);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

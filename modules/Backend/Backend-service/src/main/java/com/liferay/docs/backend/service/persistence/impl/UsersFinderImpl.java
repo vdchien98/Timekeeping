@@ -47,5 +47,32 @@ public class UsersFinderImpl extends UsersFinderBaseImpl implements UsersFinder 
 		
 
 	}
+	
+	public List<Users> getNhanVienPhongBan(long phongbanid) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = _customSQL.get(getClass(), UsersFinder.class.getName() + ".getNhanVienPhongBan");
+			System.out.println("Query==>" + sql);
+			System.out.println("");
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+			sqlQuery.setCacheable(false);
+			sqlQuery.addEntity("Users", UsersImpl.class);
+			System.out.println("sqlQuery==>" + sqlQuery);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+			System.out.println("queryPos==>" + queryPos);
+			queryPos.add(phongbanid);
+			System.out.println("queryPos 22222222222222222222 ==>" + queryPos);
+			System.out.println("(List<Users>) sqlQuery.list()==>" + (List<Users>) sqlQuery.list());
+			return (List<Users>) sqlQuery.list();
+		} catch (Exception e) {
+
+		} finally {
+			closeSession(session);
+		}
+		 return null;
+		
+
+	}
 
 }

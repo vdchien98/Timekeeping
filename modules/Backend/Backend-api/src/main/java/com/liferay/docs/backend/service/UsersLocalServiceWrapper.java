@@ -271,6 +271,13 @@ public class UsersLocalServiceWrapper
 		return _usersLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.docs.backend.model.Users>
+		getNhanVienPhongBan(long phongbanid) {
+
+		return _usersLocalService.getNhanVienPhongBan(phongbanid);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
