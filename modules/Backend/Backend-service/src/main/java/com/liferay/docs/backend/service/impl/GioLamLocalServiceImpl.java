@@ -145,10 +145,14 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 	}
 	
 	public List<GioLam> getGioLamByYearAndMonth(String Month,String Year, long userId) {
-	     System.out.println("Year ---- "+ Year);
-	     System.out.println("Month ---- "+ Month);
-	     System.out.println("userId ---- "+ userId);
-		return gioLamFinder.getGioLamByYearAndMonth(Month,Year, userId);
+	 
+
+	     long MonthInt = Long.parseLong(Month);
+	     long YearInt = Long.parseLong(Year);
+	     System.out.println("Year ----**** "+ YearInt);
+	     System.out.println("Month ----**** "+ MonthInt);
+	     System.out.println("userId ----**** "+ userId);
+		return gioLamFinder.getGioLamByYearAndMonth(MonthInt,YearInt, userId);
 		
 	}
 	

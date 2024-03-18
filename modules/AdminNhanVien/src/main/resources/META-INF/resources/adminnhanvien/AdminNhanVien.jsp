@@ -51,8 +51,6 @@ i.fa.fa-user-circle-o {
 		<div class="card-header py-3">
 			<h4 class="m-0 font-weight-bold text-primary">
 				Danh sách nhân viên
-
-
 				<portlet:renderURL var="createUrl">
 					<portlet:param name="mvcPath"
 						value="/adminnhanvien/AdminNhanVienCreate.jsp" />

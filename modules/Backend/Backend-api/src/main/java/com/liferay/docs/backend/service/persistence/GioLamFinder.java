@@ -24,6 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface GioLamFinder {
 
 	public java.util.List<com.liferay.docs.backend.model.GioLam>
-		getGioLamByYearAndMonth(String Month, String Year, long userId);
+		getGioLamByYearAndMonth(long Month, long Year, long userId);
 
 }

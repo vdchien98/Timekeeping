@@ -691,6 +691,7 @@ public class GioLamPortlet extends MVCPortlet {
 
 		// hàm check có phải trưởng phòng ko ???
 		int quyenxemgiolam = checkQuyenTruongPhong(user);
+		System.out.println("quyenxemgiolam ----- )))) " + quyenxemgiolam);
 		renderRequest.setAttribute("quyenxemgiolam", quyenxemgiolam);
 		// System.out.println("user****** " + user);
 		// XỬ LÝ NÚT CHẤM CÔNG ///
@@ -831,43 +832,76 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 		String keyyear = year;
 		String keymonth = month;
+		System.out.println("keyyear +++++****** " + keyyear);
+		System.out.println("keymonth +++++****** " + keymonth);
+
 		renderRequest.setAttribute("monthhienthi", month);
 		renderRequest.setAttribute("yearhienthi", year);
 		List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear, userId);
+		System.out.println("danhSachNgayTrongThangMoi ");
 		renderRequest.setAttribute("danhSachNgayTrongThang", danhSachNgayTrongThangMoi);
 		List<List<Map<String, Object>>> danhSachNgayTrongThangcaPhong = new ArrayList<>();
 		if (quyenxemgiolam == 1) {
 			// Xử lý hiện thị cho trưởng phòng và phụ trách phòng và giám đốc
 			System.out.println("quyenTruongPhong  --- " + quyenxemgiolam);
 			List<Users> TatCaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
+			int mothInt = Integer.parseInt(month);
+			int yearInt = Integer.parseInt(year);
+			int daysInMonth = getDaysInMonth(mothInt, yearInt);
+			List<String> ListThang = new ArrayList<>(daysInMonth);
+			for (int i = 1; i <= daysInMonth; i++) {
+				String s = String.valueOf(i);
+				ListThang.add(s);
+
+			}
+
+			renderRequest.setAttribute("ListThang", ListThang);
 			for (Users tungthanhvien : TatCaNhanVien) {
 				List<Map<String, Object>> danhSachNgayTrongThangTungThanvien = laydulieugiolamofmotnhanvien(keymonth,
 						keyyear, tungthanhvien.getUserId());
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
+			System.out.println("danhSachNgayTrongThangcaPhong ===== " + danhSachNgayTrongThangcaPhong);
+			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
+			
+			
 
 		} else if (quyenxemgiolam == 2) {
 			// xử lý trưởng phòng
 			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(user.getPhongban_id());
+			int mothInt = Integer.parseInt(month);
+			int yearInt = Integer.parseInt(year);
+			int daysInMonth = getDaysInMonth(mothInt, yearInt);
+			List<String> ListThang = new ArrayList<>(daysInMonth);
+			for (int i = 1; i <= daysInMonth; i++) {
+				String s = String.valueOf(i);
+				ListThang.add(s);
 
+			}
+
+			renderRequest.setAttribute("ListThang", ListThang);
 			for (Users tungthanhvien : ThanhvienPhong) {
 				List<Map<String, Object>> danhSachNgayTrongThangTungThanvien = laydulieugiolamofmotnhanvien(keymonth,
 						keyyear, tungthanhvien.getUserId());
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
+			System.out.println("danhSachNgayTrongThangcaPhong ===== " + danhSachNgayTrongThangcaPhong);
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
+
+		} else if (quyenxemgiolam == 3) {
 
 		}
 		super.render(renderRequest, renderResponse);
 	}
 
-	public List<Map<String, Object>> laydulieugiolamofmotnhanvien(String keyyear, String keymonth, long userId) {
+	public List<Map<String, Object>> laydulieugiolamofmotnhanvien(String keymonth, String keyyear, long userId) {
 		// xử lý giờ làm của 1 người
 
 		List<GioLam> GioLamByUserIdYearAndMonthList = GioLamLocalServiceUtil.getGioLamByYearAndMonth(keymonth, keyyear,
 				userId);
+		System.out.println("GioLamByUserIdYearAndMonthList ^^^^^^^^^^^ " + GioLamByUserIdYearAndMonthList);
 		int mothInt = Integer.parseInt(month);
 		int yearInt = Integer.parseInt(year);
 		int daysInMonth = getDaysInMonth(mothInt, yearInt);
@@ -881,7 +915,7 @@ public class GioLamPortlet extends MVCPortlet {
 			int ngay = 0;
 			LocalDate ngay_lamchuacos = LocalDate.of(yearInt, mothInt, i);
 			Date ngay_lamchuacoDate = Date.from(ngay_lamchuacos.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
+			System.out.println("ngay_lamchuacoDate ************  " + ngay_lamchuacoDate);
 			int idGioLamnew = (int) CounterLocalServiceUtil.increment();
 			GioLam gioLamChuan = GioLamLocalServiceUtil.createGioLam(idGioLamnew);
 			gioLamChuan.setUser_id(userId);
@@ -891,6 +925,7 @@ public class GioLamPortlet extends MVCPortlet {
 				Date ngay_lam = gioLam.getNgay_lam();
 				Instant instant = ngay_lam.toInstant();
 				LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+
 				if (localDate.getDayOfMonth() == i) {
 					gioLamChuan = gioLam;
 					ngay = localDate.getDayOfMonth();
@@ -905,7 +940,7 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		// System.out.println("monthList " + monthList);
+		System.out.println("monthList ************  " + monthList);
 
 		List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 		for (GioLam x : monthList) {
@@ -915,10 +950,6 @@ public class GioLamPortlet extends MVCPortlet {
 			int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 			boolean CoPhaiNgayNghileKo = CoPhaiNgayNghiKo(x.getNgay_lam());
 			boolean CoPhaiThu7orChuNhatKo = CoPhaiThu7orChuNhat(x.getNgay_lam());
-
-			// System.out.println("CoPhaiThu7orChuNhatKo " + x.getNgay_lam() + " - la -" +
-			// CoPhaiThu7orChuNhatKo);
-
 			int DateTruocSauNgayHienTai = DateTruocSau(x.getNgay_lam());
 			int trangthaicasang = checkDataCaSang(x.getCheck_in_sang(), x.getCheck_out_sang(), x.getDi_muon_sang(),
 					x.getVe_som_sang(), x.getCheck_in_chieu(), x.getCheck_out_chieu(), x.getDi_muon_chieu(),
@@ -926,9 +957,14 @@ public class GioLamPortlet extends MVCPortlet {
 			int trangthaicachieu = checkDataCaChieu(x.getCheck_in_sang(), x.getCheck_out_sang(), x.getDi_muon_sang(),
 					x.getVe_som_sang(), x.getCheck_in_chieu(), x.getCheck_out_chieu(), x.getDi_muon_chieu(),
 					x.getVe_som_chieu(), DateTruocSauNgayHienTai);
+			Users users = UsersLocalServiceUtil.getUserbyUserId(x.getUser_id());
+			String ho_va_ten = users.getHovaten();
+
+			System.out.println("check_in_sang +++++++++++ " + x.getCheck_in_sang());
 
 			if (x == null) {
 //							gioLamMap.put("ngay_lam", x.getNgay_lam());
+//			            	gioLamMap.put("ho_va_ten", ho_va_ten);
 //							gioLamMap.put("ngay_lam_trongthang", dayOfMonth);
 //							gioLamMap.put("cophaingayNghi", CoPhaiNgayNghileKo);
 //							gioLamMap.put("CoPhaiThu7orChuNhat", CoPhaiThu7orChuNhatKo);
@@ -940,9 +976,10 @@ public class GioLamPortlet extends MVCPortlet {
 //							gioLamMap.put("checkoutsang", x.getCheck_out_sang());
 //							gioLamMap.put("checkinchieu", x.getCheck_in_chieu());
 //							gioLamMap.put("checkoutchieu", x.getCheck_out_chieu());
-				newgioLamMapListNhanVien.add(null);
+//				newgioLamMapListNhanVien.add(null);
 			} else {
 				gioLamMap.put("user_id", x.getUser_id());
+				gioLamMap.put("ho_va_ten", ho_va_ten);
 				gioLamMap.put("ngay_lam_trongthang", dayOfMonth);
 				gioLamMap.put("cophaingayNghi", CoPhaiNgayNghileKo);
 				gioLamMap.put("CoPhaiThu7orChuNhat", CoPhaiThu7orChuNhatKo);

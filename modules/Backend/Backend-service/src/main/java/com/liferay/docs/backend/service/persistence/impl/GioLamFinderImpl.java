@@ -20,7 +20,7 @@ public class GioLamFinderImpl extends GioLamFinderBaseImpl implements GioLamFind
 	   @Reference
 	    private CustomSQL _customSQL;
 		
-		public List<GioLam>  getGioLamByYearAndMonth( String Month,String Year, long userId){
+		public List<GioLam>  getGioLamByYearAndMonth( long Month,long Year, long userId){
 			System.out.println("Inside custom sql");
 			 Session session=null;
 			  try{
