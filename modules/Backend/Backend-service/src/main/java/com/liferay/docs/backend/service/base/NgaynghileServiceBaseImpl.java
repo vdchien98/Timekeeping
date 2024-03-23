@@ -19,6 +19,7 @@ import com.liferay.docs.backend.service.NgaynghileService;
 import com.liferay.docs.backend.service.NgaynghileServiceUtil;
 import com.liferay.docs.backend.service.persistence.CalamviecPersistence;
 import com.liferay.docs.backend.service.persistence.ChucvuPersistence;
+import com.liferay.docs.backend.service.persistence.FilekysoPersistence;
 import com.liferay.docs.backend.service.persistence.GioLamFinder;
 import com.liferay.docs.backend.service.persistence.GioLamPersistence;
 import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
@@ -145,6 +146,9 @@ public abstract class NgaynghileServiceBaseImpl
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;
+
+	@Reference
+	protected FilekysoPersistence filekysoPersistence;
 
 	@Reference
 	protected GioLamPersistence gioLamPersistence;

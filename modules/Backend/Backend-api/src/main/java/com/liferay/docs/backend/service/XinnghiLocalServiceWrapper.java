@@ -302,6 +302,20 @@ public class XinnghiLocalServiceWrapper
 		return _xinnghiLocalService.getXinnghisCount();
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.Xinnghi saveXinNghiCaNgay(
+			long userId, java.util.Date tu_ngay, java.util.Date den_ngay,
+			String chon_ly_do, String ly_do, int trangthai, int nuangay,
+			int soNgay, String file_url, long nguoihuy, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinnghiLocalService.saveXinNghiCaNgay(
+			userId, tu_ngay, den_ngay, chon_ly_do, ly_do, trangthai, nuangay,
+			soNgay, file_url, nguoihuy, phongban_id, serviceContext);
+	}
+
 	/**
 	 * Updates the xinnghi in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

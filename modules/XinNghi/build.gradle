@@ -1,0 +1,22 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.0"
+	   compileOnly project(":modules:Backend:Backend-api")
+   compileOnly project(":modules:Backend:Backend-service")
+	
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+   implementation 'com.google.code.gson:gson:2.8.9'
+   compileOnly project(":modules:PortletUtils")
+  //  compileOnly group: "com.itextpdf", name: "itext7-core", version: "7.1.0"
+  
+ testImplementation 'junit:junit:4.11'
+     compileInclude group: 'org.xhtmlrenderer', name: 'flying-saucer-core', version: '9.1.20'
+    compileInclude group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf', version: '9.1.20'
+     compileInclude group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+     compileInclude group: 'commons-io', name: 'commons-io', version: '2.11.0'
+ //   compileInclude group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
+     compileInclude group: 'com.itextpdf', name: 'kernel', version: '7.0.0'
+     compileInclude group: 'com.itextpdf', name: 'layout', version: '7.0.0'
+	
+}

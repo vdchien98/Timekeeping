@@ -901,7 +901,6 @@ public class GioLamPortlet extends MVCPortlet {
 
 		List<GioLam> GioLamByUserIdYearAndMonthList = GioLamLocalServiceUtil.getGioLamByYearAndMonth(keymonth, keyyear,
 				userId);
-		System.out.println("GioLamByUserIdYearAndMonthList ^^^^^^^^^^^ " + GioLamByUserIdYearAndMonthList);
 		int mothInt = Integer.parseInt(month);
 		int yearInt = Integer.parseInt(year);
 		int daysInMonth = getDaysInMonth(mothInt, yearInt);
@@ -915,7 +914,6 @@ public class GioLamPortlet extends MVCPortlet {
 			int ngay = 0;
 			LocalDate ngay_lamchuacos = LocalDate.of(yearInt, mothInt, i);
 			Date ngay_lamchuacoDate = Date.from(ngay_lamchuacos.atStartOfDay(ZoneId.systemDefault()).toInstant());
-			System.out.println("ngay_lamchuacoDate ************  " + ngay_lamchuacoDate);
 			int idGioLamnew = (int) CounterLocalServiceUtil.increment();
 			GioLam gioLamChuan = GioLamLocalServiceUtil.createGioLam(idGioLamnew);
 			gioLamChuan.setUser_id(userId);
@@ -960,7 +958,6 @@ public class GioLamPortlet extends MVCPortlet {
 			Users users = UsersLocalServiceUtil.getUserbyUserId(x.getUser_id());
 			String ho_va_ten = users.getHovaten();
 
-			System.out.println("check_in_sang +++++++++++ " + x.getCheck_in_sang());
 
 			if (x == null) {
 //							gioLamMap.put("ngay_lam", x.getNgay_lam());

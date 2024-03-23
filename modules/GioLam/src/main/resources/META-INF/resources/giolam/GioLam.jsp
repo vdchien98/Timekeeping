@@ -734,8 +734,6 @@ function guimazalochamcong(userId) {
 	sendMaZaloAndConfirmCheckin(userId);
 }
 function sendMaZaloAndConfirmCheckin(userId) {
-	//	console.log("userId ########33333333333 "+ userId);
-	//	console.log("trangthai ########33333333333 "+ trangthai);
 	    sendMaZalo()
 	      .then(function(response) {
 	        // Xử lý phản hồi    từ hàm sendMaZalo nếu cần

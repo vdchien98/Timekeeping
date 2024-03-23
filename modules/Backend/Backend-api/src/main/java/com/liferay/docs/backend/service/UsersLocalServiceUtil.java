@@ -307,6 +307,30 @@ public class UsersLocalServiceUtil {
 		return getService().getUsersesCount();
 	}
 
+	public static String LayChucVutheoChucVuId(int chucvuId)
+		throws PortalException, SystemException {
+
+		return getService().LayChucVutheoChucVuId(chucvuId);
+	}
+
+	public static String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayTenPhongtheoPhongBanId(phongbanId);
+	}
+
+	public static Users LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayUserLanhDaoPhongtheoPhongBanId(phongbanId);
+	}
+
+	public static Users LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException {
+
+		return getService().LayUserLanhDaoTrungTamtheoPhongBanId(phongbanId);
+	}
+
 	public static void UpdateAllNhanVien(
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

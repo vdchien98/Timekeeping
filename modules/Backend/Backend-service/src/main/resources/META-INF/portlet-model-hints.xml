@@ -27,6 +27,16 @@
 		<field name="role" type="int" />
 		<field name="groupId" type="long" />
 	</model>
+	<model name="com.liferay.docs.backend.model.Filekyso">
+		<field name="id" type="int" />
+		<field name="file_id_nosigned" type="long" />
+		<field name="trangthai" type="int" />
+		<field name="fileurl_signed" type="String" />
+		<field name="nguoilamdon_id" type="long" />
+		<field name="nguoikydon_id" type="long" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.backend.model.GioLam">
 		<field name="id" type="int" />
 		<field name="user_id" type="long" />

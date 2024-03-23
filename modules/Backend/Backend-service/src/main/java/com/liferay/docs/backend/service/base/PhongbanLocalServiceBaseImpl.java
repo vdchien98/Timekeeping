@@ -19,6 +19,7 @@ import com.liferay.docs.backend.service.PhongbanLocalService;
 import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.persistence.CalamviecPersistence;
 import com.liferay.docs.backend.service.persistence.ChucvuPersistence;
+import com.liferay.docs.backend.service.persistence.FilekysoPersistence;
 import com.liferay.docs.backend.service.persistence.GioLamFinder;
 import com.liferay.docs.backend.service.persistence.GioLamPersistence;
 import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
@@ -465,6 +466,9 @@ public abstract class PhongbanLocalServiceBaseImpl
 
 	@Reference
 	protected ChucvuPersistence chucvuPersistence;
+
+	@Reference
+	protected FilekysoPersistence filekysoPersistence;
 
 	@Reference
 	protected GioLamPersistence gioLamPersistence;

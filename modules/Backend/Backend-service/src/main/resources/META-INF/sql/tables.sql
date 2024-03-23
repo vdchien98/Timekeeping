@@ -26,6 +26,17 @@ create table Timekeeping_Chucvu (
 	groupId LONG
 );
 
+create table Timekeeping_Filekyso (
+	id_ INTEGER not null primary key,
+	file_id_nosigned LONG,
+	trangthai INTEGER,
+	fileurl_signed VARCHAR(75) null,
+	nguoilamdon_id LONG,
+	nguoikydon_id LONG,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table Timekeeping_GioLam (
 	id_ INTEGER not null primary key,
 	user_id LONG,

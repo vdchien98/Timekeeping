@@ -272,6 +272,18 @@ public interface UsersLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUsersesCount();
 
+	public String LayChucVutheoChucVuId(int chucvuId)
+		throws PortalException, SystemException;
+
+	public String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
+	public Users LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
+	public Users LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws PortalException, SystemException;
+
 	public void UpdateAllNhanVien(ServiceContext serviceContext)
 		throws PortalException;
 

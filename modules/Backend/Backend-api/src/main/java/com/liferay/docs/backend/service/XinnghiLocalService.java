@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -251,6 +253,13 @@ public interface XinnghiLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getXinnghisCount();
+
+	public Xinnghi saveXinNghiCaNgay(
+			long userId, Date tu_ngay, Date den_ngay, String chon_ly_do,
+			String ly_do, int trangthai, int nuangay, int soNgay,
+			String file_url, long nguoihuy, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Updates the xinnghi in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

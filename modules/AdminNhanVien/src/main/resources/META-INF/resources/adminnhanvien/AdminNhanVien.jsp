@@ -159,7 +159,6 @@ i.fa.fa-user-circle-o {
 
 												</c:choose>
 
-
 												<th><a class="btn btn-success btn-circle mr-1 btn-sm"
 													href="${editURL }"> <i
 														class="fa fa-pencil-square-o iconnhanvien"

@@ -141,12 +141,12 @@ li.nav-item.vdchien {
 					<p class="chien1">Bảng giờ làm</p> 
 			</a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#" data-toggle="collapse" id="toggleCollapse"> <i
+				href="http://localhost:8080/xin-nghi" data-toggle="collapse" id="toggleCollapse"> <i
 					class="fa fa-calendar-times-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Nghỉ</p>
 			</a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#" data-toggle="collapse" id="toggleCollapse"><i
+				href="" data-toggle="collapse" id="toggleCollapse"><i
 					class="fa fa-calendar-check-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Chấm Công</p> </a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
@@ -160,13 +160,6 @@ li.nav-item.vdchien {
 					<p class="chien1">Hướng Dẫn</p>
 			</a></li>
 		</ul>
-
-
-
-
-
-
-
 
 	</c:otherwise>
 </c:choose>

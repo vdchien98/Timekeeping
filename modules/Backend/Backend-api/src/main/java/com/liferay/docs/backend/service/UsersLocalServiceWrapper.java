@@ -347,6 +347,41 @@ public class UsersLocalServiceWrapper
 	}
 
 	@Override
+	public String LayChucVutheoChucVuId(int chucvuId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.LayChucVutheoChucVuId(chucvuId);
+	}
+
+	@Override
+	public String LayTenPhongtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.LayTenPhongtheoPhongBanId(phongbanId);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Users
+			LayUserLanhDaoPhongtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.LayUserLanhDaoPhongtheoPhongBanId(phongbanId);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Users
+			LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _usersLocalService.LayUserLanhDaoTrungTamtheoPhongBanId(
+			phongbanId);
+	}
+
+	@Override
 	public void UpdateAllNhanVien(
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

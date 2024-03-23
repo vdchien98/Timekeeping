@@ -15,8 +15,12 @@
 package com.liferay.docs.backend.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.docs.backend.model.Chucvu;
+import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.model.impl.UsersModelImpl;
+import com.liferay.docs.backend.service.ChucvuLocalServiceUtil;
+import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.backend.service.base.UsersLocalServiceBaseImpl;
 import com.liferay.docs.backend.service.persistence.UsersFinder;
@@ -156,7 +160,7 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 		System.out.println("so_ngay_nghi_phep ----1 " + so_ngay_nghi_phep);
 		System.out.println("phu_trach_phong ----1 " + phu_trach_phong);
 		System.out.println("ca_lam_toi ----1 " + ca_lam_toi);
-		
+
 		long groupId = serviceContext.getScopeGroupId();
 		Users user = getUsers(id);
 		user.setHovaten(hovaten);
@@ -317,26 +321,73 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 	}
 
 	public List<Users> getDuLieuTimKiem(String keytimkiem) {
-		System.out.println("keytimkiem la ------- "+ keytimkiem);
+		System.out.println("keytimkiem la ------- " + keytimkiem);
 		return usersFinder.getDuLieuTimKiem(keytimkiem);
 	}
+
 	public List<Users> getNhanVienPhongBan(long phongbanid) {
-		System.out.println("keytimkiem la ------- "+ phongbanid);
+		System.out.println("keytimkiem la ------- " + phongbanid);
 		return usersFinder.getNhanVienPhongBan(phongbanid);
 	}
 
-	
 	public Users getUserbyUserId(long userId) {
 		List<Users> userList = usersPersistence.findByGetUserId(userId);
-		Users user = null ;
+		Users user = null;
 		if (userList.size() == 0) {
-			user = user ;
+			user = user;
 		} else {
 			user = userList.get(0);
 		}
 		return user;
-		
+
 	}
 	
+	public Users LayUserLanhDaoPhongtheoPhongBanId (long phongbanId)throws PortalException, SystemException {
+		
+		List<Users> ListUser = UsersLocalServiceUtil.getUserses(-1, -1);
+		 List<Users> resultPhongBanUsers = ListUser.stream()
+				 .filter(phongban -> phongban.getPhongban_id() == phongbanId)
+	                .collect(Collectors.toList());
+		 
+		List<Users> ListPhuTrachPhong = resultPhongBanUsers.stream().filter(phutrachphong -> phutrachphong.getPhu_trach_phong()==1).collect(Collectors.toList());
+		
+		Users LanhDaoPhongPhuTrachPhong = ListPhuTrachPhong.get(0);
+ 		return LanhDaoPhongPhuTrachPhong;
+	}
+	
+
+	public Users LayUserLanhDaoTrungTamtheoPhongBanId(long phongbanId) throws PortalException, SystemException {
+		int idphongban = (int) phongbanId;
+		List<Phongban> ListPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+
+		Phongban phongbancanlay = PhongbanLocalServiceUtil.getPhongban(idphongban);
+		List<Users> ListUser = UsersLocalServiceUtil.getUserses(-1, -1);
+		Users LanhDaoTrungTamPhuTrachPhong = null;
+		int IdUser = 0;
+		for (Users user : ListUser) {
+			if (user.getId() == phongbancanlay.getNguoi_phu_trach()) {
+				IdUser = user.getId();
+				break;
+			}
+		}
+		LanhDaoTrungTamPhuTrachPhong = UsersLocalServiceUtil.getUsers(IdUser);
+		return LanhDaoTrungTamPhuTrachPhong;
+	}
+
+	public String LayTenPhongtheoPhongBanId(long phongbanId) throws PortalException, SystemException {
+		int idphongban = (int) phongbanId;
+		Phongban phongbancanlay = PhongbanLocalServiceUtil.getPhongban(idphongban);
+		String tenphongtheoPhongBanId = phongbancanlay.getTenphong();
+
+		return tenphongtheoPhongBanId;
+	}
+
+	public String LayChucVutheoChucVuId(int chucvuId) throws PortalException, SystemException {
+
+		Chucvu chucvucanlay = ChucvuLocalServiceUtil.getChucvu(chucvuId);
+		String tenchucvutheoChucVuId = chucvucanlay.getName();
+
+		return tenchucvutheoChucVuId;
+	}
 
 }

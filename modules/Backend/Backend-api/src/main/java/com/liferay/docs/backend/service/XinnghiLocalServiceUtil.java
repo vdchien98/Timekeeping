@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.Xinnghi;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -271,6 +272,18 @@ public class XinnghiLocalServiceUtil {
 	 */
 	public static int getXinnghisCount() {
 		return getService().getXinnghisCount();
+	}
+
+	public static Xinnghi saveXinNghiCaNgay(
+			long userId, java.util.Date tu_ngay, java.util.Date den_ngay,
+			String chon_ly_do, String ly_do, int trangthai, int nuangay,
+			int soNgay, String file_url, long nguoihuy, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().saveXinNghiCaNgay(
+			userId, tu_ngay, den_ngay, chon_ly_do, ly_do, trangthai, nuangay,
+			soNgay, file_url, nguoihuy, phongban_id, serviceContext);
 	}
 
 	/**
