@@ -137,5 +137,6 @@
 		<field name="created_at" type="Date" />
 		<field name="updated_at" type="Date" />
 		<field name="phongban_id" type="long" />
+		<field name="trangthai_kyso" type="int" />
 	</model>
 </model-hints>

@@ -15,10 +15,12 @@
 package com.liferay.docs.backend.service.impl;
 
 import com.liferay.docs.backend.service.FilekysoLocalServiceUtil;
+import com.liferay.docs.backend.service.XinnghiLocalServiceUtil;
 import com.liferay.docs.backend.service.base.FilekysoServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,24 +36,27 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = {
-		"json.web.service.context.name=ks",
-		"json.web.service.context.path=Filekyso"
-	},
-	service = AopService.class
-)
+@Component(property = { "json.web.service.context.name=ks",
+		"json.web.service.context.path=Filekyso" }, service = AopService.class)
 public class FilekysoServiceImpl extends FilekysoServiceBaseImpl {
 	@JSONWebService(value = "getchukyso")
-	public Response addFilekyso(File uploadfile, String file_id, String fileUrl) throws PortalException {
+	public Response addFilekyso(File uploadfile, String file_id, long user_id, String fileUrl) throws PortalException {
 		System.out.println("tenfile ******------------------- " + uploadfile);
+		System.out.println("user_id ******------------------- " + user_id);
 		System.out.println("file_id ******------------------- " + file_id);
 		long FileId = Long.parseLong(file_id);
 		System.out.println("fileUrl ******------------------- " + fileUrl);
 		String targetDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdfSigned";
-
+		ServiceContext serviceContext = new ServiceContext();
 		// Thay đổi phần mở rộng của tên file
 		String signedFileUrl = changeFileExtension(fileUrl, "signed.pdf");
+		if (signedFileUrl.endsWith(".signed.signed.pdf")) {
+			XinnghiLocalServiceUtil.upadatefileXinNghi((int) FileId, 2, serviceContext);
+		} else if (signedFileUrl.endsWith(".signed.pdf")) {
+			XinnghiLocalServiceUtil.upadatefileXinNghi((int) FileId, 1, serviceContext);
+		} else {
+			System.out.println("Không khớp định dạng");
+		}
 
 		// In ra kết quả
 		System.out.println("Ten file moi: " + signedFileUrl);
@@ -59,7 +65,9 @@ public class FilekysoServiceImpl extends FilekysoServiceBaseImpl {
 		try {
 			File tenfilemoi = saveFileToDirectoryAsPDF(uploadfile, targetDirectory, signedFileUrl);
 			System.out.println("tenfilemoi ----------------" + tenfilemoi);
-			FilekysoLocalServiceUtil.addfileSigned(targetFileName, signedFileUrl, FileId);
+			FilekysoLocalServiceUtil.addfileSigned(targetFileName, signedFileUrl, FileId, user_id);
+			System.out.println(" da qua dc day roi jjjjjjjjj +++++ ");
+			
 			return Response.ok("File uploaded successfully").build();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -67,6 +75,7 @@ public class FilekysoServiceImpl extends FilekysoServiceBaseImpl {
 			// Trả về response lỗi nếu có vấn đề trong quá trình xử lý file
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error uploading file").build();
 		}
+		
 
 	}
 

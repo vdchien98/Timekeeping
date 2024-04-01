@@ -223,6 +223,7 @@
 		<column type="Date" name="created_at"></column>
 		<column type="Date" name="updated_at"></column>
 		<column name="phongban_id" type="long" />
+		<column name="trangthai_kyso" type="int" />
 		<finder name="id" return-type="Collection">
 			<finder-column name="id" />
 		</finder>

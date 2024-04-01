@@ -88,6 +88,16 @@ public interface GioLamLocalService
 			float diem, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public void addGioLamXinNghiDcPheDuyetCaNgay(
+			int idGioLam, long userXinNghi, Date ngaylam, int TrangThai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addGioLamXinNghiDcPheDuyetNuaNgay(
+			int idGioLam, long userXinNghi, Date ngaylam, int Ca_Nghi_Phep,
+			int TrangThai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
@@ -306,6 +316,11 @@ public interface GioLamLocalService
 	public void updateGioLamVaoChieu(
 			int idGioLam, long user_id, String check_in_chieu,
 			int di_muon_chieu, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateGioLamXinNghiDcPheDuyetCaNgay(
+			int idGioLam, long userXinNghi, Date ngaylam, int TrangThai,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

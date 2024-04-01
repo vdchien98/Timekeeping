@@ -53,7 +53,8 @@ public interface FilekysoService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.docs.backend.service.impl.FilekysoServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the filekyso remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FilekysoServiceUtil} if injection and service tracking are not available.
 	 */
 	@JSONWebService(value = "getchukyso")
-	public Response addFilekyso(File uploadfile, String file_id, String fileUrl)
+	public Response addFilekyso(
+			File uploadfile, String file_id, long user_id, String fileUrl)
 		throws PortalException;
 
 	/**

@@ -142,5 +142,6 @@ create table Timekeeping_Xinnghi (
 	nguoi_huy LONG,
 	created_at DATE null,
 	updated_at DATE null,
-	phongban_id LONG
+	phongban_id LONG,
+	trangthai_kyso INTEGER
 );

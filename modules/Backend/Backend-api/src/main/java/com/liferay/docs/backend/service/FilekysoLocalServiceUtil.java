@@ -60,10 +60,10 @@ public class FilekysoLocalServiceUtil {
 	}
 
 	public static Filekyso addfileSigned(
-			String name, String fileUrl, long file_id)
+			String name, String fileUrl, long file_id, long user_id)
 		throws PortalException {
 
-		return getService().addfileSigned(name, fileUrl, file_id);
+		return getService().addfileSigned(name, fileUrl, file_id, user_id);
 	}
 
 	/**
@@ -278,6 +278,13 @@ public class FilekysoLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static Filekyso upadtefileSigned(
+			String name, String fileUrl, long file_id, long user_id)
+		throws PortalException {
+
+		return getService().upadtefileSigned(name, fileUrl, file_id, user_id);
 	}
 
 	/**

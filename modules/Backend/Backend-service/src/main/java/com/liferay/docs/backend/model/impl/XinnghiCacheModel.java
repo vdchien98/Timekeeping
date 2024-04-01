@@ -60,7 +60,7 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -90,6 +90,8 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 		sb.append(updated_at);
 		sb.append(", phongban_id=");
 		sb.append(phongban_id);
+		sb.append(", trangthai_kyso=");
+		sb.append(trangthai_kyso);
 		sb.append("}");
 
 		return sb.toString();
@@ -158,6 +160,7 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 		}
 
 		xinnghiImpl.setPhongban_id(phongban_id);
+		xinnghiImpl.setTrangthai_kyso(trangthai_kyso);
 
 		xinnghiImpl.resetOriginalValues();
 
@@ -186,6 +189,8 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 		updated_at = objectInput.readLong();
 
 		phongban_id = objectInput.readLong();
+
+		trangthai_kyso = objectInput.readInt();
 	}
 
 	@Override
@@ -228,6 +233,8 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 		objectOutput.writeLong(updated_at);
 
 		objectOutput.writeLong(phongban_id);
+
+		objectOutput.writeInt(trangthai_kyso);
 	}
 
 	public int id;
@@ -244,5 +251,6 @@ public class XinnghiCacheModel implements CacheModel<Xinnghi>, Externalizable {
 	public long created_at;
 	public long updated_at;
 	public long phongban_id;
+	public int trangthai_kyso;
 
 }

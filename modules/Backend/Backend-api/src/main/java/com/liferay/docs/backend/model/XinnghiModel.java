@@ -254,6 +254,20 @@ public interface XinnghiModel extends BaseModel<Xinnghi> {
 	 */
 	public void setPhongban_id(long phongban_id);
 
+	/**
+	 * Returns the trangthai_kyso of this xinnghi.
+	 *
+	 * @return the trangthai_kyso of this xinnghi
+	 */
+	public int getTrangthai_kyso();
+
+	/**
+	 * Sets the trangthai_kyso of this xinnghi.
+	 *
+	 * @param trangthai_kyso the trangthai_kyso of this xinnghi
+	 */
+	public void setTrangthai_kyso(int trangthai_kyso);
+
 	@Override
 	public Xinnghi cloneWithOriginalValues();
 

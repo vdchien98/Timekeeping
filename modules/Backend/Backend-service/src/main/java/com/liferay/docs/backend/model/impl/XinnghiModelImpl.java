@@ -71,7 +71,8 @@ public class XinnghiModelImpl
 		{"trangthai", Types.INTEGER}, {"nua_ngay", Types.INTEGER},
 		{"so_ngay", Types.INTEGER}, {"file_url", Types.VARCHAR},
 		{"nguoi_huy", Types.BIGINT}, {"created_at", Types.TIMESTAMP},
-		{"updated_at", Types.TIMESTAMP}, {"phongban_id", Types.BIGINT}
+		{"updated_at", Types.TIMESTAMP}, {"phongban_id", Types.BIGINT},
+		{"trangthai_kyso", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,10 +93,11 @@ public class XinnghiModelImpl
 		TABLE_COLUMNS_MAP.put("created_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("phongban_id", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("trangthai_kyso", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Timekeeping_Xinnghi (id_ INTEGER not null primary key,user_id LONG,tu_ngay DATE null,den_ngay DATE null,ly_do VARCHAR(75) null,chon_ly_do VARCHAR(75) null,trangthai INTEGER,nua_ngay INTEGER,so_ngay INTEGER,file_url VARCHAR(75) null,nguoi_huy LONG,created_at DATE null,updated_at DATE null,phongban_id LONG)";
+		"create table Timekeeping_Xinnghi (id_ INTEGER not null primary key,user_id LONG,tu_ngay DATE null,den_ngay DATE null,ly_do VARCHAR(75) null,chon_ly_do VARCHAR(75) null,trangthai INTEGER,nua_ngay INTEGER,so_ngay INTEGER,file_url VARCHAR(75) null,nguoi_huy LONG,created_at DATE null,updated_at DATE null,phongban_id LONG,trangthai_kyso INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Timekeeping_Xinnghi";
@@ -268,6 +270,11 @@ public class XinnghiModelImpl
 		attributeGetterFunctions.put("phongban_id", Xinnghi::getPhongban_id);
 		attributeSetterBiConsumers.put(
 			"phongban_id", (BiConsumer<Xinnghi, Long>)Xinnghi::setPhongban_id);
+		attributeGetterFunctions.put(
+			"trangthai_kyso", Xinnghi::getTrangthai_kyso);
+		attributeSetterBiConsumers.put(
+			"trangthai_kyso",
+			(BiConsumer<Xinnghi, Integer>)Xinnghi::setTrangthai_kyso);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -510,6 +517,21 @@ public class XinnghiModelImpl
 		_phongban_id = phongban_id;
 	}
 
+	@JSON
+	@Override
+	public int getTrangthai_kyso() {
+		return _trangthai_kyso;
+	}
+
+	@Override
+	public void setTrangthai_kyso(int trangthai_kyso) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_trangthai_kyso = trangthai_kyso;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -567,6 +589,7 @@ public class XinnghiModelImpl
 		xinnghiImpl.setCreated_at(getCreated_at());
 		xinnghiImpl.setUpdated_at(getUpdated_at());
 		xinnghiImpl.setPhongban_id(getPhongban_id());
+		xinnghiImpl.setTrangthai_kyso(getTrangthai_kyso());
 
 		xinnghiImpl.resetOriginalValues();
 
@@ -599,6 +622,8 @@ public class XinnghiModelImpl
 			this.<Date>getColumnOriginalValue("updated_at"));
 		xinnghiImpl.setPhongban_id(
 			this.<Long>getColumnOriginalValue("phongban_id"));
+		xinnghiImpl.setTrangthai_kyso(
+			this.<Integer>getColumnOriginalValue("trangthai_kyso"));
 
 		return xinnghiImpl;
 	}
@@ -748,6 +773,8 @@ public class XinnghiModelImpl
 
 		xinnghiCacheModel.phongban_id = getPhongban_id();
 
+		xinnghiCacheModel.trangthai_kyso = getTrangthai_kyso();
+
 		return xinnghiCacheModel;
 	}
 
@@ -854,6 +881,7 @@ public class XinnghiModelImpl
 	private Date _created_at;
 	private Date _updated_at;
 	private long _phongban_id;
+	private int _trangthai_kyso;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -898,6 +926,7 @@ public class XinnghiModelImpl
 		_columnOriginalValues.put("created_at", _created_at);
 		_columnOriginalValues.put("updated_at", _updated_at);
 		_columnOriginalValues.put("phongban_id", _phongban_id);
+		_columnOriginalValues.put("trangthai_kyso", _trangthai_kyso);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -948,6 +977,8 @@ public class XinnghiModelImpl
 		columnBitmasks.put("updated_at", 4096L);
 
 		columnBitmasks.put("phongban_id", 8192L);
+
+		columnBitmasks.put("trangthai_kyso", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

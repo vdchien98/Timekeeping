@@ -36,10 +36,11 @@ public class FilekysoServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.backend.service.impl.FilekysoServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static javax.ws.rs.core.Response addFilekyso(
-			java.io.File uploadfile, String file_id, String fileUrl)
+			java.io.File uploadfile, String file_id, long user_id,
+			String fileUrl)
 		throws PortalException {
 
-		return getService().addFilekyso(uploadfile, file_id, fileUrl);
+		return getService().addFilekyso(uploadfile, file_id, user_id, fileUrl);
 	}
 
 	/**

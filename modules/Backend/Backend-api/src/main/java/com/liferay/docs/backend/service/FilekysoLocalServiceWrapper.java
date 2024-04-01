@@ -55,10 +55,11 @@ public class FilekysoLocalServiceWrapper
 
 	@Override
 	public com.liferay.docs.backend.model.Filekyso addfileSigned(
-			String name, String fileUrl, long file_id)
+			String name, String fileUrl, long file_id, long user_id)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _filekysoLocalService.addfileSigned(name, fileUrl, file_id);
+		return _filekysoLocalService.addfileSigned(
+			name, fileUrl, file_id, user_id);
 	}
 
 	/**
@@ -311,6 +312,15 @@ public class FilekysoLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _filekysoLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Filekyso upadtefileSigned(
+			String name, String fileUrl, long file_id, long user_id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _filekysoLocalService.upadtefileSigned(
+			name, fileUrl, file_id, user_id);
 	}
 
 	/**

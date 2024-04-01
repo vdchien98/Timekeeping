@@ -56,6 +56,7 @@ public class XinnghiWrapper
 		attributes.put("created_at", getCreated_at());
 		attributes.put("updated_at", getUpdated_at());
 		attributes.put("phongban_id", getPhongban_id());
+		attributes.put("trangthai_kyso", getTrangthai_kyso());
 
 		return attributes;
 	}
@@ -144,6 +145,12 @@ public class XinnghiWrapper
 
 		if (phongban_id != null) {
 			setPhongban_id(phongban_id);
+		}
+
+		Integer trangthai_kyso = (Integer)attributes.get("trangthai_kyso");
+
+		if (trangthai_kyso != null) {
+			setTrangthai_kyso(trangthai_kyso);
 		}
 	}
 
@@ -270,6 +277,16 @@ public class XinnghiWrapper
 	@Override
 	public int getTrangthai() {
 		return model.getTrangthai();
+	}
+
+	/**
+	 * Returns the trangthai_kyso of this xinnghi.
+	 *
+	 * @return the trangthai_kyso of this xinnghi
+	 */
+	@Override
+	public int getTrangthai_kyso() {
+		return model.getTrangthai_kyso();
 	}
 
 	/**
@@ -425,6 +442,16 @@ public class XinnghiWrapper
 	@Override
 	public void setTrangthai(int trangthai) {
 		model.setTrangthai(trangthai);
+	}
+
+	/**
+	 * Sets the trangthai_kyso of this xinnghi.
+	 *
+	 * @param trangthai_kyso the trangthai_kyso of this xinnghi
+	 */
+	@Override
+	public void setTrangthai_kyso(int trangthai_kyso) {
+		model.setTrangthai_kyso(trangthai_kyso);
 	}
 
 	/**

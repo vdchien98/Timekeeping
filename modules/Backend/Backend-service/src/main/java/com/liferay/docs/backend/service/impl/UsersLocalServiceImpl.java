@@ -343,15 +343,15 @@ public class UsersLocalServiceImpl extends UsersLocalServiceBaseImpl {
 	}
 	
 	public Users LayUserLanhDaoPhongtheoPhongBanId (long phongbanId)throws PortalException, SystemException {
-		
 		List<Users> ListUser = UsersLocalServiceUtil.getUserses(-1, -1);
 		 List<Users> resultPhongBanUsers = ListUser.stream()
 				 .filter(phongban -> phongban.getPhongban_id() == phongbanId)
 	                .collect(Collectors.toList());
 		 
-		List<Users> ListPhuTrachPhong = resultPhongBanUsers.stream().filter(phutrachphong -> phutrachphong.getPhu_trach_phong()==1).collect(Collectors.toList());
-		
+		List<Users> ListPhuTrachPhong = resultPhongBanUsers.stream().filter(phutrachphong -> phutrachphong.getPhu_trach_phong()==1 || phutrachphong.getChucvu_id()==42602).collect(Collectors.toList());
+
 		Users LanhDaoPhongPhuTrachPhong = ListPhuTrachPhong.get(0);
+
  		return LanhDaoPhongPhuTrachPhong;
 	}
 	

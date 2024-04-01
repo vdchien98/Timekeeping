@@ -8,11 +8,16 @@ import com.itextpdf.layout.border.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.Chucvu;
+import com.liferay.docs.backend.model.Filekyso;
+import com.liferay.docs.backend.model.GioLam;
 import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.model.Xinnghi;
 import com.liferay.docs.backend.service.ChucvuLocalServiceUtil;
+import com.liferay.docs.backend.service.FilekysoLocalServiceUtil;
+import com.liferay.docs.backend.service.GioLamLocalServiceUtil;
 import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.backend.service.XinnghiLocalServiceUtil;
@@ -40,8 +45,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
@@ -66,29 +73,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.osgi.service.component.annotations.Component;
+
 /**
  * @author User
  */
-@Component(
-	immediate = true,
-	property = {
-		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=XinNghi",
-		"javax.portlet.init-param.template-path=/",
+@Component(immediate = true, property = { "com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.header-portlet-css=/css/main.css", "com.liferay.portlet.instanceable=true",
+		"javax.portlet.display-name=XinNghi", "javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/xin_nghi/viewXinNghi.jsp",
-		"javax.portlet.name= " + XinNghiPortletKeys.XINNGHI,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
-	},
-	service = Portlet.class
-)
+		"javax.portlet.name= " + XinNghiPortletKeys.XINNGHI, "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 @WebServlet("/xin-nghi")
 public class XinNghiPortlet extends MVCPortlet {
-	
+
 	public void uploadfile(ActionRequest request, ActionResponse response) throws IOException, PortletException {
-         
+
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		System.out.println("da vao duoc day ^^^^^^^^^^^^^^^^^^^^^ ");
@@ -96,45 +95,129 @@ public class XinNghiPortlet extends MVCPortlet {
 		System.out.println("da vao duoc day upload file sau khi API ký so");
 
 	}
-	
-	public void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
-        
+
+	// SAVE NỬA NGÀY NGHỈ PHÉP
+	public void saveXinNghiNuaNgay(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		long userId = themeDisplay.getUserId();
 		Users usernguoidung = UsersLocalServiceUtil.getUserbyUserId(userId);
-		
-		
-		
-		
-	
-
 		ServiceContext serviceContext = new ServiceContext();
 		int id = ParamUtil.getInteger(request, "id");
-		System.out.println("da vao dc day 2 ----------------------- "+ id);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date tu_ngay = ParamUtil.getDate(request, "tu_ngay", dateFormat);
-		System.out.println("tu_ngay ----------------------- "+ tu_ngay);
-		Date den_ngay = ParamUtil.getDate(request, "den_ngay", dateFormat);
-		System.out.println("den_ngay ----------------------- "+ den_ngay);
+		String Nghi_ca_lam_String = ParamUtil.getString(request, "nua_ngay");
+		int Nghi_ca_lam = Integer.parseInt(Nghi_ca_lam_String);
+		System.out.println("Nghi_ca_lam============ " + Nghi_ca_lam);
+
 		String chon_ly_do = ParamUtil.getString(request, "chon_ly_do");
-		System.out.println("chon_ly_do ----------------------- "+ chon_ly_do);
-		String ly_do = ParamUtil.getString(request, "ly_do");
-		System.out.println("ly_do ----------------------- "+ ly_do);
+		String ly_do = "nghiphep";
 		LocalDate localTuNgay = tu_ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		System.out.println("localTuNgay ----------------------- "+ localTuNgay);
+		int soNgay = 0;
+		int trangthai = 1;
+		int nuangay = 1;
+		long nguoihuy = 9498;
+		int phongbanid = (int) usernguoidung.getPhongban_id();
+		int trangthaikyso = 5;
+
+		try {
+			XinnghiLocalServiceUtil.saveXinNghiNuaNgay(userId, tu_ngay, chon_ly_do, ly_do, trangthai, Nghi_ca_lam,
+					soNgay, nguoihuy, usernguoidung.getPhongban_id(), trangthaikyso, serviceContext);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		response.sendRedirect("/xin-nghi");
+	}
+
+	public void ChamCongXinnghiCaNgay(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		ServiceContext serviceContext = new ServiceContext();
+		String id_fileXinNghi = ParamUtil.getString(request, "file_id_xinnghi");
+		int id = Integer.parseInt(id_fileXinNghi);
+		System.out.println("da vao ChamCongXinnghiCaNgay dc +++++++ " + id_fileXinNghi);
+		try {
+			Xinnghi xinnghi = XinnghiLocalServiceUtil.getXinnghi(id);
+			long user_id_Nguoi_xin_Nghi = xinnghi.getUser_id();
+			System.out.println("xinnghi la " + xinnghi);
+			Date tungay = xinnghi.getTu_ngay();
+			Date denngay = xinnghi.getDen_ngay();
+			List<GioLam> gioLamListXinNghi = new ArrayList<>(xinnghi.getSo_ngay() + 1);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(tungay);
+			for (int i = 0; !calendar.getTime().after(denngay); i++, calendar.add(Calendar.DAY_OF_MONTH, 1)) {
+				int idGioLamnew = (int) CounterLocalServiceUtil.increment();
+				GioLam gioLamChuan = GioLamLocalServiceUtil.createGioLam(idGioLamnew);
+				gioLamChuan.setUser_id(user_id_Nguoi_xin_Nghi);
+
+				gioLamChuan.setNgay_lam(calendar.getTime()); // set ngay_lam cho gioLam
+
+				gioLamListXinNghi.add(gioLamChuan);
+			}
+			System.out.println("gioLamListXinNghi ----------------------- " + gioLamListXinNghi);
+
+			for (GioLam gioLam : gioLamListXinNghi) {
+				Date Ngaylam = gioLam.getNgay_lam();
+				GioLam checkgiolamcanlay = GioLamLocalServiceUtil.getGioLamByUserId(user_id_Nguoi_xin_Nghi, Ngaylam);
+				if (checkgiolamcanlay == null) {
+					GioLamLocalServiceUtil.addGioLamXinNghiDcPheDuyetCaNgay(1, user_id_Nguoi_xin_Nghi, Ngaylam, 1,
+							serviceContext);
+				} else {
+					int idgioLam = checkgiolamcanlay.getId();
+					GioLamLocalServiceUtil.updateGioLamXinNghiDcPheDuyetCaNgay(idgioLam, user_id_Nguoi_xin_Nghi,
+							Ngaylam, 1, serviceContext);
+				}
+
+			}
+			
+			
+			XinnghiLocalServiceUtil.upadateXinNghiByLanhDaoDuyet(id, 2, serviceContext);
+
+
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+
+		response.sendRedirect("/xin-nghi");
+	}
+
+	// Lấy phần tử thông qua ngày làm của GioLam
+
+	public void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		Users usernguoidung = UsersLocalServiceUtil.getUserbyUserId(userId);
+		ServiceContext serviceContext = new ServiceContext();
+		int id = ParamUtil.getInteger(request, "id");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date tu_ngay = ParamUtil.getDate(request, "tu_ngay", dateFormat);
+		Date den_ngay = ParamUtil.getDate(request, "den_ngay", dateFormat);
+		String chon_ly_do = ParamUtil.getString(request, "chon_ly_do");
+		String ly_do = ParamUtil.getString(request, "ly_do");
+		LocalDate localTuNgay = tu_ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate localDenNgay = den_ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		System.out.println("localDenNgay ----------------------- "+ localDenNgay);
-		int soNgay = (int) ChronoUnit.DAYS.between(localTuNgay, localDenNgay);
-		System.out.println("soNgay ----------------------- "+ soNgay);
+		int soNgay = (int) ChronoUnit.DAYS.between(localTuNgay, localDenNgay) + 1;
 		int trangthai = 2;
 		int nuangay = 0;
-		System.out.println("da vao dc day 3 ----------------------- ");
 		long nguoihuy = 9498;
-		System.out.println("da vao dc day 3 ----------------------- ");
 		int phongbanid = (int) usernguoidung.getPhongban_id();
-		System.out.println("da vao dc day ----------------------- ");
 		String pdfUrl = UrlFilePDF(userId, ly_do, soNgay, tu_ngay, den_ngay);
-		System.out.println("da vao dc day ++++++++ ----------------------- ");
 		try {
 			XinnghiLocalServiceUtil.saveXinNghiCaNgay(userId, tu_ngay, den_ngay, "nghiphep", ly_do, trangthai, nuangay,
 					soNgay, pdfUrl, nguoihuy, phongbanid, serviceContext);
@@ -148,11 +231,12 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		response.sendRedirect("/xin-nghi");
 	}
+
 	public String UrlFilePDF(long userId, String lydo, int songay, Date tungay, Date denngay) {
 		String pdfFileName = "";
 		try {
 			System.out.println("UrlFilePDF ----------------------- ");
-			
+
 			// Lấy Thông Tin từ UserId
 			Users user = UsersLocalServiceUtil.getUserbyUserId(userId);
 			String hovatenNguoiLamDon = user.getHovaten();
@@ -160,19 +244,22 @@ public class XinNghiPortlet extends MVCPortlet {
 			Users lanhDaoTrungTamPhuTrach = UsersLocalServiceUtil
 					.LayUserLanhDaoTrungTamtheoPhongBanId(user.getPhongban_id());
 			Users phuTrachPhong = UsersLocalServiceUtil.LayUserLanhDaoPhongtheoPhongBanId(user.getPhongban_id());
+
 			String tenLanhDaoTrungTam = lanhDaoTrungTamPhuTrach.getHovaten();
 			String tenPhuTrachPhong = phuTrachPhong.getHovaten();
+
 			// Lấy Thông tin Ngày tháng năm
 			Date currentDate = new Date();
 			int dayHienTai = currentDate.getDay() + 1;
-
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
 
 			// Sử dụng phương thức format để lấy ngày trong tháng
 			String dayOfMonth = dateFormat.format(currentDate);
 
 			int monthHienTai = currentDate.getMonth() + 1; // Lấy tháng
+
 			int namHienTai = currentDate.getYear() + 1900; // Lấy năm
+
 			String strMonthHienTai = String.valueOf(monthHienTai);
 			String strNamHienTai = String.valueOf(namHienTai);
 			String strdayHienTai = String.valueOf(dayHienTai);
@@ -188,7 +275,6 @@ public class XinNghiPortlet extends MVCPortlet {
 			String tungayString = dateformat.format(tungay).toString();
 			String denngayString = dateformat.format(denngay).toString();
 			// String ngayhientaiString = dateformat.format(currentDate).toString();
-			// số ngày
 
 			String songayNghi = String.valueOf(songay);
 
@@ -220,12 +306,14 @@ public class XinNghiPortlet extends MVCPortlet {
 			PdfWriter writer = null;
 			PdfDocument pdfDoc = null;
 			com.itextpdf.layout.Document document = null;
+
 			try {
 				long timestamp = System.currentTimeMillis();
 				pdfFileName = hovatenNguoiLamDon + "_" + dayOfMonth + "_" + strMonthHienTai + "_" + strNamHienTai + "_"
 						+ timestamp + ".pdf";
-				writer = new PdfWriter(
-						"D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\" + pdfFileName);
+				System.out.println("pdfFileName ========++++++++++======== " + pdfFileName);
+				writer = new PdfWriter("D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\" + pdfFileName);
+				System.out.println("========================++++++++++======== ");
 				pdfDoc = new PdfDocument(writer);
 				document = new com.itextpdf.layout.Document(pdfDoc);
 				// Set font and color
@@ -475,23 +563,25 @@ public class XinNghiPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		String duoiPDFURL = renderRequest.getParameter("file_url");
 		String layve = renderResponse.toString();
-		System.out.println("da ve dc day 00000000000000000000 " + duoiPDFURL);
 		if (duoiPDFURL != null) {
 			// Xử lý file_url ở đây
 			System.out.println("fileUrl ------------ " + duoiPDFURL);
 			PortletURL portletUrl = null;
 			portletUrl = PortletURLFactoryUtil.create(renderRequest,
-					"com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_sbwb", duoiPDFURL);
+					"com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm", duoiPDFURL);
 			System.out.println("portletUrl ========= " + portletUrl);
 
 		} else {
 			try {
 				ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 				long userId = themeDisplay.getUserId();
+				Users userDangNhap = UsersLocalServiceUtil.getUserbyUserId(userId);
+				renderRequest.setAttribute("userDangNhap", userDangNhap);
+				List<Filekyso> allFileKySo = FilekysoLocalServiceUtil.getFilekysos(-1, -1);
+				renderRequest.setAttribute("allFileKySo", allFileKySo);
+
 				List<Xinnghi> danhsachXinNghi = listNgayNghiCanLay(userId);
-				System.out.println("danhsachXinNghi ------------- " + danhsachXinNghi);
 				renderRequest.setAttribute("danhsachXinNghi", danhsachXinNghi);
-				System.out.println(UsersLocalServiceUtil.getUserses(-1, -1));
 				renderRequest.setAttribute("hovatennhanviens", UsersLocalServiceUtil.getUserses(-1, -1));
 
 			} catch (Exception e) {
@@ -504,15 +594,16 @@ public class XinNghiPortlet extends MVCPortlet {
 
 	public List<Xinnghi> listNgayNghiCanLay(long userId) throws PortalException, SystemException {
 
-		// Lấy Bảng chức vụ
-		List<Chucvu> AllChucVu = ChucvuLocalServiceUtil.getChucvus(-1, -1);
-
 		// Lấy User theo userId
 		Users usercanlay = UsersLocalServiceUtil.getUserbyUserId(userId);
-
 		// Lấy toàn bộ xin nghỉ
 		List<Xinnghi> danhsachngaynghi = null;
-		if (usercanlay.getChucvu_id() == 42602 || usercanlay.getPhu_trach_phong() == 1) {
+
+		if (usercanlay.getChucvu_id() == 42604) {
+			// Đây là giám đốc lấy phòng phụ trách và nhhững phó giám đốc
+			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
+
+		} else if (usercanlay.getChucvu_id() == 42602 || usercanlay.getPhu_trach_phong() == 1) {
 			// đây là trưởng phòng hoặc phụ trách phòng chỉ lấy những nhân viên trong phòng
 			danhsachngaynghi = listNgayNghiofPhong(userId, usercanlay.getPhongban_id());
 
@@ -520,9 +611,6 @@ public class XinNghiPortlet extends MVCPortlet {
 			// đây là phó giám đốc chỉ lấy những phòng phụ trách
 			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
 
-		} else if (usercanlay.getChucvu_id() == 42604) {
-			// Đây là giám đốc lấy phòng phụ trách và nhhững phó giám đốc
-			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
 		} else if (usercanlay.getChucvu_id() == 42601) {
 			// Đây là nhân viên Chỉ lấy danh sách của bản thân nhân viên
 			danhsachngaynghi = listNgayNghiCaNhan(userId);
@@ -539,7 +627,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 
 		List<Xinnghi> listNgayNghiCaNhan = AllXinNghi.stream()
-				.filter(xinnghi -> (xinnghi.getUser_id() == userId && xinnghi.getChon_ly_do().equals("nghiphep")))
+				.filter(xinnghi -> (xinnghi.getUser_id() == userId && (xinnghi.getChon_ly_do().equals("nghiphep"))))
 				.collect(Collectors.toList());
 		return listNgayNghiCaNhan;
 	}
@@ -571,62 +659,125 @@ public class XinNghiPortlet extends MVCPortlet {
 		for (Phongban BienPhongBan : listPhongbanCanLay) {
 			List<Xinnghi> listNgayNghiofLanhDaoquanly = AllXinNghi.stream()
 					.filter(xinnghi -> xinnghi.getPhongban_id() == BienPhongBan.getId()
-							& xinnghi.getChon_ly_do().equals("nghiphep"))
+							&& xinnghi.getChon_ly_do().equals("nghiphep") && xinnghi.getTrangthai() == 2)
 					.collect(Collectors.toList());
 			listNgayNghiofLanhDaoquanlyCanLay.addAll(listNgayNghiofLanhDaoquanly);
 		}
 
-		System.out.println("====================" + listNgayNghiofLanhDaoquanlyCanLay);
-
 		return listNgayNghiofLanhDaoquanlyCanLay;
 	}
 
+	public Filekyso filekysoCanLayByduoiPDFURL(String file_ur) throws PortalException, SystemException {
+		List<Filekyso> allFileKySo = FilekysoLocalServiceUtil.getFilekysos(-1, -1);
+		System.out.println("allFileKySo 111111------------ " + allFileKySo);
+		Filekyso filekysoCanLay = null;
+		if (allFileKySo != null) {
+			List<Filekyso> filekysoCanLayAll = allFileKySo.stream().filter(x -> x.getFileurl_signed().contains(file_ur))
+					.collect(Collectors.toList());
+			filekysoCanLay = filekysoCanLayAll.get(0);
+		}
+		System.out.println("filekysoCanLay 111111------------ " + filekysoCanLay);
 
-	
-	  // Xử lý một action trong portlet
-    public void myAction(ActionRequest actionRequest, ActionResponse actionResponse) {
-        // Xử lý action ở đây
-    }
-    
-    // Xử lý một resource request trong portlet
+		return filekysoCanLay;
+	}
 
-    public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
-    	String fileUrl = resourceRequest.getParameter("file_url");
-    	System.out.println(" vao dc day *****99999999999900000000000000000 ");
-    	
-        if (fileUrl != null && !fileUrl.isEmpty()) {
-            // Đường dẫn đến thư mục chứa tệp PDF
-            String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\";
+	// Xử lý một action trong portlet
+	public void myAction(ActionRequest actionRequest, ActionResponse actionResponse) {
+		// Xử lý action ở đây
+	}
 
-            // Tạo đối tượng File cho tệp PDF
-            File pdfFile = new File(pdfDirectory + fileUrl);
-            System.out.println("pdfFile******   "+ pdfFile);
-             System.out.println("da vao dc day roi 111111111111--------------------------"+ pdfFile );
-            // Kiểm tra xem tệp PDF có tồn tại không
-            if (pdfFile.exists()) {
-                FileInputStream fileInputStream = new FileInputStream(pdfFile);
+	// Xử lý một resource request trong portlet
 
-                // Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
-                resourceResponse.setContentType("application/pdf");
-                resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
+		String fileUrl = resourceRequest.getParameter("file_url");
+		System.out.println(" fileUrl " + fileUrl);
+		System.out.println(" vao dc day *****99999999999900000000000000000 ");
+		if (fileUrl != null && !fileUrl.isEmpty() && fileUrl.endsWith(".signed.signed.pdf")) {
+			String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdfSigned\\";
 
-                byte[] buffer = new byte[4096];
-                int bytesRead;
+			// Tạo đối tượng File cho tệp PDF
+			File pdfFile = new File(pdfDirectory + fileUrl);
+			System.out.println("pdfFile signed     *****   " + pdfFile);
+			System.out.println("da vao dc day roi signed -------------------------" + pdfFile);
+			// Kiểm tra xem tệp PDF có tồn tại không
+			if (pdfFile.exists()) {
+				FileInputStream fileInputStream = new FileInputStream(pdfFile);
 
-                while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                    resourceResponse.getPortletOutputStream().write(buffer, 0, bytesRead);
-                }
+				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
+				resourceResponse.setContentType("application/pdf");
+				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
 
-                fileInputStream.close();
-            } else {
-                // Xử lý khi tệp PDF không tồn tại
-                resourceResponse.getWriter().print("Tệp PDF không tồn tại");
-            }
-             
-             
-             
-         
-    }
-    }
-    
+				byte[] buffer = new byte[4096];
+				int bytesRead;
+
+				while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+					resourceResponse.getPortletOutputStream().write(buffer, 0, bytesRead);
+				}
+
+				fileInputStream.close();
+			} else {
+				// Xử lý khi tệp PDF không tồn tại
+				resourceResponse.getWriter().print("Tệp PDF không tồn tại");
+			}
+		} else if (fileUrl != null && !fileUrl.isEmpty() && fileUrl.endsWith(".signed.pdf")) {
+			String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdfSigned\\";
+
+			// Tạo đối tượng File cho tệp PDF
+			File pdfFile = new File(pdfDirectory + fileUrl);
+			System.out.println("pdfFile signed     *****   " + pdfFile);
+			System.out.println("da vao dc day roi signed -------------------------" + pdfFile);
+			// Kiểm tra xem tệp PDF có tồn tại không
+			if (pdfFile.exists()) {
+				FileInputStream fileInputStream = new FileInputStream(pdfFile);
+
+				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
+				resourceResponse.setContentType("application/pdf");
+				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
+
+				byte[] buffer = new byte[4096];
+				int bytesRead;
+
+				while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+					resourceResponse.getPortletOutputStream().write(buffer, 0, bytesRead);
+				}
+
+				fileInputStream.close();
+			} else {
+				// Xử lý khi tệp PDF không tồn tại
+				resourceResponse.getWriter().print("Tệp PDF không tồn tại");
+			}
+		} else if (fileUrl != null && !fileUrl.isEmpty()) {
+			// Đường dẫn đến thư mục chứa tệp PDF
+			String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\";
+
+			// Tạo đối tượng File cho tệp PDF
+			File pdfFile = new File(pdfDirectory + fileUrl);
+			System.out.println("pdfFile******   " + pdfFile);
+			System.out.println("da vao dc day roi 111111111111--------------------------" + pdfFile);
+			// Kiểm tra xem tệp PDF có tồn tại không
+			if (pdfFile.exists()) {
+				FileInputStream fileInputStream = new FileInputStream(pdfFile);
+
+				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
+				resourceResponse.setContentType("application/pdf");
+				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
+
+				byte[] buffer = new byte[4096];
+				int bytesRead;
+
+				while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+					resourceResponse.getPortletOutputStream().write(buffer, 0, bytesRead);
+				}
+
+				fileInputStream.close();
+			} else {
+				// Xử lý khi tệp PDF không tồn tại
+				resourceResponse.getWriter().print("Tệp PDF không tồn tại");
+			}
+
+		}
+	}
+
+	// xử lý hiện file đã ký số
+
 }

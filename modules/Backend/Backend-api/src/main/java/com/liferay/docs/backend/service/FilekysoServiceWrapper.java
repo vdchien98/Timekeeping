@@ -36,10 +36,12 @@ public class FilekysoServiceWrapper
 
 	@Override
 	public javax.ws.rs.core.Response addFilekyso(
-			java.io.File uploadfile, String file_id, String fileUrl)
+			java.io.File uploadfile, String file_id, long user_id,
+			String fileUrl)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _filekysoService.addFilekyso(uploadfile, file_id, fileUrl);
+		return _filekysoService.addFilekyso(
+			uploadfile, file_id, user_id, fileUrl);
 	}
 
 	/**

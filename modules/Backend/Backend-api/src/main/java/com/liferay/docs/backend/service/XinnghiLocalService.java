@@ -261,6 +261,20 @@ public interface XinnghiLocalService
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Xinnghi saveXinNghiNuaNgay(
+			long userId, Date tu_ngay, String chon_ly_do, String ly_do,
+			int trangthai, int Nghi_ca_lam, int soNgay, long nguoihuy,
+			long phongban_id, int trangthaikyso, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Xinnghi upadatefileXinNghi(
+			int id_file, int trangthai_ky_so, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Xinnghi upadateXinNghiByLanhDaoDuyet(
+			int id_file, int trangthai_ky_so, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Updates the xinnghi in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

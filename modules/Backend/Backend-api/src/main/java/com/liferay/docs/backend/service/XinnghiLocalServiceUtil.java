@@ -286,6 +286,36 @@ public class XinnghiLocalServiceUtil {
 			soNgay, file_url, nguoihuy, phongban_id, serviceContext);
 	}
 
+	public static Xinnghi saveXinNghiNuaNgay(
+			long userId, java.util.Date tu_ngay, String chon_ly_do,
+			String ly_do, int trangthai, int Nghi_ca_lam, int soNgay,
+			long nguoihuy, long phongban_id, int trangthaikyso,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().saveXinNghiNuaNgay(
+			userId, tu_ngay, chon_ly_do, ly_do, trangthai, Nghi_ca_lam, soNgay,
+			nguoihuy, phongban_id, trangthaikyso, serviceContext);
+	}
+
+	public static Xinnghi upadatefileXinNghi(
+			int id_file, int trangthai_ky_so,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().upadatefileXinNghi(
+			id_file, trangthai_ky_so, serviceContext);
+	}
+
+	public static Xinnghi upadateXinNghiByLanhDaoDuyet(
+			int id_file, int trangthai_ky_so,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().upadateXinNghiByLanhDaoDuyet(
+			id_file, trangthai_ky_so, serviceContext);
+	}
+
 	/**
 	 * Updates the xinnghi in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

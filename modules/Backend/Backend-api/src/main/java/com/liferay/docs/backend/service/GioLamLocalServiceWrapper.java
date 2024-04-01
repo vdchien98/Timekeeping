@@ -77,6 +77,31 @@ public class GioLamLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public void addGioLamXinNghiDcPheDuyetCaNgay(
+			int idGioLam, long userXinNghi, java.util.Date ngaylam,
+			int TrangThai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.addGioLamXinNghiDcPheDuyetCaNgay(
+			idGioLam, userXinNghi, ngaylam, TrangThai, serviceContext);
+	}
+
+	@Override
+	public void addGioLamXinNghiDcPheDuyetNuaNgay(
+			int idGioLam, long userXinNghi, java.util.Date ngaylam,
+			int Ca_Nghi_Phep, int TrangThai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.addGioLamXinNghiDcPheDuyetNuaNgay(
+			idGioLam, userXinNghi, ngaylam, Ca_Nghi_Phep, TrangThai,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
@@ -410,6 +435,18 @@ public class GioLamLocalServiceWrapper
 		_gioLamLocalService.updateGioLamVaoChieu(
 			idGioLam, user_id, check_in_chieu, di_muon_chieu, diem, trangthai,
 			serviceContext);
+	}
+
+	@Override
+	public void updateGioLamXinNghiDcPheDuyetCaNgay(
+			int idGioLam, long userXinNghi, java.util.Date ngaylam,
+			int TrangThai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.updateGioLamXinNghiDcPheDuyetCaNgay(
+			idGioLam, userXinNghi, ngaylam, TrangThai, serviceContext);
 	}
 
 	@Override

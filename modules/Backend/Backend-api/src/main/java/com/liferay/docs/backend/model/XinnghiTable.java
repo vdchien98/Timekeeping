@@ -60,6 +60,8 @@ public class XinnghiTable extends BaseTable<XinnghiTable> {
 		"updated_at", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<XinnghiTable, Long> phongban_id = createColumn(
 		"phongban_id", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<XinnghiTable, Integer> trangthai_kyso = createColumn(
+		"trangthai_kyso", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private XinnghiTable() {
 		super("Timekeeping_Xinnghi", XinnghiTable::new);

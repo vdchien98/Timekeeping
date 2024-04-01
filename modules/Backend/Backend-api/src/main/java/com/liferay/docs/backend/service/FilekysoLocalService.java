@@ -75,7 +75,8 @@ public interface FilekysoLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Filekyso addFilekyso(Filekyso filekyso);
 
-	public Filekyso addfileSigned(String name, String fileUrl, long file_id)
+	public Filekyso addfileSigned(
+			String name, String fileUrl, long file_id, long user_id)
 		throws PortalException;
 
 	/**
@@ -253,6 +254,10 @@ public interface FilekysoLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public Filekyso upadtefileSigned(
+			String name, String fileUrl, long file_id, long user_id)
 		throws PortalException;
 
 	/**

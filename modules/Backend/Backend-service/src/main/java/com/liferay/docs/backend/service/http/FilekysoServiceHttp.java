@@ -52,7 +52,7 @@ public class FilekysoServiceHttp {
 
 	public static javax.ws.rs.core.Response addFilekyso(
 			HttpPrincipal httpPrincipal, java.io.File uploadfile,
-			String file_id, String fileUrl)
+			String file_id, long user_id, String fileUrl)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -61,7 +61,7 @@ public class FilekysoServiceHttp {
 				_addFilekysoParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, uploadfile, file_id, fileUrl);
+				methodKey, uploadfile, file_id, user_id, fileUrl);
 
 			Object returnObj = null;
 
@@ -132,7 +132,7 @@ public class FilekysoServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(FilekysoServiceHttp.class);
 
 	private static final Class<?>[] _addFilekysoParameterTypes0 = new Class[] {
-		java.io.File.class, String.class, String.class
+		java.io.File.class, String.class, long.class, String.class
 	};
 	private static final Class<?>[] _saveFileToDirectoryAsPDFParameterTypes2 =
 		new Class[] {java.io.File.class, String.class, String.class};
