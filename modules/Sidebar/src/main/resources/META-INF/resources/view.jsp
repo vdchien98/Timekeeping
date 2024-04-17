@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <style>
@@ -146,7 +146,7 @@ li.nav-item.vdchien {
 					<p class="chien1">Xin Nghỉ</p>
 			</a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="" data-toggle="collapse" id="toggleCollapse"><i
+				href="http://localhost:8080/xin-cham-cong" data-toggle="collapse" id="toggleCollapse"><i
 					class="fa fa-calendar-check-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Chấm Công</p> </a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"

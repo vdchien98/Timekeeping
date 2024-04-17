@@ -110,10 +110,13 @@
 		<field name="id" type="int" />
 		<field name="user_id" type="long" />
 		<field name="ly_do" type="String" />
+		<field name="chon_ly_do" type="String" />
 		<field name="ca_lam" type="String" />
 		<field name="check_in" type="String" />
 		<field name="check_out" type="String" />
 		<field name="ngay_lam" type="Date" />
+		<field name="tu_ngay" type="Date" />
+		<field name="den_ngay" type="Date" />
 		<field name="nguoi_duyet" type="long" />
 		<field name="nguoi_huy" type="long" />
 		<field name="diem" type="double" />

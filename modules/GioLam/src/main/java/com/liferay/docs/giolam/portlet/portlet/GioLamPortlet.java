@@ -111,7 +111,7 @@ public class GioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-		// getAccessTokenZaloNew();
+		//getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		// System.out.println("user_id_info" + user_id_info);
@@ -354,7 +354,7 @@ public class GioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=4aF93hsIWJWJGSiElfI1EHT3o0wzZOTTRHgQOOAvenHz8wveiRQhDraCcGA1mRbHSnZpPRcdt2PNBCnWWgM6KKmYZXUCYwvOHHcs5REWhaX53UO7bi2iUrCMvaQydTWCOKd9JB2TtWvR3i0ujQVJMNq6xmMnqA5vN4YH1PNolqOw8RaryuIeUHCnZqlXWvPxEKwk4-MSWK0W4hq3rCRoLInEvWNKx_Gr8qZcLFZPwnqqVz5JxycPBWLBgHBO_-DXUaps4zJrqLiyLyaNqOFSNoSAbcwAigu_8Xc5Rlkxg1COFVfPjuBc4cWxuIIuilqIIHR1TOR2zmfbRRnBkDIS751-Xss1rg8_GK-mI8xY_0fpCBH9fxw8ENuKm5VKeTGT2JR5TUQLrKSn8ziM-l6JPp4crILJQfhWVmMyZOGy"
+			String data = "refresh_token=xOYK55AId6_iYfOKKPISRkY8bHHIZUiUjzwiOdQXutt4mRX07zh5GVgujJiRuEPBgOBeLdUUdKomsSirIuY36RkLr3HItDCJdiRPQpctb4ZuwPji5u6NNDpCntOTb9famDJzUIAFaG2Ua-mGMV2yFvo-pXmd-SGIsPIX0nU7_N_dswzqE9gYMFZmrYOWke5Ns-dqU2ZsZ4VAZTP61CM3FyQaq0zXlTaGc_YlRNAhoK38jRHU1jYpG-IOssefzfvIyAlCV1tAlW7ZbCqdBFIb6SINeWStwCiCvA-PAWJ7tXFtkvTsFDRfNF_GuMSWifLwtyFC062Se2UStiK6MvAbBxhnhH9Yj_uPfiwH9nYlsohVzeasEvYRJyAAYKPxxCv2nvIoOM3frtYizzXaQg-mURFb_4P0lOqzWEM7CeehFqXJZPbh"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -864,8 +864,6 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 			System.out.println("danhSachNgayTrongThangcaPhong ===== " + danhSachNgayTrongThangcaPhong);
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
-			
-			
 
 		} else if (quyenxemgiolam == 2) {
 			// xử lý trưởng phòng
@@ -957,7 +955,6 @@ public class GioLamPortlet extends MVCPortlet {
 					x.getVe_som_chieu(), DateTruocSauNgayHienTai);
 			Users users = UsersLocalServiceUtil.getUserbyUserId(x.getUser_id());
 			String ho_va_ten = users.getHovaten();
-
 
 			if (x == null) {
 //							gioLamMap.put("ngay_lam", x.getNgay_lam());

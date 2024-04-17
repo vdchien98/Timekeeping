@@ -267,11 +267,25 @@ public interface XinnghiLocalService
 			long phongban_id, int trangthaikyso, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Xinnghi TuChoXinNghiByLanhDao(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Xinnghi TuChoXinNghiByTruongPhong(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	public Xinnghi upadatefileXinNghi(
 			int id_file, int trangthai_ky_so, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public Xinnghi upadateXinNghiByLanhDaoDuyet(
+			int id_file, int trangthai_ky_so, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Xinnghi upadateXinNghiByTruongPhongDuyet(
 			int id_file, int trangthai_ky_so, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

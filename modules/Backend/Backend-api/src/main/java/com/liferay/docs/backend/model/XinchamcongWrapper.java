@@ -45,10 +45,13 @@ public class XinchamcongWrapper
 		attributes.put("id", getId());
 		attributes.put("user_id", getUser_id());
 		attributes.put("ly_do", getLy_do());
+		attributes.put("chon_ly_do", getChon_ly_do());
 		attributes.put("ca_lam", getCa_lam());
 		attributes.put("check_in", getCheck_in());
 		attributes.put("check_out", getCheck_out());
 		attributes.put("ngay_lam", getNgay_lam());
+		attributes.put("tu_ngay", getTu_ngay());
+		attributes.put("den_ngay", getDen_ngay());
 		attributes.put("nguoi_duyet", getNguoi_duyet());
 		attributes.put("nguoi_huy", getNguoi_huy());
 		attributes.put("diem", getDiem());
@@ -80,6 +83,12 @@ public class XinchamcongWrapper
 			setLy_do(ly_do);
 		}
 
+		String chon_ly_do = (String)attributes.get("chon_ly_do");
+
+		if (chon_ly_do != null) {
+			setChon_ly_do(chon_ly_do);
+		}
+
 		String ca_lam = (String)attributes.get("ca_lam");
 
 		if (ca_lam != null) {
@@ -102,6 +111,18 @@ public class XinchamcongWrapper
 
 		if (ngay_lam != null) {
 			setNgay_lam(ngay_lam);
+		}
+
+		Date tu_ngay = (Date)attributes.get("tu_ngay");
+
+		if (tu_ngay != null) {
+			setTu_ngay(tu_ngay);
+		}
+
+		Date den_ngay = (Date)attributes.get("den_ngay");
+
+		if (den_ngay != null) {
+			setDen_ngay(den_ngay);
 		}
 
 		Long nguoi_duyet = (Long)attributes.get("nguoi_duyet");
@@ -183,6 +204,16 @@ public class XinchamcongWrapper
 	}
 
 	/**
+	 * Returns the chon_ly_do of this xinchamcong.
+	 *
+	 * @return the chon_ly_do of this xinchamcong
+	 */
+	@Override
+	public String getChon_ly_do() {
+		return model.getChon_ly_do();
+	}
+
+	/**
 	 * Returns the created_at of this xinchamcong.
 	 *
 	 * @return the created_at of this xinchamcong
@@ -190,6 +221,16 @@ public class XinchamcongWrapper
 	@Override
 	public Date getCreated_at() {
 		return model.getCreated_at();
+	}
+
+	/**
+	 * Returns the den_ngay of this xinchamcong.
+	 *
+	 * @return the den_ngay of this xinchamcong
+	 */
+	@Override
+	public Date getDen_ngay() {
+		return model.getDen_ngay();
 	}
 
 	/**
@@ -283,6 +324,16 @@ public class XinchamcongWrapper
 	}
 
 	/**
+	 * Returns the tu_ngay of this xinchamcong.
+	 *
+	 * @return the tu_ngay of this xinchamcong
+	 */
+	@Override
+	public Date getTu_ngay() {
+		return model.getTu_ngay();
+	}
+
+	/**
 	 * Returns the updated_at of this xinchamcong.
 	 *
 	 * @return the updated_at of this xinchamcong
@@ -338,6 +389,16 @@ public class XinchamcongWrapper
 	}
 
 	/**
+	 * Sets the chon_ly_do of this xinchamcong.
+	 *
+	 * @param chon_ly_do the chon_ly_do of this xinchamcong
+	 */
+	@Override
+	public void setChon_ly_do(String chon_ly_do) {
+		model.setChon_ly_do(chon_ly_do);
+	}
+
+	/**
 	 * Sets the created_at of this xinchamcong.
 	 *
 	 * @param created_at the created_at of this xinchamcong
@@ -345,6 +406,16 @@ public class XinchamcongWrapper
 	@Override
 	public void setCreated_at(Date created_at) {
 		model.setCreated_at(created_at);
+	}
+
+	/**
+	 * Sets the den_ngay of this xinchamcong.
+	 *
+	 * @param den_ngay the den_ngay of this xinchamcong
+	 */
+	@Override
+	public void setDen_ngay(Date den_ngay) {
+		model.setDen_ngay(den_ngay);
 	}
 
 	/**
@@ -435,6 +506,16 @@ public class XinchamcongWrapper
 	@Override
 	public void setTrangthai(int trangthai) {
 		model.setTrangthai(trangthai);
+	}
+
+	/**
+	 * Sets the tu_ngay of this xinchamcong.
+	 *
+	 * @param tu_ngay the tu_ngay of this xinchamcong
+	 */
+	@Override
+	public void setTu_ngay(Date tu_ngay) {
+		model.setTu_ngay(tu_ngay);
 	}
 
 	/**

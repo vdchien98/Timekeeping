@@ -298,6 +298,24 @@ public class XinnghiLocalServiceUtil {
 			nguoihuy, phongban_id, trangthaikyso, serviceContext);
 	}
 
+	public static Xinnghi TuChoXinNghiByLanhDao(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().TuChoXinNghiByLanhDao(
+			id_file, trangthai_ky_so, id_nguoihuy, serviceContext);
+	}
+
+	public static Xinnghi TuChoXinNghiByTruongPhong(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().TuChoXinNghiByTruongPhong(
+			id_file, trangthai_ky_so, id_nguoihuy, serviceContext);
+	}
+
 	public static Xinnghi upadatefileXinNghi(
 			int id_file, int trangthai_ky_so,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -313,6 +331,15 @@ public class XinnghiLocalServiceUtil {
 		throws PortalException, SystemException {
 
 		return getService().upadateXinNghiByLanhDaoDuyet(
+			id_file, trangthai_ky_so, serviceContext);
+	}
+
+	public static Xinnghi upadateXinNghiByTruongPhongDuyet(
+			int id_file, int trangthai_ky_so,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().upadateXinNghiByTruongPhongDuyet(
 			id_file, trangthai_ky_so, serviceContext);
 	}
 

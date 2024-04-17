@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -61,6 +63,30 @@ public interface XinchamcongLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.docs.backend.service.impl.XinchamcongLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the xinchamcong local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link XinchamcongLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public void actionDuyetChamCongNuaNgayCaNgay(
+			long chucvu_id, long idxinchamcong,
+			long user_id_nguoi_xin_cham_cong, long user_id_nguoi_duyet,
+			long user_id_nguoi_huy, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void actionDuyetChamCongVaoRa(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void actionTuChoiChamCongNuaNgayCaNgay(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void actionTuChoiChamCongVaoRa(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Adds the xinchamcong to the database. Also notifies the appropriate model listeners.
@@ -74,6 +100,30 @@ public interface XinchamcongLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Xinchamcong addXinchamcong(Xinchamcong xinchamcong);
+
+	public void addXinChamCongCaNgay(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, Date tu_ngay, Date den_ngay,
+			long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			String loai_cham_cong, float diem, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addXinChamCongNuaNgay(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, Date ngay_lam,
+			long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			String loai_cham_cong, float diem, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addXinChamCongVaoRa(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, Date ngay_lam,
+			long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			String loai_cham_cong, float diem, int trangthai, long phongban_id,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * @throws PortalException

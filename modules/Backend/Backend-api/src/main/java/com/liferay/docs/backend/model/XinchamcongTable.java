@@ -38,6 +38,8 @@ public class XinchamcongTable extends BaseTable<XinchamcongTable> {
 		"user_id", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, String> ly_do = createColumn(
 		"ly_do", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<XinchamcongTable, String> chon_ly_do = createColumn(
+		"chon_ly_do", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, String> ca_lam = createColumn(
 		"ca_lam", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, String> check_in = createColumn(
@@ -46,6 +48,10 @@ public class XinchamcongTable extends BaseTable<XinchamcongTable> {
 		"check_out", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, Date> ngay_lam = createColumn(
 		"ngay_lam", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<XinchamcongTable, Date> tu_ngay = createColumn(
+		"tu_ngay", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<XinchamcongTable, Date> den_ngay = createColumn(
+		"den_ngay", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, Long> nguoi_duyet = createColumn(
 		"nguoi_duyet", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<XinchamcongTable, Long> nguoi_huy = createColumn(

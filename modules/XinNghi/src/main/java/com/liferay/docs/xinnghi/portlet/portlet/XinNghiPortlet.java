@@ -176,23 +176,68 @@ public class XinNghiPortlet extends MVCPortlet {
 				}
 
 			}
-			
-			
-			XinnghiLocalServiceUtil.upadateXinNghiByLanhDaoDuyet(id, 2, serviceContext);
 
+			XinnghiLocalServiceUtil.upadateXinNghiByLanhDaoDuyet(id, 2, serviceContext);
 
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
+		response.sendRedirect("/xin-nghi");
+	}
 
+	public void TuChoiChamCongXinNghiCaNgay(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		System.out.println("userId ========================++++++++++++++++++ " + userId);
+		ServiceContext serviceContext = new ServiceContext();
+		String id_fileXinNghi = ParamUtil.getString(request, "file_id_xinnghi");
+		int id = Integer.parseInt(id_fileXinNghi);
+		System.out.println("da vao ChamCongXinnghiCaNgay dc +++++++ " + id_fileXinNghi);
+		try {
+			XinnghiLocalServiceUtil.TuChoXinNghiByLanhDao(id, 7, userId, serviceContext);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response.sendRedirect("/xin-nghi");
+	}
+
+	public void ChamCongXinnghiNuaNgay(ActionRequest request, ActionResponse response)
+			throws IOException, PortletException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+		ServiceContext serviceContext = new ServiceContext();
+		String id_fileXinNghi = ParamUtil.getString(request, "file_id_xinnghi");
+		int id = Integer.parseInt(id_fileXinNghi);
+		System.out.println("da vao ChamCongXinnghiNuaNgay dc +++++++ " + id_fileXinNghi);
+		try {
+			Xinnghi xinnghi = XinnghiLocalServiceUtil.getXinnghi(id);
+			long user_id_Nguoi_xin_Nghi = xinnghi.getUser_id();
+			System.out.println("xinnghi la " + xinnghi);
+			Date tungay = xinnghi.getTu_ngay();
+
+			GioLam checkgiolamcanlay = GioLamLocalServiceUtil.getGioLamByUserId(user_id_Nguoi_xin_Nghi, tungay);
+			if (checkgiolamcanlay == null) {
+				GioLamLocalServiceUtil.addGioLamXinNghiDcPheDuyetNuaNgay(1, user_id_Nguoi_xin_Nghi, tungay,
+						xinnghi.getNua_ngay(), 1, serviceContext);
+			} else {
+				int idgioLam = checkgiolamcanlay.getId();
+				GioLamLocalServiceUtil.updateGioLamXinNghiDcPheDuyetNuaNgay(idgioLam, user_id_Nguoi_xin_Nghi, tungay,
+						xinnghi.getNua_ngay(), 1, serviceContext);
+			}
+			
+			
+			XinnghiLocalServiceUtil.upadateXinNghiByTruongPhongDuyet(id, 6, serviceContext);
+
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		response.sendRedirect("/xin-nghi");
 	}
 

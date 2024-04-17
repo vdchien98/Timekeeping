@@ -240,10 +240,13 @@
 		<column type="int" name="id" primary="true"></column>
 		<column type="long" name="user_id"></column>
 		<column type="String" name="ly_do"></column>
+		<column type="String" name="chon_ly_do"></column>
 		<column type="String" name="ca_lam"></column>
 		<column type="String" name="check_in"></column>
 		<column type="String" name="check_out"></column>
 		<column type="Date" name="ngay_lam"></column>
+		<column type="Date" name="tu_ngay"></column>
+		<column type="Date" name="den_ngay"></column>
 		<column type="long" name="nguoi_duyet"></column>
 		<column type="long" name="nguoi_huy"></column>
 		<column type="double" name="diem"></column>

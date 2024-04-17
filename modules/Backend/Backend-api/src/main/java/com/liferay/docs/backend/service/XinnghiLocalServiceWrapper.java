@@ -331,6 +331,28 @@ public class XinnghiLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.docs.backend.model.Xinnghi TuChoXinNghiByLanhDao(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinnghiLocalService.TuChoXinNghiByLanhDao(
+			id_file, trangthai_ky_so, id_nguoihuy, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Xinnghi TuChoXinNghiByTruongPhong(
+			int id_file, int trangthai_ky_so, long id_nguoihuy,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinnghiLocalService.TuChoXinNghiByTruongPhong(
+			id_file, trangthai_ky_so, id_nguoihuy, serviceContext);
+	}
+
+	@Override
 	public com.liferay.docs.backend.model.Xinnghi upadatefileXinNghi(
 			int id_file, int trangthai_ky_so,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -349,6 +371,18 @@ public class XinnghiLocalServiceWrapper
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		return _xinnghiLocalService.upadateXinNghiByLanhDaoDuyet(
+			id_file, trangthai_ky_so, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Xinnghi
+			upadateXinNghiByTruongPhongDuyet(
+				int id_file, int trangthai_ky_so,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _xinnghiLocalService.upadateXinNghiByTruongPhongDuyet(
 			id_file, trangthai_ky_so, serviceContext);
 	}
 

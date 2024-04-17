@@ -99,6 +99,21 @@ public interface XinchamcongModel extends BaseModel<Xinchamcong> {
 	public void setLy_do(String ly_do);
 
 	/**
+	 * Returns the chon_ly_do of this xinchamcong.
+	 *
+	 * @return the chon_ly_do of this xinchamcong
+	 */
+	@AutoEscape
+	public String getChon_ly_do();
+
+	/**
+	 * Sets the chon_ly_do of this xinchamcong.
+	 *
+	 * @param chon_ly_do the chon_ly_do of this xinchamcong
+	 */
+	public void setChon_ly_do(String chon_ly_do);
+
+	/**
 	 * Returns the ca_lam of this xinchamcong.
 	 *
 	 * @return the ca_lam of this xinchamcong
@@ -156,6 +171,34 @@ public interface XinchamcongModel extends BaseModel<Xinchamcong> {
 	 * @param ngay_lam the ngay_lam of this xinchamcong
 	 */
 	public void setNgay_lam(Date ngay_lam);
+
+	/**
+	 * Returns the tu_ngay of this xinchamcong.
+	 *
+	 * @return the tu_ngay of this xinchamcong
+	 */
+	public Date getTu_ngay();
+
+	/**
+	 * Sets the tu_ngay of this xinchamcong.
+	 *
+	 * @param tu_ngay the tu_ngay of this xinchamcong
+	 */
+	public void setTu_ngay(Date tu_ngay);
+
+	/**
+	 * Returns the den_ngay of this xinchamcong.
+	 *
+	 * @return the den_ngay of this xinchamcong
+	 */
+	public Date getDen_ngay();
+
+	/**
+	 * Sets the den_ngay of this xinchamcong.
+	 *
+	 * @param den_ngay the den_ngay of this xinchamcong
+	 */
+	public void setDen_ngay(Date den_ngay);
 
 	/**
 	 * Returns the nguoi_duyet of this xinchamcong.

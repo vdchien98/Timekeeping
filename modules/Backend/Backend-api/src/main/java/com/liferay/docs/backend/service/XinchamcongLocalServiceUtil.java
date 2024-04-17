@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.Xinchamcong;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,6 +45,57 @@ public class XinchamcongLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.backend.service.impl.XinchamcongLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void actionDuyetChamCongNuaNgayCaNgay(
+			long chucvu_id, long idxinchamcong,
+			long user_id_nguoi_xin_cham_cong, long user_id_nguoi_duyet,
+			long user_id_nguoi_huy, int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().actionDuyetChamCongNuaNgayCaNgay(
+			chucvu_id, idxinchamcong, user_id_nguoi_xin_cham_cong,
+			user_id_nguoi_duyet, user_id_nguoi_huy, trangthai, phongban_id,
+			serviceContext);
+	}
+
+	public static void actionDuyetChamCongVaoRa(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().actionDuyetChamCongVaoRa(
+			chucvu_id, idxinchamcong, user_id_nguoi_xin_cham_cong, ly_do,
+			user_id_nguoi_duyet, user_id_nguoi_huy, trangthai, phongban_id,
+			serviceContext);
+	}
+
+	public static void actionTuChoiChamCongNuaNgayCaNgay(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().actionTuChoiChamCongNuaNgayCaNgay(
+			chucvu_id, idxinchamcong, user_id_nguoi_xin_cham_cong, ly_do,
+			user_id_nguoi_duyet, user_id_nguoi_huy, trangthai, phongban_id,
+			serviceContext);
+	}
+
+	public static void actionTuChoiChamCongVaoRa(
+			long chucvu_id, int idxinchamcong, long user_id_nguoi_xin_cham_cong,
+			String ly_do, long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().actionTuChoiChamCongVaoRa(
+			chucvu_id, idxinchamcong, user_id_nguoi_xin_cham_cong, ly_do,
+			user_id_nguoi_duyet, user_id_nguoi_huy, trangthai, phongban_id,
+			serviceContext);
+	}
 
 	/**
 	 * Adds the xinchamcong to the database. Also notifies the appropriate model listeners.
@@ -57,6 +109,49 @@ public class XinchamcongLocalServiceUtil {
 	 */
 	public static Xinchamcong addXinchamcong(Xinchamcong xinchamcong) {
 		return getService().addXinchamcong(xinchamcong);
+	}
+
+	public static void addXinChamCongCaNgay(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, java.util.Date tu_ngay,
+			java.util.Date den_ngay, long user_id_nguoi_duyet,
+			long user_id_nguoi_huy, String loai_cham_cong, float diem,
+			int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addXinChamCongCaNgay(
+			user_id_nguoi_xin_cham_cong, ly_do, ca_lam, check_in, check_out,
+			tu_ngay, den_ngay, user_id_nguoi_duyet, user_id_nguoi_huy,
+			loai_cham_cong, diem, trangthai, phongban_id, serviceContext);
+	}
+
+	public static void addXinChamCongNuaNgay(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, java.util.Date ngay_lam,
+			long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			String loai_cham_cong, float diem, int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addXinChamCongNuaNgay(
+			user_id_nguoi_xin_cham_cong, ly_do, ca_lam, check_in, check_out,
+			ngay_lam, user_id_nguoi_duyet, user_id_nguoi_huy, loai_cham_cong,
+			diem, trangthai, phongban_id, serviceContext);
+	}
+
+	public static void addXinChamCongVaoRa(
+			long user_id_nguoi_xin_cham_cong, String ly_do, String ca_lam,
+			String check_in, String check_out, java.util.Date ngay_lam,
+			long user_id_nguoi_duyet, long user_id_nguoi_huy,
+			String loai_cham_cong, float diem, int trangthai, long phongban_id,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addXinChamCongVaoRa(
+			user_id_nguoi_xin_cham_cong, ly_do, ca_lam, check_in, check_out,
+			ngay_lam, user_id_nguoi_duyet, user_id_nguoi_huy, loai_cham_cong,
+			diem, trangthai, phongban_id, serviceContext);
 	}
 
 	/**

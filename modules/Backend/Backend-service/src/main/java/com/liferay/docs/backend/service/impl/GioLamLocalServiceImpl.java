@@ -50,7 +50,6 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		giolam.setNgay_lam(ngaylam);
 		giolam.setCheck_in_sang(check_in_sang);
 		giolam.setDi_muon_sang(di_muon_sang);
-		
 
 		giolam.setDiem(diem);
 		giolam.setCreated_at(now);
@@ -78,15 +77,17 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		GioLamLocalServiceUtil.updateGioLam(giolam);
 
 	}
+
 	public void updateGioLamXinNghiDcPheDuyetCaNgay(int idGioLam, long userXinNghi, Date ngaylam, int TrangThai,
 			ServiceContext serviceContext) throws PortalException, SystemException {
 		GioLam giolam = GioLamLocalServiceUtil.getGioLam(idGioLam);
 		Date now = new Date();
-        giolam.setCheck_in_sang("7:15");
-        giolam.setCheck_out_sang("11:30");
-        giolam.setCheck_in_chieu("13:15");
-        giolam.setCheck_out_chieu("16:45");
-        giolam.setDiem(4);
+		giolam.setNgay_lam(ngaylam);
+		giolam.setCheck_in_sang("7:15");
+		giolam.setCheck_out_sang("11:30");
+		giolam.setCheck_in_chieu("13:15");
+		giolam.setCheck_out_chieu("16:45");
+		giolam.setDiem(4);
 		giolam.setTrangthai(1);
 		giolam.setCreated_at(now);
 		giolam.setUpdated_at(now);
@@ -100,6 +101,45 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		int idGioLamnew = (int) CounterLocalServiceUtil.increment();
 		GioLam giolam = gioLamPersistence.create(idGioLamnew);
 		Date now = new Date();
+		giolam.setNgay_lam(ngaylam);
+		giolam.setUser_id(userXinNghi);
+		if (Ca_Nghi_Phep == 1) {
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+			giolam.setDiem(2);
+		} else if (Ca_Nghi_Phep == 2) {
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+			giolam.setDiem(2);
+		}
+
+		giolam.setCreated_at(now);
+		giolam.setUpdated_at(now);
+
+		GioLamLocalServiceUtil.updateGioLam(giolam);
+
+	}
+
+	public void updateGioLamXinNghiDcPheDuyetNuaNgay(int idGioLam, long userXinNghi, Date ngaylam, int Ca_Nghi_Phep,
+			int TrangThai, ServiceContext serviceContext) throws PortalException, SystemException {
+
+		GioLam giolam = GioLamLocalServiceUtil.getGioLam(idGioLam);
+		Date now = new Date();
+		giolam.setNgay_lam(ngaylam);
+		if (Ca_Nghi_Phep == 1) {
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+			giolam.setDi_muon_sang(0);
+			giolam.setVe_som_sang(0);
+		} else if (Ca_Nghi_Phep == 2) {
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+			giolam.setDi_muon_chieu(0);
+			giolam.setVe_som_chieu(0);
+		}
+
+		giolam.setCreated_at(now);
+		giolam.setUpdated_at(now);
 
 		GioLamLocalServiceUtil.updateGioLam(giolam);
 
@@ -192,6 +232,163 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 
 	}
 
+	// Xin chấm công vào /ra
+
+	public void addXinChamCongvaoRa(int idGioLam, long user_id_XinChamCongVaoRa, Date ngay_lam, String ca_lam,
+			String loai_cham_cong, float diem, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		int startValue = 1; // Giá trị bắt đầu cho counter
+		String counterName = "XinChamCongCounter"; // Tên của counter
+		int id_GioLam = (int) CounterLocalServiceUtil.increment(counterName, startValue);
+		GioLam giolam = gioLamPersistence.create(id_GioLam);
+		Date now = new Date();
+		giolam.setId(id_GioLam);
+		giolam.setUser_id(user_id_XinChamCongVaoRa);
+		giolam.setNgay_lam(ngay_lam);
+        giolam.setCreated_at(now);
+        giolam.setUpdated_at(now);
+		if (ca_lam.equals("sang")) {
+			if (loai_cham_cong.equals("check_in")) {
+				giolam.setCheck_in_sang("7:15");
+				giolam.setDi_muon_sang(0);
+				giolam.setDiem(1);
+				giolam.setTrangthai(1);
+			} else if (loai_cham_cong.equals("check_out")) {
+				giolam.setCheck_out_sang("11:30");
+				giolam.setVe_som_sang(0);
+				giolam.setDiem(1);
+				giolam.setTrangthai(1);
+			}
+
+		} else if (ca_lam.equals("chieu")) {
+			if (loai_cham_cong.equals("check_in")) {
+				giolam.setCheck_in_sang("13:15");
+				giolam.setDi_muon_chieu(0);
+				giolam.setDiem(1);
+				giolam.setTrangthai(1);
+			} else if (loai_cham_cong.equals("check_out")) {
+				giolam.setCheck_out_sang("16:45");
+				giolam.setVe_som_chieu(0);
+				giolam.setDiem(1);
+				giolam.setTrangthai(1);
+			}
+		}
+
+		GioLamLocalServiceUtil.updateGioLam(giolam);
+
+	}
+
+	public void updateXinChamCongvaoRa(int idGioLam, Date ngay_lam, long user_id_XinChamCongVaoRa, String ca_lam,
+			String loai_cham_cong, float diem, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		GioLam giolam = GioLamLocalServiceUtil.getGioLam(idGioLam);
+		Date now = new Date();
+        giolam.setCreated_at(now);
+        giolam.setUpdated_at(now);
+		if (ca_lam.equals("sang")) {
+			if (loai_cham_cong.equals("check_in")) {
+				giolam.setCheck_in_sang("7:15");
+				giolam.setDi_muon_sang(0);
+				giolam.setTrangthai(1);
+			} else if (loai_cham_cong.equals("check_out")) {
+				giolam.setCheck_out_sang("11:30");
+				giolam.setVe_som_sang(0);
+				giolam.setTrangthai(1);
+			}
+
+		} else if (ca_lam.equals("chieu")) {
+			if (loai_cham_cong.equals("check_in")) {
+				giolam.setCheck_in_sang("13:15");
+				giolam.setDi_muon_chieu(0);
+				giolam.setTrangthai(1);
+			} else if (loai_cham_cong.equals("check_out")) {
+				giolam.setCheck_out_sang("16:45");
+				giolam.setVe_som_chieu(0);
+				giolam.setTrangthai(1);
+			}
+		}
+
+		GioLamLocalServiceUtil.updateGioLam(giolam);
+
+	}
+
+	
+	
+	
+	
+	// addXinChamCongCaNgayNuaNgay
+	public void addXinChamCongCaNgayNuaNgay(Date ngay_lam, long user_id_XinChamCong,
+			String loai_cham_cong, float diem, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		int startValue = 1; // Giá trị bắt đầu cho counter
+		String counterName = "XinChamCongCounter"; // Tên của counter
+		int id_GioLam = (int) CounterLocalServiceUtil.increment(counterName, startValue);
+		GioLam giolam = gioLamPersistence.create(id_GioLam);
+		Date now = new Date();
+		giolam.setUser_id(user_id_XinChamCong);
+		giolam.setNgay_lam(ngay_lam);
+		if (loai_cham_cong.equals("Chamcongcangay")) {
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+		} else if (loai_cham_cong.equals("ChamCongNuaNgaySang")){
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+		} else if (loai_cham_cong.equals("ChamCongNuaNgayChieu")){
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+		}
+		
+        giolam.setCreated_at(now);
+        giolam.setUpdated_at(now);
+		
+        GioLamLocalServiceUtil.updateGioLam(giolam);
+
+	}
+	
+	public void updateXinChamCongCaNgayNuaNgay(int idGioLam, Date ngay_lam, long user_id_XinChamCong,
+			String loai_cham_cong, float diem, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+
+		GioLam giolam = GioLamLocalServiceUtil.getGioLam(idGioLam);
+		Date now = new Date();
+		giolam.setUser_id(user_id_XinChamCong);
+		if (loai_cham_cong.equals("Chamcongcangay")) {
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+		} else if (loai_cham_cong.equals("ChamCongNuaNgaySang")){
+			giolam.setCheck_in_sang("7:15");
+			giolam.setCheck_out_sang("11:30");
+		} else if (loai_cham_cong.equals("ChamCongNuaNgayChieu")){
+			giolam.setCheck_in_chieu("13:15");
+			giolam.setCheck_out_chieu("16:45");
+		}
+		
+
+        giolam.setCreated_at(now);
+        giolam.setUpdated_at(now);
+		
+		GioLamLocalServiceUtil.updateGioLam(giolam);
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public List<GioLam> getGioLamByYearAndMonth(String Month, String Year, long userId) {
 
 		long MonthInt = Long.parseLong(Month);
@@ -221,9 +418,5 @@ public class GioLamLocalServiceImpl extends GioLamLocalServiceBaseImpl {
 		return gioLam;
 
 	}
-	
-	
-	
-	
 
 }

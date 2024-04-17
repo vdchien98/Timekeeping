@@ -103,6 +103,29 @@ public class GioLamLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addXinChamCongCaNgayNuaNgay(
+			java.util.Date ngay_lam, long user_id_XinChamCongVaoRa,
+			String loai_cham_cong, float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addXinChamCongCaNgayNuaNgay(
+			ngay_lam, user_id_XinChamCongVaoRa, loai_cham_cong, diem, trangthai,
+			serviceContext);
+	}
+
+	public static void addXinChamCongvaoRa(
+			int idGioLam, long user_id_XinChamCongVaoRa,
+			java.util.Date ngay_lam, String ca_lam, String loai_cham_cong,
+			float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().addXinChamCongvaoRa(
+			idGioLam, user_id_XinChamCongVaoRa, ngay_lam, ca_lam,
+			loai_cham_cong, diem, trangthai, serviceContext);
+	}
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
@@ -395,6 +418,41 @@ public class GioLamLocalServiceUtil {
 
 		getService().updateGioLamXinNghiDcPheDuyetCaNgay(
 			idGioLam, userXinNghi, ngaylam, TrangThai, serviceContext);
+	}
+
+	public static void updateGioLamXinNghiDcPheDuyetNuaNgay(
+			int idGioLam, long userXinNghi, java.util.Date ngaylam,
+			int Ca_Nghi_Phep, int TrangThai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateGioLamXinNghiDcPheDuyetNuaNgay(
+			idGioLam, userXinNghi, ngaylam, Ca_Nghi_Phep, TrangThai,
+			serviceContext);
+	}
+
+	public static void updateXinChamCongCaNgayNuaNgay(
+			int idGioLam, java.util.Date ngay_lam,
+			long user_id_XinChamCongVaoRa, String loai_cham_cong, float diem,
+			int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateXinChamCongCaNgayNuaNgay(
+			idGioLam, ngay_lam, user_id_XinChamCongVaoRa, loai_cham_cong, diem,
+			trangthai, serviceContext);
+	}
+
+	public static void updateXinChamCongvaoRa(
+			int idGioLam, java.util.Date ngay_lam,
+			long user_id_XinChamCongVaoRa, String ca_lam, String loai_cham_cong,
+			float diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		getService().updateXinChamCongvaoRa(
+			idGioLam, ngay_lam, user_id_XinChamCongVaoRa, ca_lam,
+			loai_cham_cong, diem, trangthai, serviceContext);
 	}
 
 	public static GioLamLocalService getService() {

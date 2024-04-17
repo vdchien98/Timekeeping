@@ -62,7 +62,7 @@ public class XinchamcongCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -70,6 +70,8 @@ public class XinchamcongCacheModel
 		sb.append(user_id);
 		sb.append(", ly_do=");
 		sb.append(ly_do);
+		sb.append(", chon_ly_do=");
+		sb.append(chon_ly_do);
 		sb.append(", ca_lam=");
 		sb.append(ca_lam);
 		sb.append(", check_in=");
@@ -78,6 +80,10 @@ public class XinchamcongCacheModel
 		sb.append(check_out);
 		sb.append(", ngay_lam=");
 		sb.append(ngay_lam);
+		sb.append(", tu_ngay=");
+		sb.append(tu_ngay);
+		sb.append(", den_ngay=");
+		sb.append(den_ngay);
 		sb.append(", nguoi_duyet=");
 		sb.append(nguoi_duyet);
 		sb.append(", nguoi_huy=");
@@ -111,6 +117,13 @@ public class XinchamcongCacheModel
 			xinchamcongImpl.setLy_do(ly_do);
 		}
 
+		if (chon_ly_do == null) {
+			xinchamcongImpl.setChon_ly_do("");
+		}
+		else {
+			xinchamcongImpl.setChon_ly_do(chon_ly_do);
+		}
+
 		if (ca_lam == null) {
 			xinchamcongImpl.setCa_lam("");
 		}
@@ -137,6 +150,20 @@ public class XinchamcongCacheModel
 		}
 		else {
 			xinchamcongImpl.setNgay_lam(new Date(ngay_lam));
+		}
+
+		if (tu_ngay == Long.MIN_VALUE) {
+			xinchamcongImpl.setTu_ngay(null);
+		}
+		else {
+			xinchamcongImpl.setTu_ngay(new Date(tu_ngay));
+		}
+
+		if (den_ngay == Long.MIN_VALUE) {
+			xinchamcongImpl.setDen_ngay(null);
+		}
+		else {
+			xinchamcongImpl.setDen_ngay(new Date(den_ngay));
 		}
 
 		xinchamcongImpl.setNguoi_duyet(nguoi_duyet);
@@ -171,10 +198,13 @@ public class XinchamcongCacheModel
 
 		user_id = objectInput.readLong();
 		ly_do = objectInput.readUTF();
+		chon_ly_do = objectInput.readUTF();
 		ca_lam = objectInput.readUTF();
 		check_in = objectInput.readUTF();
 		check_out = objectInput.readUTF();
 		ngay_lam = objectInput.readLong();
+		tu_ngay = objectInput.readLong();
+		den_ngay = objectInput.readLong();
 
 		nguoi_duyet = objectInput.readLong();
 
@@ -202,6 +232,13 @@ public class XinchamcongCacheModel
 			objectOutput.writeUTF(ly_do);
 		}
 
+		if (chon_ly_do == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(chon_ly_do);
+		}
+
 		if (ca_lam == null) {
 			objectOutput.writeUTF("");
 		}
@@ -224,6 +261,8 @@ public class XinchamcongCacheModel
 		}
 
 		objectOutput.writeLong(ngay_lam);
+		objectOutput.writeLong(tu_ngay);
+		objectOutput.writeLong(den_ngay);
 
 		objectOutput.writeLong(nguoi_duyet);
 
@@ -241,10 +280,13 @@ public class XinchamcongCacheModel
 	public int id;
 	public long user_id;
 	public String ly_do;
+	public String chon_ly_do;
 	public String ca_lam;
 	public String check_in;
 	public String check_out;
 	public long ngay_lam;
+	public long tu_ngay;
+	public long den_ngay;
 	public long nguoi_duyet;
 	public long nguoi_huy;
 	public double diem;

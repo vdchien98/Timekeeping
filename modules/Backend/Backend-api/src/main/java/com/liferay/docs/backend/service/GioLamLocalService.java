@@ -98,6 +98,17 @@ public interface GioLamLocalService
 			int TrangThai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public void addXinChamCongCaNgayNuaNgay(
+			Date ngay_lam, long user_id_XinChamCongVaoRa, String loai_cham_cong,
+			float diem, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addXinChamCongvaoRa(
+			int idGioLam, long user_id_XinChamCongVaoRa, Date ngay_lam,
+			String ca_lam, String loai_cham_cong, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Creates a new gio lam with the primary key. Does not add the gio lam to the database.
 	 *
@@ -321,6 +332,23 @@ public interface GioLamLocalService
 
 	public void updateGioLamXinNghiDcPheDuyetCaNgay(
 			int idGioLam, long userXinNghi, Date ngaylam, int TrangThai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateGioLamXinNghiDcPheDuyetNuaNgay(
+			int idGioLam, long userXinNghi, Date ngaylam, int Ca_Nghi_Phep,
+			int TrangThai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateXinChamCongCaNgayNuaNgay(
+			int idGioLam, Date ngay_lam, long user_id_XinChamCongVaoRa,
+			String loai_cham_cong, float diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void updateXinChamCongvaoRa(
+			int idGioLam, Date ngay_lam, long user_id_XinChamCongVaoRa,
+			String ca_lam, String loai_cham_cong, float diem, int trangthai,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 

@@ -66,12 +66,14 @@ public class XinchamcongModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"id_", Types.INTEGER}, {"user_id", Types.BIGINT},
-		{"ly_do", Types.VARCHAR}, {"ca_lam", Types.VARCHAR},
-		{"check_in", Types.VARCHAR}, {"check_out", Types.VARCHAR},
-		{"ngay_lam", Types.TIMESTAMP}, {"nguoi_duyet", Types.BIGINT},
-		{"nguoi_huy", Types.BIGINT}, {"diem", Types.DOUBLE},
-		{"trangthai", Types.INTEGER}, {"created_at", Types.TIMESTAMP},
-		{"updated_at", Types.TIMESTAMP}, {"phongban_id", Types.BIGINT}
+		{"ly_do", Types.VARCHAR}, {"chon_ly_do", Types.VARCHAR},
+		{"ca_lam", Types.VARCHAR}, {"check_in", Types.VARCHAR},
+		{"check_out", Types.VARCHAR}, {"ngay_lam", Types.TIMESTAMP},
+		{"tu_ngay", Types.TIMESTAMP}, {"den_ngay", Types.TIMESTAMP},
+		{"nguoi_duyet", Types.BIGINT}, {"nguoi_huy", Types.BIGINT},
+		{"diem", Types.DOUBLE}, {"trangthai", Types.INTEGER},
+		{"created_at", Types.TIMESTAMP}, {"updated_at", Types.TIMESTAMP},
+		{"phongban_id", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,10 +83,13 @@ public class XinchamcongModelImpl
 		TABLE_COLUMNS_MAP.put("id_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("user_id", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ly_do", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("chon_ly_do", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ca_lam", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("check_in", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("check_out", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ngay_lam", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("tu_ngay", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("den_ngay", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("nguoi_duyet", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("nguoi_huy", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("diem", Types.DOUBLE);
@@ -95,7 +100,7 @@ public class XinchamcongModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Timekeeping_Xinchamcong (id_ INTEGER not null primary key,user_id LONG,ly_do VARCHAR(75) null,ca_lam VARCHAR(75) null,check_in VARCHAR(75) null,check_out VARCHAR(75) null,ngay_lam DATE null,nguoi_duyet LONG,nguoi_huy LONG,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null,phongban_id LONG)";
+		"create table Timekeeping_Xinchamcong (id_ INTEGER not null primary key,user_id LONG,ly_do VARCHAR(75) null,chon_ly_do VARCHAR(75) null,ca_lam VARCHAR(75) null,check_in VARCHAR(75) null,check_out VARCHAR(75) null,ngay_lam DATE null,tu_ngay DATE null,den_ngay DATE null,nguoi_duyet LONG,nguoi_huy LONG,diem DOUBLE,trangthai INTEGER,created_at DATE null,updated_at DATE null,phongban_id LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Timekeeping_Xinchamcong";
@@ -236,6 +241,10 @@ public class XinchamcongModelImpl
 		attributeGetterFunctions.put("ly_do", Xinchamcong::getLy_do);
 		attributeSetterBiConsumers.put(
 			"ly_do", (BiConsumer<Xinchamcong, String>)Xinchamcong::setLy_do);
+		attributeGetterFunctions.put("chon_ly_do", Xinchamcong::getChon_ly_do);
+		attributeSetterBiConsumers.put(
+			"chon_ly_do",
+			(BiConsumer<Xinchamcong, String>)Xinchamcong::setChon_ly_do);
 		attributeGetterFunctions.put("ca_lam", Xinchamcong::getCa_lam);
 		attributeSetterBiConsumers.put(
 			"ca_lam", (BiConsumer<Xinchamcong, String>)Xinchamcong::setCa_lam);
@@ -251,6 +260,13 @@ public class XinchamcongModelImpl
 		attributeSetterBiConsumers.put(
 			"ngay_lam",
 			(BiConsumer<Xinchamcong, Date>)Xinchamcong::setNgay_lam);
+		attributeGetterFunctions.put("tu_ngay", Xinchamcong::getTu_ngay);
+		attributeSetterBiConsumers.put(
+			"tu_ngay", (BiConsumer<Xinchamcong, Date>)Xinchamcong::setTu_ngay);
+		attributeGetterFunctions.put("den_ngay", Xinchamcong::getDen_ngay);
+		attributeSetterBiConsumers.put(
+			"den_ngay",
+			(BiConsumer<Xinchamcong, Date>)Xinchamcong::setDen_ngay);
 		attributeGetterFunctions.put(
 			"nguoi_duyet", Xinchamcong::getNguoi_duyet);
 		attributeSetterBiConsumers.put(
@@ -349,6 +365,26 @@ public class XinchamcongModelImpl
 
 	@JSON
 	@Override
+	public String getChon_ly_do() {
+		if (_chon_ly_do == null) {
+			return "";
+		}
+		else {
+			return _chon_ly_do;
+		}
+	}
+
+	@Override
+	public void setChon_ly_do(String chon_ly_do) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_chon_ly_do = chon_ly_do;
+	}
+
+	@JSON
+	@Override
 	public String getCa_lam() {
 		if (_ca_lam == null) {
 			return "";
@@ -420,6 +456,36 @@ public class XinchamcongModelImpl
 		}
 
 		_ngay_lam = ngay_lam;
+	}
+
+	@JSON
+	@Override
+	public Date getTu_ngay() {
+		return _tu_ngay;
+	}
+
+	@Override
+	public void setTu_ngay(Date tu_ngay) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_tu_ngay = tu_ngay;
+	}
+
+	@JSON
+	@Override
+	public Date getDen_ngay() {
+		return _den_ngay;
+	}
+
+	@Override
+	public void setDen_ngay(Date den_ngay) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_den_ngay = den_ngay;
 	}
 
 	@JSON
@@ -573,10 +639,13 @@ public class XinchamcongModelImpl
 		xinchamcongImpl.setId(getId());
 		xinchamcongImpl.setUser_id(getUser_id());
 		xinchamcongImpl.setLy_do(getLy_do());
+		xinchamcongImpl.setChon_ly_do(getChon_ly_do());
 		xinchamcongImpl.setCa_lam(getCa_lam());
 		xinchamcongImpl.setCheck_in(getCheck_in());
 		xinchamcongImpl.setCheck_out(getCheck_out());
 		xinchamcongImpl.setNgay_lam(getNgay_lam());
+		xinchamcongImpl.setTu_ngay(getTu_ngay());
+		xinchamcongImpl.setDen_ngay(getDen_ngay());
 		xinchamcongImpl.setNguoi_duyet(getNguoi_duyet());
 		xinchamcongImpl.setNguoi_huy(getNguoi_huy());
 		xinchamcongImpl.setDiem(getDiem());
@@ -598,6 +667,8 @@ public class XinchamcongModelImpl
 		xinchamcongImpl.setUser_id(
 			this.<Long>getColumnOriginalValue("user_id"));
 		xinchamcongImpl.setLy_do(this.<String>getColumnOriginalValue("ly_do"));
+		xinchamcongImpl.setChon_ly_do(
+			this.<String>getColumnOriginalValue("chon_ly_do"));
 		xinchamcongImpl.setCa_lam(
 			this.<String>getColumnOriginalValue("ca_lam"));
 		xinchamcongImpl.setCheck_in(
@@ -606,6 +677,10 @@ public class XinchamcongModelImpl
 			this.<String>getColumnOriginalValue("check_out"));
 		xinchamcongImpl.setNgay_lam(
 			this.<Date>getColumnOriginalValue("ngay_lam"));
+		xinchamcongImpl.setTu_ngay(
+			this.<Date>getColumnOriginalValue("tu_ngay"));
+		xinchamcongImpl.setDen_ngay(
+			this.<Date>getColumnOriginalValue("den_ngay"));
 		xinchamcongImpl.setNguoi_duyet(
 			this.<Long>getColumnOriginalValue("nguoi_duyet"));
 		xinchamcongImpl.setNguoi_huy(
@@ -707,6 +782,14 @@ public class XinchamcongModelImpl
 			xinchamcongCacheModel.ly_do = null;
 		}
 
+		xinchamcongCacheModel.chon_ly_do = getChon_ly_do();
+
+		String chon_ly_do = xinchamcongCacheModel.chon_ly_do;
+
+		if ((chon_ly_do != null) && (chon_ly_do.length() == 0)) {
+			xinchamcongCacheModel.chon_ly_do = null;
+		}
+
 		xinchamcongCacheModel.ca_lam = getCa_lam();
 
 		String ca_lam = xinchamcongCacheModel.ca_lam;
@@ -738,6 +821,24 @@ public class XinchamcongModelImpl
 		}
 		else {
 			xinchamcongCacheModel.ngay_lam = Long.MIN_VALUE;
+		}
+
+		Date tu_ngay = getTu_ngay();
+
+		if (tu_ngay != null) {
+			xinchamcongCacheModel.tu_ngay = tu_ngay.getTime();
+		}
+		else {
+			xinchamcongCacheModel.tu_ngay = Long.MIN_VALUE;
+		}
+
+		Date den_ngay = getDen_ngay();
+
+		if (den_ngay != null) {
+			xinchamcongCacheModel.den_ngay = den_ngay.getTime();
+		}
+		else {
+			xinchamcongCacheModel.den_ngay = Long.MIN_VALUE;
 		}
 
 		xinchamcongCacheModel.nguoi_duyet = getNguoi_duyet();
@@ -863,10 +964,13 @@ public class XinchamcongModelImpl
 	private int _id;
 	private long _user_id;
 	private String _ly_do;
+	private String _chon_ly_do;
 	private String _ca_lam;
 	private String _check_in;
 	private String _check_out;
 	private Date _ngay_lam;
+	private Date _tu_ngay;
+	private Date _den_ngay;
 	private long _nguoi_duyet;
 	private long _nguoi_huy;
 	private double _diem;
@@ -907,10 +1011,13 @@ public class XinchamcongModelImpl
 		_columnOriginalValues.put("id_", _id);
 		_columnOriginalValues.put("user_id", _user_id);
 		_columnOriginalValues.put("ly_do", _ly_do);
+		_columnOriginalValues.put("chon_ly_do", _chon_ly_do);
 		_columnOriginalValues.put("ca_lam", _ca_lam);
 		_columnOriginalValues.put("check_in", _check_in);
 		_columnOriginalValues.put("check_out", _check_out);
 		_columnOriginalValues.put("ngay_lam", _ngay_lam);
+		_columnOriginalValues.put("tu_ngay", _tu_ngay);
+		_columnOriginalValues.put("den_ngay", _den_ngay);
 		_columnOriginalValues.put("nguoi_duyet", _nguoi_duyet);
 		_columnOriginalValues.put("nguoi_huy", _nguoi_huy);
 		_columnOriginalValues.put("diem", _diem);
@@ -947,27 +1054,33 @@ public class XinchamcongModelImpl
 
 		columnBitmasks.put("ly_do", 4L);
 
-		columnBitmasks.put("ca_lam", 8L);
+		columnBitmasks.put("chon_ly_do", 8L);
 
-		columnBitmasks.put("check_in", 16L);
+		columnBitmasks.put("ca_lam", 16L);
 
-		columnBitmasks.put("check_out", 32L);
+		columnBitmasks.put("check_in", 32L);
 
-		columnBitmasks.put("ngay_lam", 64L);
+		columnBitmasks.put("check_out", 64L);
 
-		columnBitmasks.put("nguoi_duyet", 128L);
+		columnBitmasks.put("ngay_lam", 128L);
 
-		columnBitmasks.put("nguoi_huy", 256L);
+		columnBitmasks.put("tu_ngay", 256L);
 
-		columnBitmasks.put("diem", 512L);
+		columnBitmasks.put("den_ngay", 512L);
 
-		columnBitmasks.put("trangthai", 1024L);
+		columnBitmasks.put("nguoi_duyet", 1024L);
 
-		columnBitmasks.put("created_at", 2048L);
+		columnBitmasks.put("nguoi_huy", 2048L);
 
-		columnBitmasks.put("updated_at", 4096L);
+		columnBitmasks.put("diem", 4096L);
 
-		columnBitmasks.put("phongban_id", 8192L);
+		columnBitmasks.put("trangthai", 8192L);
+
+		columnBitmasks.put("created_at", 16384L);
+
+		columnBitmasks.put("updated_at", 32768L);
+
+		columnBitmasks.put("phongban_id", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
