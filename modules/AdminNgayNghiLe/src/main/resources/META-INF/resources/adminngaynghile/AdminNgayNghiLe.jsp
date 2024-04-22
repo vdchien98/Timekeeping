@@ -30,20 +30,6 @@
 			<div class="row">
 				<div class="col-md-7">
 					<div class="form-group row">
-						<%-- 
-						<form class="pl-5" id="search-year" action="">
-							<div class="form-group row">
-								<label
-									class="col-form-label font-weight-bold text-info mr-3 datepicker">Năm</label>
-								<input type="text" class="form-control datepicker col-md-6 ml-6"
-									name="<portlet:namespace />year" id="year" placeholder="Năm"
-									value="">
-							</div>
-						</form>
-						
-						 --%>
-
-
 						<form class="pl-5" id="search-year" method="get">
 							<input type="hidden" name="p_p_id"
 								value="<%=themeDisplay.getPortletDisplay().getId()%>" /> <input

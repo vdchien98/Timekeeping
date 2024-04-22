@@ -8,16 +8,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <portlet:defineObjects />
+
+
+
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
-
-
 
 
 
@@ -216,7 +216,7 @@ form#search-year {
 
 
 
-			<%-- Xem gio làm của nhân viên theo tháng và năm  
+			<%-- Xem gio làm của nhân viên theo tháng và năm --%> 
 
 			<div class="input-group mb-3 row justify-content-center thangnam">
 				<label class="col-form-label font-weight-bold text-info">Tháng
@@ -237,7 +237,22 @@ form#search-year {
 					</div>
 				</form>
 			</div>
-			--%>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			<div class="row mb-3 ">
 				<span class="btn btn-success">Đúng giờ</span> <span
 					class="btn btn-warning">Đi muộn/Về sớm</span> <span
@@ -635,9 +650,10 @@ form#search-year {
 
 
 
+
 <%-- Lỗi load nhiều là do ở đây  --%>
 
-<%--
+<%--  nhúng đoạn này vào để thêm giây trong popup   --%>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -646,7 +662,7 @@ form#search-year {
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
 	integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
 	crossorigin="anonymous"></script>
- nhúng đoạn này vào để thêm giây trong popup 
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
@@ -658,7 +674,7 @@ form#search-year {
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
---%>
+
 
 <script>
 $(function () {
@@ -672,9 +688,13 @@ function closeMyModal() {
 
 </script>
 
-<%--  --%>
+
 
 <script type="text/javascript">
+
+
+<%-- 	--%>
+
 !(function($){
 	$.fn.datepicker.dates['vi'] = {
 		days: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"],
@@ -687,6 +707,7 @@ function closeMyModal() {
 		format: "dd/mm/yyyy"
 	};
 }(jQuery));
+
 $(document).ready(function() {
 	  $('.datepicker').datepicker({
 	  //  language: 'vi',
@@ -702,8 +723,8 @@ $(document).ready(function() {
 		   // $('#search-year').submit();
 	  });
 	});
-</script>
 
+</script>
 
 <script>
 $(function() {
