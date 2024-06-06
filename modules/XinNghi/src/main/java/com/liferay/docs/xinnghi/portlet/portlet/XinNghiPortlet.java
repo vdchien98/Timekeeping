@@ -109,10 +109,9 @@ public class XinNghiPortlet extends MVCPortlet {
 		Date tu_ngay = ParamUtil.getDate(request, "tu_ngay", dateFormat);
 		String Nghi_ca_lam_String = ParamUtil.getString(request, "nua_ngay");
 		int Nghi_ca_lam = Integer.parseInt(Nghi_ca_lam_String);
-		System.out.println("Nghi_ca_lam============ " + Nghi_ca_lam);
 
 		String chon_ly_do = ParamUtil.getString(request, "chon_ly_do");
-		String ly_do = "nghiphep";
+		String ly_do = ParamUtil.getString(request, "ly_do");
 		LocalDate localTuNgay = tu_ngay.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		int soNgay = 0;
 		int trangthai = 1;
@@ -230,8 +229,7 @@ public class XinNghiPortlet extends MVCPortlet {
 				GioLamLocalServiceUtil.updateGioLamXinNghiDcPheDuyetNuaNgay(idgioLam, user_id_Nguoi_xin_Nghi, tungay,
 						xinnghi.getNua_ngay(), 1, serviceContext);
 			}
-			
-			
+
 			XinnghiLocalServiceUtil.upadateXinNghiByTruongPhongDuyet(id, 6, serviceContext);
 
 		} catch (PortalException e) {
@@ -643,7 +641,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		Users usercanlay = UsersLocalServiceUtil.getUserbyUserId(userId);
 		// Lấy toàn bộ xin nghỉ
 		List<Xinnghi> danhsachngaynghi = null;
-
+		System.out.println("User Nhan Vien ---------- " + userId);
 		if (usercanlay.getChucvu_id() == 42604) {
 			// Đây là giám đốc lấy phòng phụ trách và nhhững phó giám đốc
 			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
@@ -651,6 +649,7 @@ public class XinNghiPortlet extends MVCPortlet {
 		} else if (usercanlay.getChucvu_id() == 42602 || usercanlay.getPhu_trach_phong() == 1) {
 			// đây là trưởng phòng hoặc phụ trách phòng chỉ lấy những nhân viên trong phòng
 			danhsachngaynghi = listNgayNghiofPhong(userId, usercanlay.getPhongban_id());
+			System.out.println("danhsachngaynghi" + danhsachngaynghi);
 
 		} else if (usercanlay.getChucvu_id() == 42605) {
 			// đây là phó giám đốc chỉ lấy những phòng phụ trách
@@ -671,8 +670,7 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 
-		List<Xinnghi> listNgayNghiCaNhan = AllXinNghi.stream()
-				.filter(xinnghi -> (xinnghi.getUser_id() == userId && (xinnghi.getChon_ly_do().equals("nghiphep"))))
+		List<Xinnghi> listNgayNghiCaNhan = AllXinNghi.stream().filter(xinnghi -> (xinnghi.getUser_id() == userId))
 				.collect(Collectors.toList());
 		return listNgayNghiCaNhan;
 	}
@@ -682,8 +680,8 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
 
-		List<Xinnghi> listNgayNghiofPhong = AllXinNghi.stream()
-				.filter(xinnghi -> xinnghi.getPhongban_id() == phongbanId && xinnghi.getChon_ly_do().equals("nghiphep"))
+		List<Xinnghi> listNgayNghiofPhong = AllXinNghi.stream().filter(
+				xinnghi -> xinnghi.getPhongban_id() == phongbanId && (xinnghi.getChon_ly_do().equals("nghiphep")))
 				.collect(Collectors.toList());
 		return listNgayNghiofPhong;
 	}
@@ -704,7 +702,8 @@ public class XinNghiPortlet extends MVCPortlet {
 		for (Phongban BienPhongBan : listPhongbanCanLay) {
 			List<Xinnghi> listNgayNghiofLanhDaoquanly = AllXinNghi.stream()
 					.filter(xinnghi -> xinnghi.getPhongban_id() == BienPhongBan.getId()
-							&& xinnghi.getChon_ly_do().equals("nghiphep") && xinnghi.getTrangthai() == 2)
+							&& xinnghi.getChon_ly_do().equals("nghiphep")
+							&& (xinnghi.getTrangthai() == 3 || xinnghi.getTrangthai() == 2))
 					.collect(Collectors.toList());
 			listNgayNghiofLanhDaoquanlyCanLay.addAll(listNgayNghiofLanhDaoquanly);
 		}

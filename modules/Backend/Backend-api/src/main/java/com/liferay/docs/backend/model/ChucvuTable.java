@@ -44,6 +44,8 @@ public class ChucvuTable extends BaseTable<ChucvuTable> {
 		"role_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ChucvuTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ChucvuTable, Long> so_thanh_vien = createColumn(
+		"so_thanh_vien", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private ChucvuTable() {
 		super("Timekeeping_Chucvu", ChucvuTable::new);

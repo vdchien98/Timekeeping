@@ -47,6 +47,7 @@ public class ChucvuWrapper
 		attributes.put("updated_at", getUpdated_at());
 		attributes.put("role", getRole());
 		attributes.put("groupId", getGroupId());
+		attributes.put("so_thanh_vien", getSo_thanh_vien());
 
 		return attributes;
 	}
@@ -87,6 +88,12 @@ public class ChucvuWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long so_thanh_vien = (Long)attributes.get("so_thanh_vien");
+
+		if (so_thanh_vien != null) {
+			setSo_thanh_vien(so_thanh_vien);
 		}
 	}
 
@@ -153,6 +160,16 @@ public class ChucvuWrapper
 	@Override
 	public int getRole() {
 		return model.getRole();
+	}
+
+	/**
+	 * Returns the so_thanh_vien of this chucvu.
+	 *
+	 * @return the so_thanh_vien of this chucvu
+	 */
+	@Override
+	public long getSo_thanh_vien() {
+		return model.getSo_thanh_vien();
 	}
 
 	/**
@@ -228,6 +245,16 @@ public class ChucvuWrapper
 	@Override
 	public void setRole(int role) {
 		model.setRole(role);
+	}
+
+	/**
+	 * Sets the so_thanh_vien of this chucvu.
+	 *
+	 * @param so_thanh_vien the so_thanh_vien of this chucvu
+	 */
+	@Override
+	public void setSo_thanh_vien(long so_thanh_vien) {
+		model.setSo_thanh_vien(so_thanh_vien);
 	}
 
 	/**

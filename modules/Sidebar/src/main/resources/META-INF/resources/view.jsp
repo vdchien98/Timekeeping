@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <style>
@@ -66,8 +66,8 @@ li.nav-item.vdchien {
 			</a></li>
 			<hr class="sidebar-divider">
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#"  id="toggleCollapse"> <i
-					class="fa fa-clock-o" aria-hidden="true"></i>
+				href="#" id="toggleCollapse"> <i class="fa fa-clock-o"
+					aria-hidden="true"></i>
 					<p class="chien1">Bảng giờ làm</p> <i
 					class="fa fa-chevron-right chien22" aria-hidden="true"></i>
 			</a>
@@ -80,13 +80,13 @@ li.nav-item.vdchien {
 					</div>
 				</div></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#"  id="toggleCollapse"> <i
-					class="fa fa-calendar-times-o" aria-hidden="true"></i>
+				href="#" id="toggleCollapse"> <i class="fa fa-calendar-times-o"
+					aria-hidden="true"></i>
 					<p class="chien1">Xin Nghỉ</p>
 			</a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				 id="toggleCollapseCauHinh"> <i
-					class="fa fa-cogs" aria-hidden="true"></i>
+				id="toggleCollapseCauHinh"> <i class="fa fa-cogs"
+					aria-hidden="true"></i>
 					<p class="chien1 chien33">Cấu hình hệ Thống</p> <i
 					class="fa fa-chevron-right chien23" aria-hidden="true"></i>
 			</a>
@@ -110,8 +110,8 @@ li.nav-item.vdchien {
 					</div>
 				</div></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#"  id="toggleCollapse"> <i
-					class="fa fa-calendar-times-o" aria-hidden="true"></i>
+				href="#" id="toggleCollapse"> <i class="fa fa-calendar-times-o"
+					aria-hidden="true"></i>
 					<p class="chien1">Hướng Dẫn</p>
 			</a></li>
 		</ul>
@@ -136,27 +136,31 @@ li.nav-item.vdchien {
 
 			<hr class="sidebar-divider">
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="http://localhost:8080/gio-lam"  id="toggleCollapse"> <i
+				href="http://localhost:8080/gio-lam" id="toggleCollapse"> <i
 					class="fa fa-clock-o" aria-hidden="true"></i>
-					<p class="chien1">Bảng giờ làm</p> 
-			</a></li>
+					<p class="chien1">Bảng giờ làm</p>
+			</a> <%-- <a class="collapse-item " href="http://localhost:8080/gio-lam">Bảng
+					giờ làm</a>
+--%></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="http://localhost:8080/xin-nghi"  id="toggleCollapse"> <i
+				href="http://localhost:8080/xin-nghi" id="toggleCollapse"> <i
 					class="fa fa-calendar-times-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Nghỉ</p>
-			</a></li>
+			</a> <%-- 
+			 <a class="collapse-item " href="http://localhost:8080/xin-nghi">Xin
+					Nghỉ</a> --%></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
 				href="http://localhost:8080/xin-cham-cong" id="toggleCollapse"><i
 					class="fa fa-calendar-check-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Chấm Công</p> </a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#"  id="toggleCollapse"> <i
-					class="fa fa-file-pdf-o" aria-hidden="true"></i>
+				href="#" id="toggleCollapse"> <i class="fa fa-file-pdf-o"
+					aria-hidden="true"></i>
 					<p class="chien1">Phiếu điểm</p>
 			</a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#"  id="toggleCollapse"> <i
-					class="fa fa-book" aria-hidden="true"></i>
+				href="#" id="toggleCollapse"> <i class="fa fa-book"
+					aria-hidden="true"></i>
 					<p class="chien1">Hướng Dẫn</p>
 			</a></li>
 		</ul>

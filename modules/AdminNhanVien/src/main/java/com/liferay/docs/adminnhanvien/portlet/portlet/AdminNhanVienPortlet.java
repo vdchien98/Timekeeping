@@ -60,9 +60,12 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 		String hoTen = ParamUtil.getString(request, "hovaten");
 		String email = ParamUtil.getString(request, "email");
 		long chucvu = ParamUtil.getLong(request, "chucvu_id");
-		System.out.println("chucvu ----- " + chucvu);
+		System.out.println("chucvu @@@@@+++++++++++++++++ ------------- " + chucvu);
 
 		long trangThai = ParamUtil.getLong(request, "trangthai");
+
+		System.out.println("trangThai +++++++++++++++++ ------------- " + trangThai);
+
 		long phongban_id = ParamUtil.getLong(request, "phongban_id");
 
 		System.out.println("phongban_id ----- " + phongban_id);
@@ -79,12 +82,39 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 			if (id == 0) {
 				UsersLocalServiceUtil.addNhanVien(hoTen, email, chucvu, trangThai, phongban_id, ca_lam_id, caLamToi,
 						ma_xac_nhan, zaloId, chamCongNgoai, soNgayNghiPhep, phuTrachPhong, serviceContext);
+//				PhongbanLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) phongban_id, 1, serviceContext);
+//				ChucvuLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) chucvu, 1, serviceContext);
 			} else {
 				Users user = UsersLocalServiceUtil.getUsers(id);
 				if (user != null) {
 					UsersLocalServiceUtil.updateNhanVien(id, hoTen, email, chucvu, trangThai, phongban_id, ca_lam_id,
 							caLamToi, ma_xac_nhan, zaloId, chamCongNgoai, soNgayNghiPhep, phuTrachPhong,
 							serviceContext);
+//					int trangthainew = (int) trangThai;
+//					int trangthaihientaiUser = (int) user.getTrangthai();
+//
+//					
+//					if (user.getChucvu_id() !=chucvu) {
+//						if (trangthaihientaiUser == 1) {
+//							if (trangthainew == 1 ) {
+//							} else if (trangthainew == 0) {
+//								PhongbanLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) user.getPhongban_id(),
+//										(int) trangthainew, serviceContext);
+//								ChucvuLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) user.getChucvu_id(),
+//										(int) trangthainew, serviceContext);
+//							}
+//						} else if (trangthaihientaiUser == 0) {
+//							if (trangthainew == 1) {
+//								PhongbanLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) user.getPhongban_id(),
+//										(int) trangthainew, serviceContext);
+//								ChucvuLocalServiceUtil.updateSoThanhVienTuCreateNhanVien((int) user.getChucvu_id(),
+//										(int) trangthainew, serviceContext);
+//							} else if (trangthainew == 0) {
+//
+//							}
+//						}
+//					}
+//					
 				} else {
 					System.out.println("Not Find");
 				}
@@ -183,7 +213,7 @@ public class AdminNhanVienPortlet extends MVCPortlet {
 					System.out.println("chạy vào đây******");
 					e.printStackTrace();
 				}
-			} 
+			}
 
 		} catch (SystemException e) {
 			e.printStackTrace();

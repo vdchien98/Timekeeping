@@ -2,13 +2,19 @@ package com.liferay.docs.adminphongban.portlet.portlet;
 
 import com.liferay.docs.adminphongban.portlet.constants.AdminPhongBanPortletKeys;
 import com.liferay.docs.backend.model.Phongban;
+import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
+import com.liferay.docs.backend.service.UsersLocalServiceUtil;
+import com.liferay.portal.kernel.dao.db.Index;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -70,12 +76,45 @@ public class AdminPhongBanPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		List<Phongban> phongBanList = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+		System.out.println("phongBanList **** "+ phongBanList);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+		httpServletRequest.setAttribute("usersList", usersList);
+		
+		// update số nhân viên của mỗi phòng 
+		for (Phongban phongban : phongBanList) {
+			List<Users> ListUsersofMotPhong = new ArrayList<>();
+		
+			for (Users user : usersList) {
+				if (phongban.getId()== user.getPhongban_id() && user.getTrangthai()==1) {
+					ListUsersofMotPhong.add(user);
+				}			
+			}
+			ServiceContext serviceContext = new ServiceContext();
+			try {
+				PhongbanLocalServiceUtil.updateSoThanhVienTuAllPhong(phongban.getId(), ListUsersofMotPhong.size(), serviceContext);
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("--------- "+ ListUsersofMotPhong);
+			
+		}
+		
+		
+		
+		
+		
+		
 		httpServletRequest.setAttribute("phongBanList", phongBanList);
 		int idPhongBan = ParamUtil.getInteger(renderRequest, "idPhongBan");
 		if (idPhongBan > 0) {
 			try {
 				Phongban phongbanedit = PhongbanLocalServiceUtil.getPhongban(idPhongBan);
+				System.out.println("phongbanedit ****++++++++++++++  "+ phongbanedit);
 				httpServletRequest.setAttribute("phongbanedit", phongbanedit);
 			} catch (Exception e) {
 				e.printStackTrace();

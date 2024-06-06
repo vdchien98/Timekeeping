@@ -2,7 +2,9 @@ package com.liferay.docs.adminchucvu.portlet.portlet;
 
 import com.liferay.docs.adminchucvu.portlet.constants.AdminChucVuPortletKeys;
 import com.liferay.docs.backend.model.Chucvu;
+import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.ChucvuLocalServiceUtil;
+import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -11,6 +13,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -67,16 +70,38 @@ public class AdminChucVuPortlet extends MVCPortlet {
 		List<Chucvu> chucVuList = ChucvuLocalServiceUtil.getChucvus(-1, -1);
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		httpServletRequest.setAttribute("chucVuList", chucVuList);
-//		int idChucVu = ParamUtil.getInteger(renderRequest, "idChucVu");
-//		if (idChucVu > 0) {
-//			try {
-//				Chucvu chucvuedit = ChucvuLocalServiceUtil.getChucvu(idChucVu);
-//				System.out.println("chucvuedit   "+ chucvuedit);
-//				httpServletRequest.setAttribute("chucvuedit", chucvuedit);				
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}	
+		List<Users> usersList = UsersLocalServiceUtil.getUserses(-1, -1);
+		//UpdatechucVu
+		
+		// update số nhân viên của mỗi chức vụ
+		for (Chucvu chucvu : chucVuList) {
+			
+			
+			List<Users> ListUsersofMotChuVu = new ArrayList<>();
+		
+			for (Users user : usersList) {
+				if (chucvu.getId()== user.getChucvu_id() && user.getTrangthai()==1) {
+					ListUsersofMotChuVu.add(user);
+				}			
+			}
+			ServiceContext serviceContext = new ServiceContext();
+			try {
+				ChucvuLocalServiceUtil.updateSoThanhVienTuALLChucVu(chucvu.getId(), ListUsersofMotChuVu.size(), serviceContext);
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("--------- "+ ListUsersofMotChuVu);
+			
+		}
+		
+		
+		
+		
+
 		super.render(renderRequest, renderResponse);
 	}
 }

@@ -67,7 +67,8 @@ public class ChucvuModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"id_", Types.INTEGER}, {"name", Types.VARCHAR},
 		{"created_at", Types.TIMESTAMP}, {"updated_at", Types.TIMESTAMP},
-		{"role_", Types.INTEGER}, {"groupId", Types.BIGINT}
+		{"role_", Types.INTEGER}, {"groupId", Types.BIGINT},
+		{"so_thanh_vien", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,10 +81,11 @@ public class ChucvuModelImpl
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("role_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("so_thanh_vien", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Timekeeping_Chucvu (id_ INTEGER not null primary key,name VARCHAR(75) null,created_at DATE null,updated_at DATE null,role_ INTEGER,groupId LONG)";
+		"create table Timekeeping_Chucvu (id_ INTEGER not null primary key,name VARCHAR(75) null,created_at DATE null,updated_at DATE null,role_ INTEGER,groupId LONG,so_thanh_vien LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table Timekeeping_Chucvu";
 
@@ -235,6 +237,10 @@ public class ChucvuModelImpl
 		attributeGetterFunctions.put("groupId", Chucvu::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId", (BiConsumer<Chucvu, Long>)Chucvu::setGroupId);
+		attributeGetterFunctions.put("so_thanh_vien", Chucvu::getSo_thanh_vien);
+		attributeSetterBiConsumers.put(
+			"so_thanh_vien",
+			(BiConsumer<Chucvu, Long>)Chucvu::setSo_thanh_vien);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -346,6 +352,21 @@ public class ChucvuModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
+	@Override
+	public long getSo_thanh_vien() {
+		return _so_thanh_vien;
+	}
+
+	@Override
+	public void setSo_thanh_vien(long so_thanh_vien) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_so_thanh_vien = so_thanh_vien;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -395,6 +416,7 @@ public class ChucvuModelImpl
 		chucvuImpl.setUpdated_at(getUpdated_at());
 		chucvuImpl.setRole(getRole());
 		chucvuImpl.setGroupId(getGroupId());
+		chucvuImpl.setSo_thanh_vien(getSo_thanh_vien());
 
 		chucvuImpl.resetOriginalValues();
 
@@ -413,6 +435,8 @@ public class ChucvuModelImpl
 			this.<Date>getColumnOriginalValue("updated_at"));
 		chucvuImpl.setRole(this.<Integer>getColumnOriginalValue("role_"));
 		chucvuImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		chucvuImpl.setSo_thanh_vien(
+			this.<Long>getColumnOriginalValue("so_thanh_vien"));
 
 		return chucvuImpl;
 	}
@@ -520,6 +544,8 @@ public class ChucvuModelImpl
 
 		chucvuCacheModel.groupId = getGroupId();
 
+		chucvuCacheModel.so_thanh_vien = getSo_thanh_vien();
+
 		return chucvuCacheModel;
 	}
 
@@ -616,6 +642,7 @@ public class ChucvuModelImpl
 	private Date _updated_at;
 	private int _role;
 	private long _groupId;
+	private long _so_thanh_vien;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -652,6 +679,7 @@ public class ChucvuModelImpl
 		_columnOriginalValues.put("updated_at", _updated_at);
 		_columnOriginalValues.put("role_", _role);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("so_thanh_vien", _so_thanh_vien);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -687,6 +715,8 @@ public class ChucvuModelImpl
 		columnBitmasks.put("role_", 16L);
 
 		columnBitmasks.put("groupId", 32L);
+
+		columnBitmasks.put("so_thanh_vien", 64L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -82,7 +82,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			userOld = UserLocalServiceUtil.updateUser(userOld);
 			AuthenticatedSessionManagerUtil.login(request, response, login, password, rememberMe, authType);
 			actionRequest.setAttribute("userId", String.valueOf(userId));
-			actionResponse.sendRedirect("/home");
+			actionResponse.sendRedirect("/gio-lam");
 		}
 		
 		
@@ -103,7 +103,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				userOld = UserLocalServiceUtil.updateUser(userOld);
 				AuthenticatedSessionManagerUtil.login(request, response, login, password, true, authType);
 				actionRequest.setAttribute("userId", String.valueOf(userId));
-				actionResponse.sendRedirect("/home");
+				actionResponse.sendRedirect("/gio-lam");
 			}
 		} else {
 			System.out.println("khong dung dang email ");

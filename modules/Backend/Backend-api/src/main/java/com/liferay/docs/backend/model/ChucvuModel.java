@@ -140,6 +140,20 @@ public interface ChucvuModel extends BaseModel<Chucvu> {
 	 */
 	public void setGroupId(long groupId);
 
+	/**
+	 * Returns the so_thanh_vien of this chucvu.
+	 *
+	 * @return the so_thanh_vien of this chucvu
+	 */
+	public long getSo_thanh_vien();
+
+	/**
+	 * Sets the so_thanh_vien of this chucvu.
+	 *
+	 * @param so_thanh_vien the so_thanh_vien of this chucvu
+	 */
+	public void setSo_thanh_vien(long so_thanh_vien);
+
 	@Override
 	public Chucvu cloneWithOriginalValues();
 

@@ -12,6 +12,7 @@
 		<column type="Date" name="updated_at"></column>
 		<column type="int" name="role"></column>
 		<column name="groupId" type="long" />
+		<column name="so_thanh_vien" type="long" />
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -31,6 +32,7 @@
 		<column name="created_at" type="Date" />
 		<column name="updated_at" type="Date" />
 		<column name="groupId" type="long" />
+		<column name="so_thanh_vien" type="long" />
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

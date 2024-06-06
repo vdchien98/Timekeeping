@@ -73,23 +73,50 @@
 									<tbody>
 										<c:forEach var="phongban" items="${phongBanList}"
 											varStatus="loop">
-											<tr role="row" class="odd">
-												<td class="sorting_1">${loop.index +1}</td>
-												<td><span>${phongban.tenphong}</span> <br> <span
-													class="font-weight-bold text-primary">Số nhân viên:
-														10</span> <br> <span class="font-weight-bold text-warning">Người
-														phụ trách: ${phongban.nguoi_phu_trach}</span></td>
-												<td><span class="btn btn-success btn-sm">Hoạt
-														động</span></td>
-												<td>
-													<button class="btn btn-success btn-circle mr-1 btn-sm"
-														type="button" data-toggle="tooltip" title="Sửa"
-														onclick="editPhongBan('${phongban.id}', '${phongban.tenphong}', '${phongban.nguoi_phu_trach}', '${phongban.trangthai}');">
-														<i class="fa fa-pencil-square-o iconnhanvien"
-															aria-hidden="true"></i>
-													</button>
-												</td>
-											</tr>
+
+											<c:if test="${phongban.so_thanh_vien > 0}">
+												<tr role="row" class="odd">
+													<td class="sorting_1">${loop.index +1}</td>
+													<td><span>${phongban.tenphong}</span> <br> <span
+														class="font-weight-bold text-primary">Số nhân viên:
+															${phongban.so_thanh_vien}</span> <br> <c:forEach
+															var="itemUser" items="${usersList}">
+															<c:if test="${phongban.nguoi_phu_trach == itemUser.id}">
+																<span class="font-weight-bold text-warning">Người
+																	phụ trách: ${itemUser.hovaten}</span>
+															</c:if>
+														</c:forEach></td>
+													<c:choose>
+														<c:when test="${phongban.trangthai == 1}">
+															<td><span class="btn btn-success btn-sm">Hoạt
+																	động</span></td>
+
+														</c:when>
+														<c:when test="${phongban.trangthai == 0}">
+															<td><span class="btn btn-light btn-sm">Không
+																	hoạt động</span></td>
+
+														</c:when>
+													</c:choose>
+
+
+													<td>
+														<button class="btn btn-success btn-circle mr-1 btn-sm"
+															type="button" data-toggle="tooltip" title="Sửa"
+															onclick="editPhongBan('${phongban.id}', '${phongban.tenphong}', '${phongban.nguoi_phu_trach}', '${phongban.trangthai}');">
+															<i class="fa fa-pencil-square-o iconnhanvien"
+																aria-hidden="true"></i>
+														</button>
+													</td>
+												</tr>
+
+
+
+
+											</c:if>
+
+
+
 										</c:forEach>
 
 									</tbody>
@@ -156,9 +183,11 @@
 							<div class="form-group row mt-4">
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" name="<portlet:namespace />trangthai"
-										value="1" class="custom-control-input" id="trangthai"
-										checked=""> <label class="custom-control-label"
-										for="trangthai">Hoạt động</label>
+										value="${phongbanedit.trangthai}"
+										${phongbanedit.trangthai == 1 ? 'checked' : ''}
+										class="custom-control-input" id="trangthai"
+										onclick="updateValuehoatdong()"> <label
+										class="custom-control-label" for="trangthai">Hoạt động</label>
 								</div>
 							</div>
 						</div>
@@ -182,7 +211,19 @@
 </div>
 
 
+<script type="text/javascript">
+	function updateValuehoatdong() {
+		var checkbox = document.getElementById("trangthai");
+		var valueInput = document
+				.getElementsByName("<portlet:namespace />trangthai")[0];
 
+		if (checkbox.checked) {
+			valueInput.value = 1; // Giá trị mới khi checkbox được chọn
+		} else {
+			valueInput.value = 0; // Giá trị mới khi checkbox không được chọn
+		}
+	}
+</script>
 
 <script>
 	function editPhongBan(id, tenphong, nguoi_phu_trach, trangthai) {
@@ -195,7 +236,13 @@
 		document.getElementById("phongbanId").value = id;
 		document.getElementById("tenphong").value = tenphong;
 		document.getElementById("nguoi_phu_trach").value = nguoi_phu_trach;
-		document.getElementById("trangthai").checked = trangthai;
+
+		if (trangthai > 0) {
+			document.getElementById("trangthai").checked = 1;
+		} else {
+			document.getElementById("trangthai").checked = 0;
+		}
+
 	}
 </script>
 

@@ -85,7 +85,7 @@ public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
 		xinnghi.setUser_id(userId);
 		xinnghi.setTu_ngay(tu_ngay);
 		xinnghi.setLy_do(ly_do);
-		xinnghi.setChon_ly_do(chon_ly_do);
+		xinnghi.setChon_ly_do("nghiphep");
 		xinnghi.setTrangthai(trangthai);
 		xinnghi.setNua_ngay(Nghi_ca_lam);
 		xinnghi.setSo_ngay(soNgay);
@@ -125,8 +125,8 @@ public class XinnghiLocalServiceImpl extends XinnghiLocalServiceBaseImpl {
 		System.out.println("da vao dc serrvice -------- ");
 		Xinnghi xinnghi = getXinnghi(id_file);
 		
-		xinnghi.setTrangthai_kyso(2);
-		xinnghi.setTrangthai(2);
+		//xinnghi.setTrangthai_kyso(2);
+		xinnghi.setTrangthai(3);
 		
 		
 		xinnghiLocalService.updateXinnghi(xinnghi);

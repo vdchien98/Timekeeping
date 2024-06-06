@@ -16,6 +16,7 @@ package com.liferay.docs.backend.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.Chucvu;
+import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.service.base.ChucvuLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,5 +63,43 @@ public class ChucvuLocalServiceImpl extends ChucvuLocalServiceBaseImpl {
    		chucvuLocalService.updateChucvu(chucvu);
         return chucvu;
 	}
+	
+	
+	
+	public Chucvu updateSoThanhVienTuCreateNhanVien(int id, int trangthai, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		System.out.println("trangthai updateSoThanhVienTuCreateNhanVien-------------- "+ trangthai);
+		Date now = new Date();
+		Chucvu chucvu = getChucvu(id);
+		if (trangthai == 1) {
+			chucvu.setSo_thanh_vien(chucvu.getSo_thanh_vien() + 1);
+		} else if (trangthai == 0){
+			chucvu.setSo_thanh_vien(chucvu.getSo_thanh_vien() - 1);
+
+		}else if (trangthai == 3) {
+			chucvu.setSo_thanh_vien(chucvu.getSo_thanh_vien());
+		}
+  		chucvu.setCreated_at(now);
+		chucvu.setUpdated_at(now);
+		chucvuLocalService.updateChucvu(chucvu);
+		return chucvu;
+	}
+
+	public Chucvu updateSoThanhVienTuALLChucVu(int id, long so_thanh_vien, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		Date now = new Date();
+		Chucvu chucvu = getChucvu(id);
+		chucvu.setSo_thanh_vien(so_thanh_vien);
+  		chucvu.setCreated_at(now);
+		chucvu.setUpdated_at(now);
+
+   		chucvuLocalService.updateChucvu(chucvu);
+
+		return chucvu;
+	}
+	
+	
+	
+	
 	
 }

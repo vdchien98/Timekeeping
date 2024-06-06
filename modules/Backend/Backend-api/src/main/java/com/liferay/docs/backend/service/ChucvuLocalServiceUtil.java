@@ -304,6 +304,24 @@ public class ChucvuLocalServiceUtil {
 		return getService().updateChucVu(id, name, role, serviceContext);
 	}
 
+	public static Chucvu updateSoThanhVienTuALLChucVu(
+			int id, long so_thanh_vien,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateSoThanhVienTuALLChucVu(
+			id, so_thanh_vien, serviceContext);
+	}
+
+	public static Chucvu updateSoThanhVienTuCreateNhanVien(
+			int id, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateSoThanhVienTuCreateNhanVien(
+			id, trangthai, serviceContext);
+	}
+
 	public static ChucvuLocalService getService() {
 		return _service;
 	}

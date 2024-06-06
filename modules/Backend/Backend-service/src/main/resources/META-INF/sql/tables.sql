@@ -23,7 +23,8 @@ create table Timekeeping_Chucvu (
 	created_at DATE null,
 	updated_at DATE null,
 	role_ INTEGER,
-	groupId LONG
+	groupId LONG,
+	so_thanh_vien LONG
 );
 
 create table Timekeeping_Filekyso (
@@ -88,7 +89,8 @@ create table Timekeeping_Phongban (
 	nguoi_phu_trach INTEGER,
 	created_at DATE null,
 	updated_at DATE null,
-	groupId LONG
+	groupId LONG,
+	so_thanh_vien LONG
 );
 
 create table Timekeeping_Users (

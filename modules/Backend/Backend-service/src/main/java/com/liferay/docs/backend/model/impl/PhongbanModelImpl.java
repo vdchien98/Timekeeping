@@ -68,7 +68,7 @@ public class PhongbanModelImpl
 		{"id_", Types.INTEGER}, {"tenphong", Types.VARCHAR},
 		{"trangthai", Types.INTEGER}, {"nguoi_phu_trach", Types.INTEGER},
 		{"created_at", Types.TIMESTAMP}, {"updated_at", Types.TIMESTAMP},
-		{"groupId", Types.BIGINT}
+		{"groupId", Types.BIGINT}, {"so_thanh_vien", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,10 +82,11 @@ public class PhongbanModelImpl
 		TABLE_COLUMNS_MAP.put("created_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("updated_at", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("so_thanh_vien", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Timekeeping_Phongban (id_ INTEGER not null primary key,tenphong VARCHAR(75) null,trangthai INTEGER,nguoi_phu_trach INTEGER,created_at DATE null,updated_at DATE null,groupId LONG)";
+		"create table Timekeeping_Phongban (id_ INTEGER not null primary key,tenphong VARCHAR(75) null,trangthai INTEGER,nguoi_phu_trach INTEGER,created_at DATE null,updated_at DATE null,groupId LONG,so_thanh_vien LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table Timekeeping_Phongban";
@@ -246,6 +247,11 @@ public class PhongbanModelImpl
 		attributeGetterFunctions.put("groupId", Phongban::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId", (BiConsumer<Phongban, Long>)Phongban::setGroupId);
+		attributeGetterFunctions.put(
+			"so_thanh_vien", Phongban::getSo_thanh_vien);
+		attributeSetterBiConsumers.put(
+			"so_thanh_vien",
+			(BiConsumer<Phongban, Long>)Phongban::setSo_thanh_vien);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -372,6 +378,21 @@ public class PhongbanModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
+	@Override
+	public long getSo_thanh_vien() {
+		return _so_thanh_vien;
+	}
+
+	@Override
+	public void setSo_thanh_vien(long so_thanh_vien) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_so_thanh_vien = so_thanh_vien;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -422,6 +443,7 @@ public class PhongbanModelImpl
 		phongbanImpl.setCreated_at(getCreated_at());
 		phongbanImpl.setUpdated_at(getUpdated_at());
 		phongbanImpl.setGroupId(getGroupId());
+		phongbanImpl.setSo_thanh_vien(getSo_thanh_vien());
 
 		phongbanImpl.resetOriginalValues();
 
@@ -444,6 +466,8 @@ public class PhongbanModelImpl
 		phongbanImpl.setUpdated_at(
 			this.<Date>getColumnOriginalValue("updated_at"));
 		phongbanImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		phongbanImpl.setSo_thanh_vien(
+			this.<Long>getColumnOriginalValue("so_thanh_vien"));
 
 		return phongbanImpl;
 	}
@@ -553,6 +577,8 @@ public class PhongbanModelImpl
 
 		phongbanCacheModel.groupId = getGroupId();
 
+		phongbanCacheModel.so_thanh_vien = getSo_thanh_vien();
+
 		return phongbanCacheModel;
 	}
 
@@ -652,6 +678,7 @@ public class PhongbanModelImpl
 	private Date _created_at;
 	private Date _updated_at;
 	private long _groupId;
+	private long _so_thanh_vien;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -689,6 +716,7 @@ public class PhongbanModelImpl
 		_columnOriginalValues.put("created_at", _created_at);
 		_columnOriginalValues.put("updated_at", _updated_at);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("so_thanh_vien", _so_thanh_vien);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -725,6 +753,8 @@ public class PhongbanModelImpl
 		columnBitmasks.put("updated_at", 32L);
 
 		columnBitmasks.put("groupId", 64L);
+
+		columnBitmasks.put("so_thanh_vien", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

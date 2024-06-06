@@ -274,4 +274,12 @@ public interface ChucvuLocalService
 			int id, String name, int role, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Chucvu updateSoThanhVienTuALLChucVu(
+			int id, long so_thanh_vien, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Chucvu updateSoThanhVienTuCreateNhanVien(
+			int id, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 }

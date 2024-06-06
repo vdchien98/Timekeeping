@@ -49,6 +49,7 @@ public class PhongbanWrapper
 		attributes.put("created_at", getCreated_at());
 		attributes.put("updated_at", getUpdated_at());
 		attributes.put("groupId", getGroupId());
+		attributes.put("so_thanh_vien", getSo_thanh_vien());
 
 		return attributes;
 	}
@@ -95,6 +96,12 @@ public class PhongbanWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long so_thanh_vien = (Long)attributes.get("so_thanh_vien");
+
+		if (so_thanh_vien != null) {
+			setSo_thanh_vien(so_thanh_vien);
 		}
 	}
 
@@ -151,6 +158,16 @@ public class PhongbanWrapper
 	@Override
 	public int getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the so_thanh_vien of this phongban.
+	 *
+	 * @return the so_thanh_vien of this phongban
+	 */
+	@Override
+	public long getSo_thanh_vien() {
+		return model.getSo_thanh_vien();
 	}
 
 	/**
@@ -236,6 +253,16 @@ public class PhongbanWrapper
 	@Override
 	public void setPrimaryKey(int primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the so_thanh_vien of this phongban.
+	 *
+	 * @param so_thanh_vien the so_thanh_vien of this phongban
+	 */
+	@Override
+	public void setSo_thanh_vien(long so_thanh_vien) {
+		model.setSo_thanh_vien(so_thanh_vien);
 	}
 
 	/**

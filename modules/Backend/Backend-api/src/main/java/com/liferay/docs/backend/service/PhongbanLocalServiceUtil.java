@@ -306,6 +306,24 @@ public class PhongbanLocalServiceUtil {
 		return getService().updatePhongban(phongban);
 	}
 
+	public static Phongban updateSoThanhVienTuAllPhong(
+			int id, long so_thanh_vien,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateSoThanhVienTuAllPhong(
+			id, so_thanh_vien, serviceContext);
+	}
+
+	public static Phongban updateSoThanhVienTuCreateNhanVien(
+			int id, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateSoThanhVienTuCreateNhanVien(
+			id, trangthai, serviceContext);
+	}
+
 	public static PhongbanLocalService getService() {
 		return _service;
 	}

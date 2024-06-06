@@ -340,6 +340,29 @@ public class ChucvuLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.docs.backend.model.Chucvu updateSoThanhVienTuALLChucVu(
+			int id, long so_thanh_vien,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _chucvuLocalService.updateSoThanhVienTuALLChucVu(
+			id, so_thanh_vien, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Chucvu
+			updateSoThanhVienTuCreateNhanVien(
+				int id, int trangthai,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _chucvuLocalService.updateSoThanhVienTuCreateNhanVien(
+			id, trangthai, serviceContext);
+	}
+
+	@Override
 	public ChucvuLocalService getWrappedService() {
 		return _chucvuLocalService;
 	}

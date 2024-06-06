@@ -154,6 +154,20 @@ public interface PhongbanModel extends BaseModel<Phongban> {
 	 */
 	public void setGroupId(long groupId);
 
+	/**
+	 * Returns the so_thanh_vien of this phongban.
+	 *
+	 * @return the so_thanh_vien of this phongban
+	 */
+	public long getSo_thanh_vien();
+
+	/**
+	 * Sets the so_thanh_vien of this phongban.
+	 *
+	 * @param so_thanh_vien the so_thanh_vien of this phongban
+	 */
+	public void setSo_thanh_vien(long so_thanh_vien);
+
 	@Override
 	public Phongban cloneWithOriginalValues();
 

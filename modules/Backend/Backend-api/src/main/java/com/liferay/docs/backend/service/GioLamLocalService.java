@@ -79,13 +79,12 @@ public interface GioLamLocalService
 
 	public void addGioLamVaoChieu(
 			long user_id, Date ngaylam, String check_in_chieu,
-			int di_muon_chieu, float diem, int trangthai,
-			ServiceContext serviceContext)
+			int di_muon_chieu, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void addGioLamVaoSang(
 			long user_id, Date ngaylam, String check_in_sang, int di_muon_sang,
-			float diem, int trangthai, ServiceContext serviceContext)
+			int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void addGioLamXinNghiDcPheDuyetCaNgay(
@@ -99,7 +98,7 @@ public interface GioLamLocalService
 		throws PortalException, SystemException;
 
 	public void addXinChamCongCaNgayNuaNgay(
-			Date ngay_lam, long user_id_XinChamCongVaoRa, String loai_cham_cong,
+			Date ngay_lam, long user_id_XinChamCong, String loai_cham_cong,
 			float diem, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
@@ -294,6 +293,11 @@ public interface GioLamLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void upateDiemChamCong(
+			int idGioLam, Date ngay_lam, double diem, int trangthai,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	/**
 	 * Updates the gio lam in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -309,25 +313,22 @@ public interface GioLamLocalService
 
 	public void updateGioLamCaNgay(
 			int idGioLam, long user_id, String check_out_chieu,
-			int ve_som_chieu, float diem, int trangthai,
-			ServiceContext serviceContext)
+			int ve_som_chieu, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void updateGioLamRaChieu(
 			int idGioLam, long user_id, String check_out_chieu,
-			int ve_som_chieu, float diem, int trangthai,
-			ServiceContext serviceContext)
+			int ve_som_chieu, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void updateGioLamRaSang(
 			int idGioLam, long user_id, String check_out_sang, int ve_som_sang,
-			float diem, int trangthai, ServiceContext serviceContext)
+			int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void updateGioLamVaoChieu(
 			int idGioLam, long user_id, String check_in_chieu,
-			int di_muon_chieu, float diem, int trangthai,
-			ServiceContext serviceContext)
+			int di_muon_chieu, int trangthai, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	public void updateGioLamXinNghiDcPheDuyetCaNgay(
@@ -341,7 +342,7 @@ public interface GioLamLocalService
 		throws PortalException, SystemException;
 
 	public void updateXinChamCongCaNgayNuaNgay(
-			int idGioLam, Date ngay_lam, long user_id_XinChamCongVaoRa,
+			int idGioLam, Date ngay_lam, long user_id_XinChamCong,
 			String loai_cham_cong, float diem, int trangthai,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;

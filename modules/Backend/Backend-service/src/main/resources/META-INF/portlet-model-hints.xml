@@ -26,6 +26,7 @@
 		<field name="updated_at" type="Date" />
 		<field name="role" type="int" />
 		<field name="groupId" type="long" />
+		<field name="so_thanh_vien" type="long" />
 	</model>
 	<model name="com.liferay.docs.backend.model.Filekyso">
 		<field name="id" type="int" />
@@ -86,6 +87,7 @@
 		<field name="created_at" type="Date" />
 		<field name="updated_at" type="Date" />
 		<field name="groupId" type="long" />
+		<field name="so_thanh_vien" type="long" />
 	</model>
 	<model name="com.liferay.docs.backend.model.Users">
 		<field name="id" type="int" />

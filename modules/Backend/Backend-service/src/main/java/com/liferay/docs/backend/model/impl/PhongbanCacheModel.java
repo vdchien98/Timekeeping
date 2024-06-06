@@ -61,7 +61,7 @@ public class PhongbanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -77,6 +77,8 @@ public class PhongbanCacheModel
 		sb.append(updated_at);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", so_thanh_vien=");
+		sb.append(so_thanh_vien);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,6 +115,7 @@ public class PhongbanCacheModel
 		}
 
 		phongbanImpl.setGroupId(groupId);
+		phongbanImpl.setSo_thanh_vien(so_thanh_vien);
 
 		phongbanImpl.resetOriginalValues();
 
@@ -131,6 +134,8 @@ public class PhongbanCacheModel
 		updated_at = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		so_thanh_vien = objectInput.readLong();
 	}
 
 	@Override
@@ -151,6 +156,8 @@ public class PhongbanCacheModel
 		objectOutput.writeLong(updated_at);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(so_thanh_vien);
 	}
 
 	public int id;
@@ -160,5 +167,6 @@ public class PhongbanCacheModel
 	public long created_at;
 	public long updated_at;
 	public long groupId;
+	public long so_thanh_vien;
 
 }

@@ -46,6 +46,8 @@ public class PhongbanTable extends BaseTable<PhongbanTable> {
 		"updated_at", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<PhongbanTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<PhongbanTable, Long> so_thanh_vien = createColumn(
+		"so_thanh_vien", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private PhongbanTable() {
 		super("Timekeeping_Phongban", PhongbanTable::new);

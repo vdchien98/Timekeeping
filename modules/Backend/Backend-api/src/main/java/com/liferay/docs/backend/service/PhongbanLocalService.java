@@ -276,4 +276,12 @@ public interface PhongbanLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Phongban updatePhongban(Phongban phongban);
 
+	public Phongban updateSoThanhVienTuAllPhong(
+			int id, long so_thanh_vien, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public Phongban updateSoThanhVienTuCreateNhanVien(
+			int id, int trangthai, ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 }

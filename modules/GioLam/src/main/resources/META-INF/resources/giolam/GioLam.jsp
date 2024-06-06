@@ -72,6 +72,23 @@ form#search-year {
 	margin-left: -75px;
 	padding: 0;
 }
+
+.col-auto.chientrophy {
+	font-size: 85px;
+	color: #fff700;
+}
+
+span#hours {
+	font-size: 15px;
+}
+
+span#min {
+	font-size: 15px;
+}
+
+span#sec {
+	font-size: 15px;
+}
 </style>
 
 <div class="container-fluid">
@@ -79,12 +96,14 @@ form#search-year {
 		<div class="card-header py-3">
 			<h4
 				class="m-0 font-weight-bold text-primary text-uppercase text-center">
-				Bảng giờ làm tháng 3 năm 2024 <span
-					class="btn btn-danger text-white" style="font-size: 60%;"> <a><span
-						class="badge ngay">Ngày 4/3 </span></a> <a><span
-						class="badge hours">09</span></a> : <a><span class="badge min">54</span></a>
-					: <a><span class="badge sec">41</span></a>
+				Bảng giờ làm tháng ${monthhienthi} năm ${yearhienthi} <span
+					class="btn text-primary" style="font-size: 60%;"> <a><span
+						class="badge hours" id="hours"></span></a> Giờ : <a><span
+						class="badge min" id="min"></span></a> Phút: <a><span
+						class="badge sec" id="sec"></span></a> Giây
 				</span>
+
+
 			</h4>
 		</div>
 		<div class="card-body">
@@ -147,6 +166,7 @@ form#search-year {
 				<form id="chamCongForm" method="POST"
 					action="<%=ActionChamCong.toString()%>"
 					name="<portlet:namespace />fm">
+
 					<div id="myModal" class="modal fade">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
@@ -178,12 +198,12 @@ form#search-year {
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
 										data-dismiss="modal">Hủy</button>
-									<button type="submit" class="btn btn-danger">Gửi Mã</button>
+									<button id="guimazalo" type="button" class="btn btn-danger"
+										onclick="closeMyModal()">Gửi Mã</button>
 								</div>
 							</div>
 						</div>
 					</div>
-
 
 				</form>
 
@@ -216,7 +236,7 @@ form#search-year {
 
 
 
-			<%-- Xem gio làm của nhân viên theo tháng và năm --%> 
+			<%-- Xem gio làm của nhân viên theo tháng và năm --%>
 
 			<div class="input-group mb-3 row justify-content-center thangnam">
 				<label class="col-form-label font-weight-bold text-info">Tháng
@@ -237,7 +257,7 @@ form#search-year {
 					</div>
 				</form>
 			</div>
-			
+
 
 
 
@@ -350,25 +370,25 @@ form#search-year {
 														<c:when test="${calamsang == 1}">
 															<div class="bg-success border" style="height: 10px"
 																data-toggle="tooltip" data-html="true"
-																title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00"
+																title="Ca sáng <br> Giờ vào: ${NgayTrongThang.checkinsang } | Giờ ra: ${NgayTrongThang.checkoutsang }"
 																data-original-title="">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamsang == 2}">
 															<div class="bg-secondary border" style="height: 10px"
 																data-toggle="tooltip" data-html="true"
-																title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00"
-																data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+																title="Ca sáng <br> Giờ vào: ${NgayTrongThang.checkinsang } | Giờ ra: ${NgayTrongThang.checkoutsang }"
+																data-original-title="Ca sáng <br>  Giờ vào: ${NgayTrongThang.checkinsang } | Giờ ra: ${NgayTrongThang.checkoutsang }">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamsang == 3}">
 															<div class="bg-warning border" style="height: 10px"
 																data-toggle="tooltip" data-html="true"
-																title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00"
-																data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+																title="Ca sáng <br> Giờ vào: ${NgayTrongThang.checkinsang } | Giờ ra: ${NgayTrongThang.checkoutsang }"
+																data-original-title="Ca sáng <br>  Giờ vào: ${NgayTrongThang.checkinsang } | Giờ ra: ${NgayTrongThang.checkoutsang }">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamsang == 4}">
 															<div class="bg-danger border" style="height: 10px"
 																data-toggle="tooltip" data-html="true"
-																title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00"
+																title="Ca sáng Nghỉ không phép"
 																data-original-title="Nghỉ không phép">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamsang == 0}">
@@ -382,22 +402,26 @@ form#search-year {
 														<c:when test="${calamchieu == 1}">
 
 															<div class="bg-success border" style="height: 10px"
-																data-toggle="tooltip" data-html="true" title=""
-																data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+																data-toggle="tooltip" data-html="true"
+																title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }"
+																data-original-title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamchieu == 2}">
 															<div class="bg-secondary border" style="height: 10px"
-																data-toggle="tooltip" data-html="true" title=""
-																data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+																data-toggle="tooltip" data-html="true"
+																title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }"
+																data-original-title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamchieu == 3}">
 															<div class="bg-warning border" style="height: 10px"
-																data-toggle="tooltip" data-html="true" title=""
-																data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+																data-toggle="tooltip" data-html="true"
+																title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }"
+																data-original-title="Ca Chiều <br> Giờ vào: ${NgayTrongThang.checkinchieu } | Giờ ra: ${NgayTrongThang.checkoutchieu }">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamchieu == 4}">
 															<div class="bg-danger border" style="height: 10px"
-																data-toggle="tooltip" data-html="true" title=""
+																data-toggle="tooltip" data-html="true"
+																title="Ca Chiều Nghỉ Không Phép"
 																data-original-title="Nghỉ không phép">&nbsp;</div>
 														</c:when>
 														<c:when test="${calamchieu == 0}">
@@ -434,15 +458,29 @@ form#search-year {
 								<div class="card-body">
 									<div class="row ml-2">
 										<strong>Điểm hiện tại của tháng: <span
-											class="text-danger">5</span></strong>
+											class="text-danger">${TongdiemHanThangMotThanhVien}</span></strong>
 									</div>
 									<div class="row ml-2">
 										<strong>Điểm tối đa của tháng: <span
-											class="text-danger">84</span></strong>
+											class="text-danger">${TongdiemOfThang}</span></strong>
 									</div>
 									<div class="row ml-2">
-										<strong>Xếp loại hiện tại của bạn: <span
-											class="text-danger">D</span></strong>
+										<strong>Xếp loại hiện tại của bạn: <c:choose>
+												<c:when test="${xeploaiChu == 1}">
+													<span class="text-danger">A</span>
+												</c:when>
+												<c:when test="${xeploaiChu == 2}">
+													<span class="text-danger">B</span>
+												</c:when>
+												<c:when test="${xeploaiChu == 3}">
+													<span class="text-danger">C</span>
+												</c:when>
+												<c:when test="${xeploaiChu == 4}">
+													<span class="text-danger">D</span>
+												</c:when>
+											</c:choose>
+
+										</strong>
 									</div>
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
@@ -452,19 +490,20 @@ form#search-year {
 											</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6%</div>
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${xeploaiphantram}%</div>
 												</div>
 												<div class="col">
 													<div class="progress progress-sm mr-2">
 														<div class="progress-bar bg-info" role="progressbar"
-															style="width: 6%" aria-valuenow="6" aria-valuemin="0"
+															style="width: ${xeploaiphantram}%"
+															aria-valuenow="${xeploaiphantram}" aria-valuemin="0"
 															aria-valuemax="100"></div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="col-auto">
-											<i class="fas fa-trophy fa-2x text-warning"></i>
+										<div class="col-auto chientrophy">
+											<i class="fa fa-trophy" aria-hidden="true"></i>
 										</div>
 									</div>
 								</div>
@@ -578,7 +617,7 @@ form#search-year {
 																			</c:when>
 																			<c:when test="${calamsang == 3}">
 																				<div class="bg-warning border" style="height: 10px"
-																					data-toggle="tooltip" data-html="true" title=""
+																					data-toggle="tooltip" data-html="true"
 																					data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamsang == 4}">
@@ -629,6 +668,7 @@ form#search-year {
 														</c:when>
 													</c:choose>
 												</c:forEach>
+												<td>1998</td>
 											</tr>
 
 										</c:forEach>
@@ -651,18 +691,7 @@ form#search-year {
 
 
 
-<%-- Lỗi load nhiều là do ở đây  --%>
-
-<%--  nhúng đoạn này vào để thêm giây trong popup   --%>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-	integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-	crossorigin="anonymous"></script>
-
+<%-- Lỗi load nhiều là do ở đây 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
@@ -670,30 +699,85 @@ form#search-year {
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
+
+
+ --%>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+	integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+	crossorigin="anonymous"></script>
+
+
+
+
+<%--  nhúng đoạn này vào để thêm giây trong popup   --%>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+	crossorigin="anonymous"></script>
+
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
 
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	 $("#guimazalo").click(function() {
+	        // Submit form khi nút được nhấn
+		 $("#chamCongForm").submit();
+	    });
+	
+});
+
+function closeMyModal() {
+    $('#myModal').modal('hide');
+}
+</script>
+
 <script>
 $(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
 	})
 
-function closeMyModal() {
-    $('#myModal').modal('hide');
-}
-
 
 </script>
 
+<script>
+    function updateTime() {
+        const now = new Date();
+        const ngay = now.getDate() + '/' + (now.getMonth() + 1);
+        const hours = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        const sec = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('min').textContent = min;
+        document.getElementById('sec').textContent = sec;
+    }
 
+    // Cập nhật giá trị mỗi giây
+    setInterval(updateTime, 1000);
+
+    // Khởi tạo giá trị ban đầu
+    updateTime();
+</script>
 
 <script type="text/javascript">
-
-
-<%-- 	--%>
 
 !(function($){
 	$.fn.datepicker.dates['vi'] = {
@@ -710,7 +794,7 @@ function closeMyModal() {
 
 $(document).ready(function() {
 	  $('.datepicker').datepicker({
-	  //  language: 'vi',
+	    language: 'vi',
 	    format: "mm/yyyy",
 		startView : "months",
 		minViewMode : "months"
@@ -720,7 +804,7 @@ $(document).ready(function() {
 		    console.log("selectedYear "+selectedYear)
 		    $('#year').val(selectedYear);
 		    $('#thang').val(selectedMonth);
-		   // $('#search-year').submit();
+		    $('#search-year').submit();
 	  });
 	});
 
@@ -793,5 +877,21 @@ function sendMaZalo() {
         throw new Error('Lỗi khi gửi yêu cầu đến hàm sendMaZalo');
       });
   }
+
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var submitButton = document.getElementById('guimazalo');
+    if (submitButton) {
+        submitButton.addEventListener('click', function() {
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+                modalBackdrop.style.display = 'none';
+            }
+            
+            console.log("xin chao ------- ");
+        });
+    }
+});
 
 </script>

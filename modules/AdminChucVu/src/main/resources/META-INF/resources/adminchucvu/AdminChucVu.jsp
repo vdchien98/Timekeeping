@@ -70,20 +70,26 @@
 									</thead>
 									<tbody>
 										<c:forEach var="chucvu" items="${chucVuList}" varStatus="loop">
-											<tr role="row" class="odd">
-												<td class="sorting_1">${loop.index +1}</td>
-												<td>${chucvu.name} <br> <span class="text-info">Số nhân viên: 5</span>
-												</td>
-												<td>
-													<button class="btn btn-success btn-circle mr-1 btn-sm"
-														type="button" data-toggle="tooltip" title="Sửa"
-														onclick="editChucVu('${chucvu.id}', '${chucvu.name}', '${chucvu.role}');"
-														>
-														<i class="fa fa-pencil-square-o iconnhanvien"
-															aria-hidden="true"></i>
-													</button>
-												</td>
-											</tr>
+											<c:if test="${chucvu.so_thanh_vien >0 }">
+
+												<tr role="row" class="odd">
+													<td class="sorting_1">${loop.index +1}</td>
+													<td>${chucvu.name}<br> <span class="text-info">Số
+															nhân viên:${chucvu.so_thanh_vien} </span>
+													</td>
+													<td>
+														<button class="btn btn-success btn-circle mr-1 btn-sm"
+															type="button" data-toggle="tooltip" title="Sửa"
+															onclick="editChucVu('${chucvu.id}', '${chucvu.name}', '${chucvu.role}');">
+															<i class="fa fa-pencil-square-o iconnhanvien"
+																aria-hidden="true"></i>
+														</button>
+													</td>
+												</tr>
+
+											</c:if>
+
+
 
 										</c:forEach>
 
@@ -131,26 +137,25 @@
 							<div class="form-group row mt-4">
 								<label for="name" class="col-form-label text-md-right">Tên
 									chức vụ <span class="text-danger">(*)</span>
-								</label> 
-								<input id="chucvuId" type="hidden" class="form-control"
-									    name="<portlet:namespace />idChucVu" required autofocus
-									placeholder="ID" value="${chucvuedit.id}"> 
-								<input id="name" type="text" class="form-control"
-									   name="<portlet:namespace />name" required autofocus
-									   placeholder="Nhập tên chức vụ"  ${chucvuedit.name} >
+								</label> <input id="chucvuId" type="hidden" class="form-control"
+									name="<portlet:namespace />idChucVu" required autofocus
+									placeholder="ID" value="${chucvuedit.id}"> <input
+									id="name" type="text" class="form-control"
+									name="<portlet:namespace />name" required autofocus
+									placeholder="Nhập tên chức vụ" ${chucvuedit.name}>
 							</div>
 							<div class="form-group row mt-4">
 								<label for="name" class="col-form-label text-md-right">Nhóm
 									quyền <span class="text-danger">(*)</span>
-								</label> 
-                                <select class="custom-select" id="roleChucVu" name="<portlet:namespace />roleChucVu" required="">
+								</label> <select class="custom-select" id="roleChucVu"
+									name="<portlet:namespace />roleChucVu" required="">
 
-											<option value="0" >Nhân viên</option>
-											<option value="1"  >Lãnh đạo phòng</option>
-											<option value="2" >Lãnh đạo đơn vị</option>
+									<option value="0">Nhân viên</option>
+									<option value="1">Lãnh đạo phòng</option>
+									<option value="2">Lãnh đạo đơn vị</option>
 								</select>
-								
-								
+
+
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -174,29 +179,29 @@
 
 
 <script>
-    function editChucVu(id, name, role) {
-        var modalTitle = document.querySelector(".modal-title");
-        var roleChucVuSelect = document.getElementById("roleChucVu");
+	function editChucVu(id, name, role) {
+		var modalTitle = document.querySelector(".modal-title");
+		var roleChucVuSelect = document.getElementById("roleChucVu");
 
-        if (id > 0) {
-            modalTitle.textContent = 'Chỉnh sửa chức vụ';
-        } else {
-            modalTitle.textContent = 'Thêm mới chức vụ';
-        }
+		if (id > 0) {
+			modalTitle.textContent = 'Chỉnh sửa chức vụ';
+		} else {
+			modalTitle.textContent = 'Thêm mới chức vụ';
+		}
 
-        console.log("*****" + id);
+		console.log("*****" + id);
 
-        // Đặt giá trị cho các trường input và select
-        document.getElementById("chucvuId").value = id;
-        document.getElementById("name").value = name;
+		// Đặt giá trị cho các trường input và select
+		document.getElementById("chucvuId").value = id;
+		document.getElementById("name").value = name;
 
-        // Duyệt qua các tùy chọn và thêm thuộc tính selected cho tùy chọn có giá trị bằng role
-        for (var i = 0; i < roleChucVuSelect.options.length; i++) {
-            if (roleChucVuSelect.options[i].value == role) {
-                roleChucVuSelect.options[i].selected = true;
-            } else {
-                roleChucVuSelect.options[i].selected = false;
-            }
-        }
-    }
+		// Duyệt qua các tùy chọn và thêm thuộc tính selected cho tùy chọn có giá trị bằng role
+		for (var i = 0; i < roleChucVuSelect.options.length; i++) {
+			if (roleChucVuSelect.options[i].value == role) {
+				roleChucVuSelect.options[i].selected = true;
+			} else {
+				roleChucVuSelect.options[i].selected = false;
+			}
+		}
+	}
 </script>

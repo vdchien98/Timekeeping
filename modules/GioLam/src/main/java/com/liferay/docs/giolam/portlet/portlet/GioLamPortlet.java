@@ -4,18 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.docs.backend.model.Calamviec;
-import com.liferay.docs.backend.model.Chucvu;
 import com.liferay.docs.backend.model.GioLam;
+import com.liferay.docs.backend.model.Ngaylamviec;
 import com.liferay.docs.backend.model.Ngaynghile;
-import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.CalamviecLocalServiceUtil;
-import com.liferay.docs.backend.service.ChucvuLocalServiceUtil;
 import com.liferay.docs.backend.service.GioLamLocalServiceUtil;
+import com.liferay.docs.backend.service.NgaylamviecLocalServiceUtil;
 import com.liferay.docs.backend.service.NgaynghileLocalServiceUtil;
-import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.giolam.portlet.constants.GioLamPortletKeys;
+import com.liferay.petra.io.OutputStreamWriter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,12 +31,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -58,9 +55,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -111,7 +109,7 @@ public class GioLamPortlet extends MVCPortlet {
 	public void sendMaXacThucToZalo(String message, String zalo_id) throws IOException, PortletException {
 		// System.out.println("da vao dc sendMaXacThucToZalo"+ message);
 
-		//getAccessTokenZaloNew();
+		// getAccessTokenZaloNew();
 
 		JsonObject user_id_info = getInfoZalo(zalo_id);
 		// System.out.println("user_id_info" + user_id_info);
@@ -199,8 +197,10 @@ public class GioLamPortlet extends MVCPortlet {
 		WebCacheItem access_token_value = new CustomWebCacheItem("access_token_key");
 
 		if (WebCachePoolUtil.get("access_token_key", access_token_value) == null) {
-			WebCacheItem refresh_token_value = new CustomWebCacheItem("refresh_token_key");
-			Object refresh_token = WebCachePoolUtil.get("refresh_token_key", refresh_token_value);
+			// WebCacheItem refresh_token_value = new
+			// CustomWebCacheItem("refresh_token_key");
+			// Object refresh_token = WebCachePoolUtil.get("refresh_token_key",
+			// refresh_token_value);
 			// System.out.println("refresh_token: " + refresh_token);
 
 			List<Map<String, String>> token = getAccessTokenZalo(
@@ -324,13 +324,13 @@ public class GioLamPortlet extends MVCPortlet {
 			tokenPairs.add(refreshTokenPair);
 			// In danh sách các cặp khóa-giá trị
 			// In danh sách các cặp khóa-giá trị
-			for (Map<String, String> tokenPair : tokenPairs) {
-				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
-					String key = entry.getKey();
-					String value = entry.getValue();
-					// System.out.println(key + ": " + value);
-				}
-			}
+//			for (Map<String, String> tokenPair : tokenPairs) {
+//				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
+////					String key = entry.getKey();
+////					String value = entry.getValue();
+//					// System.out.println(key + ": " + value);
+//				}
+//			}
 
 			connection.disconnect();
 
@@ -354,7 +354,7 @@ public class GioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=xOYK55AId6_iYfOKKPISRkY8bHHIZUiUjzwiOdQXutt4mRX07zh5GVgujJiRuEPBgOBeLdUUdKomsSirIuY36RkLr3HItDCJdiRPQpctb4ZuwPji5u6NNDpCntOTb9famDJzUIAFaG2Ua-mGMV2yFvo-pXmd-SGIsPIX0nU7_N_dswzqE9gYMFZmrYOWke5Ns-dqU2ZsZ4VAZTP61CM3FyQaq0zXlTaGc_YlRNAhoK38jRHU1jYpG-IOssefzfvIyAlCV1tAlW7ZbCqdBFIb6SINeWStwCiCvA-PAWJ7tXFtkvTsFDRfNF_GuMSWifLwtyFC062Se2UStiK6MvAbBxhnhH9Yj_uPfiwH9nYlsohVzeasEvYRJyAAYKPxxCv2nvIoOM3frtYizzXaQg-mURFb_4P0lOqzWEM7CeehFqXJZPbh"
+			String data = "refresh_token=At__Gxzc_pygVVr3l63_FYv__aE_UPPAMWB6KxHvXb1VOS0foNoJFnicu1pbU9eg4GYS9e1eo3z7U8KXaod29r5BW1l7EzHcKN-aKxOxrbqXKT1Mq36JNoaf_LMmRgPfTMlXIv4kk5nbQjfgj1QlJd9qrKAKCOrF0N7NPlWOZ1XhK-5bZ2E_P7zWkrEvBSLOBZMyB-LFxpyB7Q0WyaJsMpWgj6RrH-PXB5k1ITigu4GpLv98tXhHLKjzZ72J1z8EO4cFSAeJsbj2VQ9pa62aH1nwnLJk7fnBVdxOHvS5d3m4QvWqw0t17Gnqm1UU4R9rIcEsVzCIn5aYLebLpXMETmTEzMhDLR9XN1FM0yrTZNKYFDPBrrsuTZSRxLFJNOWk0IMC9ST0uGqgNuSW_IU93Xb3x2xs1vyrDJEXA3TFlddwEm"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -402,13 +402,13 @@ public class GioLamPortlet extends MVCPortlet {
 			// In danh sách các cặp khóa-giá trị
 			// In danh sách các cặp khóa-giá trị
 			// System.out.println("tokenPairs la 111111112222222" + tokenPairs);
-			for (Map<String, String> tokenPair : tokenPairs) {
-				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
-					String key = entry.getKey();
-					String value = entry.getValue();
-					// System.out.println(key + ": " + value);
-				}
-			}
+//			for (Map<String, String> tokenPair : tokenPairs) {
+//				for (Map.Entry<String, String> entry : tokenPair.entrySet()) {
+//					String key = entry.getKey();
+//					String value = entry.getValue();
+//					// System.out.println(key + ": " + value);
+//				}
+//			}
 
 			WebCacheItem wca = new CustomWebCacheItem("access_token_key_new", tokenPairs);
 			// Lưu trữ CustomWebCacheItem vào WebCachePool
@@ -490,45 +490,17 @@ public class GioLamPortlet extends MVCPortlet {
 				if (userGioLam == null) {
 					if (GioHienTaiTrongBuoiSang == true) {
 						int chenhLechPhutVaoSang = (int) ChronoUnit.MINUTES.between(gioVaoSang, gioHienTaiDate);
-						float diem = 0;
-						if (chenhLechPhutVaoSang < 0) {
-							diem += 1.0;
-						} else if (chenhLechPhutVaoSang > 1 && chenhLechPhutVaoSang < 10) {
-							diem += 0.8;
-						} else if (chenhLechPhutVaoSang >= 10 && chenhLechPhutVaoSang < 15) {
-							diem += 0.6;
-						} else if (chenhLechPhutVaoSang >= 15 && chenhLechPhutVaoSang < 20) {
-							diem += 0.4;
-						} else if (chenhLechPhutVaoSang >= 20 && chenhLechPhutVaoSang < 30) {
-							diem += 0.2;
-						} else {
-							diem += 0.0;
-						}
 
 						GioLamLocalServiceUtil.addGioLamVaoSang(userId, ngayHienTaikieuDate, gioHienTai,
-								chenhLechPhutVaoSang, diem, 1, serviceContext);
+								chenhLechPhutVaoSang, 1, serviceContext);
 
 					} else if (GioHienTaiTrongBuoiChieu == true) {
 //						int chenhLechPhutVaoChieu = (int) gioHienTaiDate.until(gioChamCongVaoChieuFormatted,
 //								ChronoUnit.MINUTES);
 						int chenhLechPhutVaoChieu = (int) ChronoUnit.MINUTES.between(gioVaoChieu, gioHienTaiDate);
-						float diem = 0;
-						if (chenhLechPhutVaoChieu < 0) {
-							diem += 1.0;
-						} else if (chenhLechPhutVaoChieu > 1 && chenhLechPhutVaoChieu < 10) {
-							diem += 0.8;
-						} else if (chenhLechPhutVaoChieu >= 10 && chenhLechPhutVaoChieu < 15) {
-							diem += 0.6;
-						} else if (chenhLechPhutVaoChieu >= 15 && chenhLechPhutVaoChieu < 20) {
-							diem += 0.4;
-						} else if (chenhLechPhutVaoChieu >= 20 && chenhLechPhutVaoChieu < 30) {
-							diem += 0.2;
-						} else {
-							diem += 0.0;
-						}
 
 						GioLamLocalServiceUtil.addGioLamVaoChieu(userId, ngayHienTaikieuDate, gioHienTai,
-								chenhLechPhutVaoChieu, diem, 1, serviceContext);
+								chenhLechPhutVaoChieu, 1, serviceContext);
 
 					} else {
 
@@ -546,24 +518,11 @@ public class GioLamPortlet extends MVCPortlet {
 
 						int chenhLechPhutRaSang = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaSang);
 						// System.out.println("chenhLechPhutRaSang ------ " + chenhLechPhutRaSang);
-						float diem = (float) userGioLam.getDiem();
+						// float diem = (float) userGioLam.getDiem();
 						// System.out.println("diem hien tai la ------- " + diem);
-						if (chenhLechPhutRaSang < 0) {
-							diem += 1.0;
-						} else if (chenhLechPhutRaSang > 1 && chenhLechPhutRaSang < 10) {
-							diem += 0.8;
-						} else if (chenhLechPhutRaSang >= 10 && chenhLechPhutRaSang < 15) {
-							diem += 0.6;
-						} else if (chenhLechPhutRaSang >= 15 && chenhLechPhutRaSang < 20) {
-							diem += 0.4;
-						} else if (chenhLechPhutRaSang >= 20 && chenhLechPhutRaSang < 30) {
-							diem += 0.2;
-						} else {
-							diem += 0.0;
-						}
 
-						GioLamLocalServiceUtil.updateGioLamRaSang(idGioLam, user_id, gioHienTai, chenhLechPhutRaSang,
-								diem, 1, serviceContext);
+						GioLamLocalServiceUtil.updateGioLamRaSang(idGioLam, user_id, gioHienTai, chenhLechPhutRaSang, 1,
+								serviceContext);
 
 					} else if (GioHienTaiTrongBuoiChieu == true) {
 						String checkinchieu = userGioLam.getCheck_in_chieu();
@@ -577,85 +536,29 @@ public class GioLamPortlet extends MVCPortlet {
 
 							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
 
-							float diem = (float) userGioLam.getDiem();
-							if (chenhLechPhutRaChieu < 0) {
-								diem += 1.0;
-							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
-								diem += 0.8;
-							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
-								diem += 0.6;
-							} else if (chenhLechPhutRaChieu >= 15 && chenhLechPhutRaChieu < 20) {
-								diem += 0.4;
-							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
-								diem += 0.2;
-							} else {
-								diem += 0;
-							}
-
 							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
-									chenhLechPhutRaChieu, diem, 1, serviceContext);
+									chenhLechPhutRaChieu, 1, serviceContext);
 						} else if (checkinSang.equals("") == false && checkoutSang.equals("") == false) {
 							// System.out.println("da cham cong sang nhưng chưa cham cong vao chieu");
 							int chenhLechPhutVaoChieu = (int) ChronoUnit.MINUTES.between(gioVaoChieu, gioHienTaiDate);
 
-							float diem = (float) userGioLam.getDiem();
-							if (chenhLechPhutVaoChieu < 0) {
-								diem += 1;
-							} else if (chenhLechPhutVaoChieu > 1 && chenhLechPhutVaoChieu < 10) {
-								diem += 0.8;
-							} else if (chenhLechPhutVaoChieu >= 10 && chenhLechPhutVaoChieu < 15) {
-								diem += 0.6;
-							} else if (chenhLechPhutVaoChieu >= 15 && chenhLechPhutVaoChieu < 20) {
-								diem += 0.4;
-							} else if (chenhLechPhutVaoChieu >= 20 && chenhLechPhutVaoChieu < 30) {
-								diem += 0.2;
-							} else {
-								diem += 0.0;
-							}
-
 							GioLamLocalServiceUtil.updateGioLamVaoChieu(idGioLam, user_id, gioHienTai,
-									chenhLechPhutVaoChieu, diem, 1, serviceContext);
+									chenhLechPhutVaoChieu, 1, serviceContext);
 						} else if (checkinSang.equals("") == false) {
 							// trường hợp chấm công nhiều thường xuyên
 //							int chenhLechPhutRaChieu = (int) gioHienTaiDate.until(gioChamCongRaChieuFormatted,
 //									ChronoUnit.MINUTES);
 							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
-							float diem = (float) userGioLam.getDiem();
-							if (chenhLechPhutRaChieu < 0) {
-								diem += 3.0;
-							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
-								diem += 2.8;
-							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
-								diem += 2.6;
-							} else if (chenhLechPhutRaChieu >= 15 && chenhLechPhutRaChieu < 20) {
-								diem += 2.4;
-							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
-								diem += 2.2;
-							} else {
-								diem += 2.0;
-							}
+
 							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
-									chenhLechPhutRaChieu, diem, 1, serviceContext);
+									chenhLechPhutRaChieu, 1, serviceContext);
 						} else if (checkinchieu.equals("") == false) {
 							// System.out.println("da cham cong sang nhưng chưa cham cong vao chieu");
 							int chenhLechPhutRaChieu = (int) ChronoUnit.MINUTES.between(gioHienTaiDate, gioRaChieu);
-							float diem = (float) userGioLam.getDiem();
-							if (chenhLechPhutRaChieu < 0) {
-								diem += 1.0;
-							} else if (chenhLechPhutRaChieu > 1 && chenhLechPhutRaChieu < 10) {
-								diem += 0.8;
-							} else if (chenhLechPhutRaChieu >= 10 && chenhLechPhutRaChieu < 15) {
-								diem += 0.6;
-							} else if (chenhLechPhutRaChieu >= 15 && chenhLechPhutRaChieu < 20) {
-								diem += 0.4;
-							} else if (chenhLechPhutRaChieu >= 20 && chenhLechPhutRaChieu < 30) {
-								diem += 0.2;
-							} else {
-								diem += 0.0;
-							}
+							// float diem = (float) userGioLam.getDiem();
 
 							GioLamLocalServiceUtil.updateGioLamRaChieu(idGioLam, user_id, gioHienTai,
-									chenhLechPhutRaChieu, diem, 1, serviceContext);
+									chenhLechPhutRaChieu, 1, serviceContext);
 
 						}
 
@@ -672,6 +575,8 @@ public class GioLamPortlet extends MVCPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// response.setProperty("hideModalBackdrop", "true");
 
 		response.sendRedirect("/gio-lam");
 	}
@@ -697,9 +602,9 @@ public class GioLamPortlet extends MVCPortlet {
 		// XỬ LÝ NÚT CHẤM CÔNG ///
 		// Lấy ca làm việc lưu trong db
 		List<Calamviec> calamviecList = CalamviecLocalServiceUtil.getCalamviecs(-1, 1);
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		DateFormat StringtoDate = new SimpleDateFormat("HH:mm"); // chuyển từ String sang Date
-		SimpleDateFormat dateFormatString = new SimpleDateFormat("HH:mm"); // chuyển từ Date sang String
+//		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+//		DateFormat StringtoDate = new SimpleDateFormat("HH:mm"); // chuyển từ String sang Date
+//		SimpleDateFormat dateFormatString = new SimpleDateFormat("HH:mm"); // chuyển từ Date sang String
 		Calamviec calamviec = calamviecList.get(0);
 		String giovaosang = calamviec.getGio_vao_sang();
 		int thoigianvaosomsang = calamviec.getVao_truoc_sang();
@@ -727,9 +632,10 @@ public class GioLamPortlet extends MVCPortlet {
 		LocalTime gioChamCongRaChieuFormatted = gioRaChieu.plusMinutes(thoigianramuonchieu);
 
 		// Lấy ngày hiện tại
-		LocalDate ngayHienTai = LocalDate.now();
-		DateTimeFormatter ngayHienTaiformatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		String ngayHienTaiDinhDang = ngayHienTai.format(ngayHienTaiformatter);
+		// LocalDate ngayHienTai = LocalDate.now();
+		// DateTimeFormatter ngayHienTaiformatter =
+		// DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//		String ngayHienTaiDinhDang = ngayHienTai.format(ngayHienTaiformatter);
 		// System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
 
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -838,11 +744,51 @@ public class GioLamPortlet extends MVCPortlet {
 		renderRequest.setAttribute("monthhienthi", month);
 		renderRequest.setAttribute("yearhienthi", year);
 		List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear, userId);
-		System.out.println("danhSachNgayTrongThangMoi ");
+
+		System.out.println("danhSachNgayTrongThangMoi*********** " + danhSachNgayTrongThangMoi);
+		// Tính Tổng điểm hàng tháng
+		double TongdiemHanThang1ThanhVien = 0;
+		for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
+			if (map == null) {
+				TongdiemHanThang1ThanhVien += 0;
+			} else {
+				TongdiemHanThang1ThanhVien += (Double) map.get("diem");
+			}
+
+		}
+		System.out.println("TongdiemHanThang1ThanhVien*********** " + TongdiemHanThang1ThanhVien);
+		// Tổng điểm tối đa hàng tháng
+		double TongdiemOfThang = 0;
+		int thang = Integer.parseInt(keymonth);
+		int nam = Integer.parseInt(keyyear);
+		TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
+		System.out.println(" TongdiemOfThang " + TongdiemOfThang);
+		// Xếp Loại
+		double xeploai = TongdiemHanThang1ThanhVien / TongdiemOfThang * 100;
+		xeploai = Math.round(xeploai * 100.0) / 100.0;
+		System.out.println("xeploai " + xeploai);
+		int xeploaiChu = 0;
+		if (xeploai >= 85.00) {
+			xeploaiChu = 1;
+		} else if (xeploai >= 70.00 && xeploai < 85.00) {
+			xeploaiChu = 2;
+		} else if (xeploai >= 50.00 && xeploai < 70.00) {
+			xeploaiChu = 3;
+		} else if (xeploai < 50.00) {
+			xeploaiChu = 4;
+		}
+
+		// System.out.println("xeploaiChu "+ xeploaiChu);
+
+		renderRequest.setAttribute("TongdiemHanThangMotThanhVien", TongdiemHanThang1ThanhVien);
+		renderRequest.setAttribute("TongdiemOfThang", TongdiemOfThang);
+		renderRequest.setAttribute("xeploaiChu", xeploaiChu);
+		renderRequest.setAttribute("xeploaiphantram", xeploai);
 		renderRequest.setAttribute("danhSachNgayTrongThang", danhSachNgayTrongThangMoi);
 		List<List<Map<String, Object>>> danhSachNgayTrongThangcaPhong = new ArrayList<>();
 		if (quyenxemgiolam == 1) {
-			// Xử lý hiện thị cho trưởng phòng và phụ trách phòng và giám đốc
+			// Xử lý hiện thị cho trưởng phòng hành chính và phụ trách phòng hành chính và
+			// giám đốc
 			System.out.println("quyenTruongPhong  --- " + quyenxemgiolam);
 			List<Users> TatCaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
 			int mothInt = Integer.parseInt(month);
@@ -866,7 +812,7 @@ public class GioLamPortlet extends MVCPortlet {
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
 
 		} else if (quyenxemgiolam == 2) {
-			// xử lý trưởng phòng
+			// xử lý trưởng phòng khác
 			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(user.getPhongban_id());
 			int mothInt = Integer.parseInt(month);
 			int yearInt = Integer.parseInt(year);
@@ -891,6 +837,7 @@ public class GioLamPortlet extends MVCPortlet {
 		} else if (quyenxemgiolam == 3) {
 
 		}
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -956,14 +903,20 @@ public class GioLamPortlet extends MVCPortlet {
 			Users users = UsersLocalServiceUtil.getUserbyUserId(x.getUser_id());
 			String ho_va_ten = users.getHovaten();
 
+			// Lấy điểm của thành viên
+
+			double diem = TinhDiemcuaMotNhanVienOfMotNgay(x.getUser_id(), x.getNgay_lam());
+			// System.out.println("diem -------- " + diem);
+
 			if (x == null) {
+				System.out.println("khong vao dc" + x);
 //							gioLamMap.put("ngay_lam", x.getNgay_lam());
 //			            	gioLamMap.put("ho_va_ten", ho_va_ten);
 //							gioLamMap.put("ngay_lam_trongthang", dayOfMonth);
 //							gioLamMap.put("cophaingayNghi", CoPhaiNgayNghileKo);
 //							gioLamMap.put("CoPhaiThu7orChuNhat", CoPhaiThu7orChuNhatKo);
 //						    gioLamMap.put("ngaytrcNgayHienTaiKo", DateTruocSauNgayHienTai); // trường hợp để giới hạn những ngày
-//																							// ngày đã chấm công
+
 //							gioLamMap.put("calamsang", trangthaicasang);
 //							gioLamMap.put("calamchieu", trangthaicachieu);
 //							gioLamMap.put("checkinsang", x.getCheck_in_sang());
@@ -985,7 +938,7 @@ public class GioLamPortlet extends MVCPortlet {
 				gioLamMap.put("checkoutsang", x.getCheck_out_sang());
 				gioLamMap.put("checkinchieu", x.getCheck_in_chieu());
 				gioLamMap.put("checkoutchieu", x.getCheck_out_chieu());
-				gioLamMap.put("diem", x.getDiem());
+				gioLamMap.put("diem", diem);
 				newgioLamMapListNhanVien.add(gioLamMap);
 			}
 		}
@@ -1049,12 +1002,6 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 
 		return isSameDay;
-	}
-
-	public static boolean CoPhaiThu7orChuNhat(Date ngay_lam) {
-		LocalDate localDatengay_lam = ngay_lam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		DayOfWeek dayOfWeek = localDatengay_lam.getDayOfWeek();
-		return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 	}
 
 	// Hàm check ngày đã này thuộc ngày trc hay sau ngày hiện tại ; Trước ngày hiện
@@ -1121,7 +1068,10 @@ public class GioLamPortlet extends MVCPortlet {
 			} else if (inSang == true && outSang == true) {
 				// trường hợp ca sáng nghỉ ko phép
 				DataCaSang = 4;
-			} else if ((inSang == true && outSang == false) || (inSang == true && outSang == false)) {
+			} else if ((inSang == false && outSang == true && (dimuonsang > 0 || vesomsang > 0))) {
+				// trường hợp ca sáng ko chấm công vào ra
+				DataCaSang = 3;
+			} else if ((inSang == true && outSang == false) || (inSang == false && outSang == true)) {
 				// trường hợp ca sáng ko chấm công vào ra
 				DataCaSang = 2;
 			} else if (dimuonsang > 0 || vesomsang > 0) {
@@ -1149,6 +1099,10 @@ public class GioLamPortlet extends MVCPortlet {
 			if (dimuonchieu <= 0 && vesomchieu <= 0 && (inChieu == false) && (outChieu == false)) {
 				// trường hợp đi làm đúng giờ
 				DataCaChieu = 1;
+			} else if ((dimuonchieu > 0 || vesomchieu > 0) && (inChieu == false) && (outChieu == false)) {
+				// ttrường hợp ca chiều ko chấm công vào ra
+				System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+				DataCaChieu = 3;
 			} else if ((inChieu == false) && dimuonchieu <= 0 && (inSang == false || outSang == false)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
 				DataCaChieu = 2;
@@ -1161,9 +1115,12 @@ public class GioLamPortlet extends MVCPortlet {
 			} else if (inChieu == false && outChieu == true) {
 				// trường hợp ca sáng ko chấm công vào ra
 				DataCaChieu = 2;
-			} else if (dimuonsang > 0 || vesomsang > 0) {
+			} else if (inChieu == false && outChieu == false) {
+				// trường hợp ca sáng ko chấm công vào ra
+				DataCaChieu = 2;
+			} else if ((dimuonsang > 0 && vesomsang > 0)) {
 				// trường hợp ca sáng đi muộn về sớm
-				DataCaChieu = 3;
+				DataCaChieu = 2;
 			} else if ((inSang == true && outSang == true)) {
 				// trường hợp ca sáng nghỉ ko phép
 				DataCaChieu = 4;
@@ -1173,8 +1130,8 @@ public class GioLamPortlet extends MVCPortlet {
 			if (dimuonchieu <= 0 && vesomchieu <= 0 && (inChieu == false) && (outChieu == false)) {
 				// trường hợp đi làm đúng giờ
 				DataCaChieu = 1;
-			} else if (inSang == false && outSang == true && inChieu == true & outChieu == false && dimuonsang <= 0
-					&& vesomchieu <= 0) {
+			} else if (inSang == false && outSang == true && inChieu == true & outChieu == false
+					&& (dimuonsang <= 0 || dimuonsang > 0) && vesomchieu <= 0) {
 				// trường hợp đi làm đúng giờ
 				DataCaChieu = 1;
 			} else if (inChieu == true && outChieu == true) {
@@ -1221,4 +1178,213 @@ public class GioLamPortlet extends MVCPortlet {
 		return checkQuyenTruongPhong;
 	}
 
+	// Hàm tính điểm của 1 nhân viên của 1 ngày
+	public double TinhDiemcuaMotNhanVienOfMotNgay(long user_id, Date ngay_lam) {
+
+		double tongdiem1ngay = 0;
+		try {
+			GioLam NgaycanTinhDiem = GioLamLocalServiceUtil.getGioLamByUserId(user_id, ngay_lam);
+
+			if (NgaycanTinhDiem != null) {
+				String checkinsang = NgaycanTinhDiem.getCheck_in_sang();
+				String checkoutsang = NgaycanTinhDiem.getCheck_out_sang();
+				String checkinchieu = NgaycanTinhDiem.getCheck_in_chieu();
+				String checkoutchieu = NgaycanTinhDiem.getCheck_out_chieu();
+				int dimuonsang = NgaycanTinhDiem.getDi_muon_sang();
+				int vesomsang = NgaycanTinhDiem.getVe_som_sang();
+				int dimuonchieu = NgaycanTinhDiem.getDi_muon_chieu();
+				int vesomchieu = NgaycanTinhDiem.getVe_som_chieu();
+				double diemvaosang = 0;
+				double diemrasang = 0;
+				double diemvaochieu = 0;
+				double diemrachieu = 0;
+
+				if (!checkinsang.equals("") && !checkoutchieu.equals("")) {
+					if (dimuonsang <= 1) {
+						diemvaosang = 1;
+					} else if (dimuonsang > 1 && dimuonsang < 10) {
+						diemvaosang = 0.8;
+					} else if (dimuonsang >= 10 && dimuonsang < 15) {
+						diemvaosang = 0.6;
+					} else if (dimuonsang >= 15 && dimuonsang < 20) {
+						diemvaosang = 0.4;
+					} else if (dimuonsang >= 20 && dimuonsang < 30) {
+						diemvaosang = 0.2;
+					} else {
+						diemvaosang = 0.0;
+					}
+					diemrasang = 1;
+					diemvaochieu = 1;
+					if (vesomchieu <= 1) {
+						diemrachieu = 1;
+					} else if (vesomchieu > 1 && vesomchieu < 10) {
+						diemrachieu = 0.8;
+					} else if (vesomchieu >= 10 && vesomchieu < 15) {
+						diemrachieu = 0.6;
+					} else if (vesomchieu >= 15 && vesomchieu < 20) {
+						diemrachieu = 0.4;
+					} else if (vesomchieu >= 20 && vesomchieu < 30) {
+						diemrachieu = 0.2;
+					} else {
+						diemrachieu = 0.0;
+					}
+
+				} else {
+
+					if (!checkinsang.equals("") && checkoutsang.equals("")) {
+						if (dimuonsang <= 1) {
+							diemvaosang = 1;
+						} else if (dimuonsang > 1 && dimuonsang < 10) {
+							diemvaosang = 0.8;
+						} else if (dimuonsang >= 10 && dimuonsang < 15) {
+							diemvaosang = 0.6;
+						} else if (dimuonsang >= 15 && dimuonsang < 20) {
+							diemvaosang = 0.4;
+						} else if (dimuonsang >= 20 && dimuonsang < 30) {
+							diemvaosang = 0.2;
+						} else {
+							diemvaosang = 0.0;
+						}
+
+						diemrasang = 0.0;
+
+					}
+					if (!checkinsang.equals("") && !checkoutsang.equals("")) {
+						if (dimuonsang <= 1) {
+							diemvaosang = 1;
+						} else if (dimuonsang > 1 && dimuonsang < 10) {
+							diemvaosang = 0.8;
+						} else if (dimuonsang >= 10 && dimuonsang < 15) {
+							diemvaosang = 0.6;
+						} else if (dimuonsang >= 15 && dimuonsang < 20) {
+							diemvaosang = 0.4;
+						} else if (dimuonsang >= 20 && dimuonsang < 30) {
+							diemvaosang = 0.2;
+						} else {
+							diemvaosang = 0.0;
+						}
+
+						if (vesomsang <= 1) {
+							diemrasang = 1;
+						} else if (vesomsang > 1 && vesomsang < 10) {
+							diemrasang = 0.8;
+						} else if (vesomsang >= 10 && vesomsang < 15) {
+							diemrasang = 0.6;
+						} else if (vesomsang >= 15 && vesomsang < 20) {
+							diemrasang = 0.4;
+						} else if (vesomsang >= 20 && vesomsang < 30) {
+							diemrasang = 0.2;
+						} else {
+							diemrasang = 0.0;
+						}
+
+					}
+
+					if (!checkinchieu.equals("") && checkoutchieu.equals("")) {
+						if (dimuonchieu <= 1) {
+							diemvaochieu = 1;
+						} else if (dimuonchieu > 1 && dimuonchieu < 10) {
+							diemvaochieu = 0.8;
+						} else if (dimuonchieu >= 10 && dimuonchieu < 15) {
+							diemvaochieu = 0.6;
+						} else if (dimuonchieu >= 15 && dimuonchieu < 20) {
+							diemvaochieu = 0.4;
+						} else if (dimuonchieu >= 20 && dimuonchieu < 30) {
+							diemvaochieu = 0.2;
+						} else {
+							diemvaochieu = 0.0;
+						}
+
+						diemrachieu = 0.0;
+
+					}
+					if (!checkinchieu.equals("") && !checkoutchieu.equals("")) {
+						if (dimuonchieu <= 1) {
+							diemvaochieu = 1;
+						} else if (dimuonchieu > 1 && dimuonchieu < 10) {
+							diemvaochieu = 0.8;
+						} else if (dimuonchieu >= 10 && dimuonchieu < 15) {
+							diemvaochieu = 0.6;
+						} else if (dimuonchieu >= 15 && dimuonchieu < 20) {
+							diemvaochieu = 0.4;
+						} else if (dimuonchieu >= 20 && dimuonchieu < 30) {
+							diemvaochieu = 0.2;
+						} else {
+							diemvaochieu = 0.0;
+						}
+
+						if (vesomchieu <= 1) {
+							diemrachieu = 1;
+						} else if (vesomchieu > 1 && vesomchieu < 10) {
+							diemrachieu = 0.8;
+						} else if (vesomchieu >= 10 && vesomchieu < 15) {
+							diemrachieu = 0.6;
+						} else if (vesomchieu >= 15 && vesomchieu < 20) {
+							diemrachieu = 0.4;
+						} else if (vesomchieu >= 20 && vesomchieu < 30) {
+							diemrachieu = 0.2;
+						} else {
+							diemrachieu = 0.0;
+						}
+
+					}
+
+				}
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				tongdiem1ngay = (diemvaosang + diemrasang + diemvaochieu + diemrachieu);
+
+				GioLamLocalServiceUtil.upateDiemChamCong(NgaycanTinhDiem.getId(), NgaycanTinhDiem.getNgay_lam(),
+						tongdiem1ngay, 1, serviceContext);
+
+			} else {
+				tongdiem1ngay = 0;
+			}
+
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+
+		return tongdiem1ngay;
+	}
+
+	public double TinhDiemToiDaOfThang(int thang, int nam) {
+		System.out.println("thang la ########## " + thang);
+		System.out.println("nam la ########## " + nam);
+		List<Ngaylamviec> listNgaylamviecs = NgaylamviecLocalServiceUtil.getNgaylamviecs(-1, -1);
+		System.out.println("listNgaylamviecs " + listNgaylamviecs);
+		Ngaylamviec NgayLamViec = listNgaylamviecs.stream()
+				.filter(ngaylamviec -> ngaylamviec.getNam() == nam && ngaylamviec.getThang() == thang).findFirst()
+				.orElse(null); // Nếu không tìm thấy thì trả về null
+		System.out.println("NgayLamViec " + NgayLamViec);
+		double TinhDiemToiDaOfThang = 0;
+		if (NgayLamViec == null) {
+			TinhDiemToiDaOfThang = 0;
+		} else {
+			TinhDiemToiDaOfThang = NgayLamViec.getSo_ngay_lam_viec() * 4;
+		}
+		// System.out.println("TinhDiemToiDaOfThang "+ TinhDiemToiDaOfThang);
+		// thực ra đã tính số ngày làm việc của tháng trong modal NgayLamVIEC RỒI NÊN
+		// ĐOẠN SAU THỪA
+//		List<Ngaynghile> AllNgayNghiLe = NgaynghileLocalServiceUtil.getNgaynghiles(-1, -1);
+//		System.out.println("AllNgayNghiLe ---------- " + AllNgayNghiLe);
+//		List<Ngaynghile> listNgayNghiLe = AllNgayNghiLe.stream().filter(ngaynghile -> {
+//			LocalDate localDate = ngaynghile.getNgay_nghi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//
+//			int ngayThang = localDate.getMonthValue();
+//			int ngayNam = localDate.getYear();
+//			boolean cophaichunhta = CoPhaiThu7orChuNhat(ngaynghile.getNgay_nghi());
+//			return ngayThang == thang && ngayNam == nam && !cophaichunhta;
+//		}).collect(Collectors.toList());
+//
+//		System.out.println("listNgayNghiLe ==== "+ listNgayNghiLe);
+		return TinhDiemToiDaOfThang;
+	}
+
+	public static boolean CoPhaiThu7orChuNhat(Date ngay_lam) {
+		LocalDate localDatengay_lam = ngay_lam.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		DayOfWeek dayOfWeek = localDatengay_lam.getDayOfWeek();
+		return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+	}
 }

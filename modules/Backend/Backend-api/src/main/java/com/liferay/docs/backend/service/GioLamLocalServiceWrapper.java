@@ -54,26 +54,26 @@ public class GioLamLocalServiceWrapper
 	@Override
 	public void addGioLamVaoChieu(
 			long user_id, java.util.Date ngaylam, String check_in_chieu,
-			int di_muon_chieu, float diem, int trangthai,
+			int di_muon_chieu, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.addGioLamVaoChieu(
-			user_id, ngaylam, check_in_chieu, di_muon_chieu, diem, trangthai,
+			user_id, ngaylam, check_in_chieu, di_muon_chieu, trangthai,
 			serviceContext);
 	}
 
 	@Override
 	public void addGioLamVaoSang(
 			long user_id, java.util.Date ngaylam, String check_in_sang,
-			int di_muon_sang, float diem, int trangthai,
+			int di_muon_sang, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.addGioLamVaoSang(
-			user_id, ngaylam, check_in_sang, di_muon_sang, diem, trangthai,
+			user_id, ngaylam, check_in_sang, di_muon_sang, trangthai,
 			serviceContext);
 	}
 
@@ -104,14 +104,14 @@ public class GioLamLocalServiceWrapper
 
 	@Override
 	public void addXinChamCongCaNgayNuaNgay(
-			java.util.Date ngay_lam, long user_id_XinChamCongVaoRa,
+			java.util.Date ngay_lam, long user_id_XinChamCong,
 			String loai_cham_cong, float diem, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.addXinChamCongCaNgayNuaNgay(
-			ngay_lam, user_id_XinChamCongVaoRa, loai_cham_cong, diem, trangthai,
+			ngay_lam, user_id_XinChamCong, loai_cham_cong, diem, trangthai,
 			serviceContext);
 	}
 
@@ -395,6 +395,17 @@ public class GioLamLocalServiceWrapper
 		return _gioLamLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void upateDiemChamCong(
+			int idGioLam, java.util.Date ngay_lam, double diem, int trangthai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		_gioLamLocalService.upateDiemChamCong(
+			idGioLam, ngay_lam, diem, trangthai, serviceContext);
+	}
+
 	/**
 	 * Updates the gio lam in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -415,52 +426,52 @@ public class GioLamLocalServiceWrapper
 	@Override
 	public void updateGioLamCaNgay(
 			int idGioLam, long user_id, String check_out_chieu,
-			int ve_som_chieu, float diem, int trangthai,
+			int ve_som_chieu, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.updateGioLamCaNgay(
-			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, trangthai,
 			serviceContext);
 	}
 
 	@Override
 	public void updateGioLamRaChieu(
 			int idGioLam, long user_id, String check_out_chieu,
-			int ve_som_chieu, float diem, int trangthai,
+			int ve_som_chieu, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.updateGioLamRaChieu(
-			idGioLam, user_id, check_out_chieu, ve_som_chieu, diem, trangthai,
+			idGioLam, user_id, check_out_chieu, ve_som_chieu, trangthai,
 			serviceContext);
 	}
 
 	@Override
 	public void updateGioLamRaSang(
 			int idGioLam, long user_id, String check_out_sang, int ve_som_sang,
-			float diem, int trangthai,
+			int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.updateGioLamRaSang(
-			idGioLam, user_id, check_out_sang, ve_som_sang, diem, trangthai,
+			idGioLam, user_id, check_out_sang, ve_som_sang, trangthai,
 			serviceContext);
 	}
 
 	@Override
 	public void updateGioLamVaoChieu(
 			int idGioLam, long user_id, String check_in_chieu,
-			int di_muon_chieu, float diem, int trangthai,
+			int di_muon_chieu, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.updateGioLamVaoChieu(
-			idGioLam, user_id, check_in_chieu, di_muon_chieu, diem, trangthai,
+			idGioLam, user_id, check_in_chieu, di_muon_chieu, trangthai,
 			serviceContext);
 	}
 
@@ -491,15 +502,14 @@ public class GioLamLocalServiceWrapper
 
 	@Override
 	public void updateXinChamCongCaNgayNuaNgay(
-			int idGioLam, java.util.Date ngay_lam,
-			long user_id_XinChamCongVaoRa, String loai_cham_cong, float diem,
-			int trangthai,
+			int idGioLam, java.util.Date ngay_lam, long user_id_XinChamCong,
+			String loai_cham_cong, float diem, int trangthai,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
 		_gioLamLocalService.updateXinChamCongCaNgayNuaNgay(
-			idGioLam, ngay_lam, user_id_XinChamCongVaoRa, loai_cham_cong, diem,
+			idGioLam, ngay_lam, user_id_XinChamCong, loai_cham_cong, diem,
 			trangthai, serviceContext);
 	}
 

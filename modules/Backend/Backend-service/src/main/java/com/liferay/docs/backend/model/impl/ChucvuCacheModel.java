@@ -60,7 +60,7 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -74,6 +74,8 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 		sb.append(role);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", so_thanh_vien=");
+		sb.append(so_thanh_vien);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,6 +110,7 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 
 		chucvuImpl.setRole(role);
 		chucvuImpl.setGroupId(groupId);
+		chucvuImpl.setSo_thanh_vien(so_thanh_vien);
 
 		chucvuImpl.resetOriginalValues();
 
@@ -124,6 +127,8 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 		role = objectInput.readInt();
 
 		groupId = objectInput.readLong();
+
+		so_thanh_vien = objectInput.readLong();
 	}
 
 	@Override
@@ -143,6 +148,8 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 		objectOutput.writeInt(role);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(so_thanh_vien);
 	}
 
 	public int id;
@@ -151,5 +158,6 @@ public class ChucvuCacheModel implements CacheModel<Chucvu>, Externalizable {
 	public long updated_at;
 	public int role;
 	public long groupId;
+	public long so_thanh_vien;
 
 }

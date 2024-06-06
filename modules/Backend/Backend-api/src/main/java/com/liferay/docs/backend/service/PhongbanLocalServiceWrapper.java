@@ -345,6 +345,29 @@ public class PhongbanLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.docs.backend.model.Phongban updateSoThanhVienTuAllPhong(
+			int id, long so_thanh_vien,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _phongbanLocalService.updateSoThanhVienTuAllPhong(
+			id, so_thanh_vien, serviceContext);
+	}
+
+	@Override
+	public com.liferay.docs.backend.model.Phongban
+			updateSoThanhVienTuCreateNhanVien(
+				int id, int trangthai,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _phongbanLocalService.updateSoThanhVienTuCreateNhanVien(
+			id, trangthai, serviceContext);
+	}
+
+	@Override
 	public PhongbanLocalService getWrappedService() {
 		return _phongbanLocalService;
 	}

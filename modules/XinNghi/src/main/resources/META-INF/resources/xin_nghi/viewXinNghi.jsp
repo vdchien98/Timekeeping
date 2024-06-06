@@ -53,16 +53,17 @@ span.lanhdaotuchoi {
 }
 
 .button-holder.xinnghistyle {
-    margin-left: 20px;
-    margin-right: 10px;
-    /* background: url(); */
+	margin-left: 20px;
+	margin-right: 10px;
+	/* background: url(); */
 }
+
 .btn-secondary {
-    color: #fff;
-    background-color: #1cc88a;
-    border-color: #85879600;
-    margin-left: 16px;
-    }
+	color: #fff;
+	background-color: #1cc88a;
+	border-color: #85879600;
+	margin-left: 16px;
+}
 </style>
 <portlet:renderURL var="xinnghiURL">
 	<portlet:param name="mvcPath" value="/xin_nghi/viewXinNghiCaNgay.jsp"></portlet:param>
@@ -218,7 +219,27 @@ span.lanhdaotuchoi {
 												<c:when test="${userdanhsach.trangthai == 7}">
 													<span class="lanhdaotuchoi">Lãnh đạo Từ Chối</span>
 												</c:when>
-												<%-- truong hop truowngr phongf đã ký --%>
+
+												<c:when test="${userdanhsach.trangthai_kyso == 0}">
+													<a
+														href="http://localhost:8080/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm_file_url=${userdanhsach.file_url}"
+														class="btn btn-link mr-2 filedSigned" onclick=""
+														target="_blank"> <span>File Chờ Trưởng Phòng Ký
+													</span>
+													</a>
+
+													<c:choose>
+														<c:when test="${userDangNhap.chucvu_id == 42602}">
+															<button class="nutkyso"
+																onclick="kysoPdf('${userdanhsach.file_url}', '${userDangNhap.userId}', '${userdanhsach.id}')">Ký
+																Số</button>
+														</c:when>
+													</c:choose>
+												</c:when>
+
+
+
+												<%-- truong hop trường phòng đã ký đã ký --%>
 												<c:when test="${userdanhsach.trangthai_kyso == 1}">
 													<c:set var="originalFileUrl"
 														value="${userdanhsach.file_url}" />
@@ -256,22 +277,7 @@ span.lanhdaotuchoi {
 													</a>
 
 												</c:when>
-												<c:when test="${userdanhsach.trangthai_kyso == 0}">
-													<a
-														href="http://localhost:8080/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm_file_url=${userdanhsach.file_url}"
-														class="btn btn-link mr-2 filedSigned" onclick=""
-														target="_blank"> <span>File Chờ Trưởng Phòng Ký
-													</span>
-													</a>
 
-													<c:choose>
-														<c:when test="${userDangNhap.chucvu_id == 42602}">
-															<button class="nutkyso"
-																onclick="kysoPdf('${userdanhsach.file_url}', '${userDangNhap.userId}', '${userdanhsach.id}')">Ký
-																Số</button>
-														</c:when>
-													</c:choose>
-												</c:when>
 
 											</c:choose>
 										</div>
@@ -286,27 +292,34 @@ span.lanhdaotuchoi {
 													Phòng </span>
 											</c:when>
 											<%-- truong hop truowngr phongf đã ký --%>
-											<c:when test="${userdanhsach.trangthai_kyso == 1}">
-												<span class="btn btn-info">Đã xác nhận Trưởng Phòng
-													Chờ Lãnh Đạo Cơ Quan Xác Nhận</span>
-											</c:when>
-											<%-- truong hop lãnh đạo cơ quan đã ký --%>
-											<c:when test="${userdanhsach.trangthai_kyso == 2}">
-												<span class="btn btn-success">Đã xác nhận Lãnh Đạo Cơ
-													Quan</span>
-											</c:when>
 
 											<c:when
 												test="${userdanhsach.trangthai_kyso == 0 || userdanhsach.trangthai_kyso ==5}">
 												<span class="btn btn-info">Chờ xác nhận của Trưởng
 													Phòng</span>
 											</c:when>
+
+											<c:when test="${userdanhsach.trangthai == 2}">
+												<span class="btn btn-info">Đã xác nhận Trưởng Phòng
+													Chờ Lãnh Đạo Cơ Quan Xác Nhận</span>
+											</c:when>
+											<%-- truong hop lãnh đạo cơ quan đã ký --%>
+											<c:when test="${userdanhsach.trangthai == 3}">
+												<span class="btn btn-success">Đã xác nhận Lãnh Đạo Cơ
+													Quan</span>
+											</c:when>
+
+
 										</c:choose></th>
 									<th class="hanhdong"><c:choose>
 											<%-- truong hop lãnh đạo cơ quan đã ký --%>
-											<c:when
-												test="${userdanhsach.trangthai_kyso == 1 && (userDangNhap.chucvu_id == 42604 || userDangNhap.chucvu_id == 42605 )}">
 
+
+
+
+
+											<c:when
+												test="${userdanhsach.trangthai == 2 && userdanhsach.trangthai_kyso !=0 && (userDangNhap.chucvu_id == 42604 || userDangNhap.chucvu_id == 42605 )}">
 												<%-- hành động xác nhận  --%>
 												<portlet:actionURL name="ChamCongXinnghiCaNgay"
 													var="ChamCongXinNghiCaNgayURL" />
@@ -337,15 +350,14 @@ span.lanhdaotuchoi {
 													</button>
 												</form>
 
-
-
-
-
 											</c:when>
 
 
 											<%-- hành động của trưởng phòng--%>
-											<c:when test="${userdanhsach.trangthai == 1}">
+
+
+											<c:when
+												test="${userdanhsach.trangthai == 1 && userDangNhap.chucvu_id == 42602}">
 												<%-- hành động xác nhận  --%>
 												<portlet:actionURL name="ChamCongXinnghiNuaNgay"
 													var="ChamCongXinnghiNuaNgayURL" />
