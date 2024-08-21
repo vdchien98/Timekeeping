@@ -34,7 +34,9 @@
 	margin-bottom: -10px;
 	/* flex-direction: row; */
 }
-
+i.fa.fa-file-excel-o.iconexcel {
+    margin-right: 9px;
+}
 p.box1 {
 	margin-right: 5px;
 	font-size: 20px;
@@ -58,7 +60,10 @@ p.box3 {
 label.col-form-label.mxn {
 	font-size: 20px;
 }
-
+.pb-2.chamcongvabaocao {
+    display: flex;
+    justify-content: space-around;
+}
 .input-group.mb-3.row.justify-content-center.thangnam {
 	/* display: contents; */
 	display: flex;
@@ -107,7 +112,7 @@ span#sec {
 			</h4>
 		</div>
 		<div class="card-body">
-			<div class="pb-2">
+			<div class="pb-2 chamcongvabaocao">
 				<%-- xử lý chức năng chấm công  --%>
 				<c:choose>
 					<c:when test="${Chamcongsang == true}">
@@ -214,28 +219,34 @@ span#sec {
 				</form>
 
 				<%-- kết thúc chức năng chấm công  --%>
+				<%-- báo cáo tháng bắt đầu xử lý --%>
+				<portlet:actionURL name="OpenExxcel" var="OpenExxcelURL" />
+				<%-- hành động download về máy  --%>
+				<button class="btn btn-info" id="downloadButton" type="submit">
+				<i class="fa fa-file-excel-o iconexcel" aria-hidden="true"></i>Báo Cáo Tháng</button>
+				<script type="text/javascript">
+				        document.getElementById('downloadButton').addEventListener('click', function() {
+				            // Khi nút được nhấp, gửi form để tải file
+				            console.log(" đã vào đc đây rồi !!!!!!!!!!!!! ")
+				            var form = document.createElement('form');
+				            form.method = 'POST';
+				            form.action = '<%=OpenExxcelURL.toString()%>';
+				            document.body.appendChild(form);
+				            form.submit();
+				         });
+				</script>
 
-				<%-- báo cáo tháng chưa xử lý --%>
-				<form id="export-excel" class="float-right"
-					action="https://chamcong.bacninh.gov.vn/export-xep-loai"
-					method="GET">
-					<input type="hidden" name="_token"
-						value="Mf1O36nHU1Oett1jj1R0MIW0oCelkz9kI3zPSPGF"> <input
-						type="hidden" name="user_id" value="22"> <input
-						type="hidden" name="searchDate" value="2024-03">
-					<button type="submit" class="btn btn-info">
-						<i class="fas fa-file-excel"></i> Báo cáo tháng
-					</button>
-				</form>
+
+
+
+
+
+
 			</div>
 
 
 
 			<%-- thực hiện hiển thị giờ làm của user  --%>
-
-
-
-
 			<%-- Xem gio làm của nhân viên theo tháng và năm --%>
 
 			<div class="input-group mb-3 row justify-content-center thangnam">

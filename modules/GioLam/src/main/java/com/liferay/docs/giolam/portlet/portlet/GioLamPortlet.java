@@ -7,11 +7,13 @@ import com.liferay.docs.backend.model.Calamviec;
 import com.liferay.docs.backend.model.GioLam;
 import com.liferay.docs.backend.model.Ngaylamviec;
 import com.liferay.docs.backend.model.Ngaynghile;
+import com.liferay.docs.backend.model.Phongban;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.service.CalamviecLocalServiceUtil;
 import com.liferay.docs.backend.service.GioLamLocalServiceUtil;
 import com.liferay.docs.backend.service.NgaylamviecLocalServiceUtil;
 import com.liferay.docs.backend.service.NgaynghileLocalServiceUtil;
+import com.liferay.docs.backend.service.PhongbanLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.giolam.portlet.constants.GioLamPortletKeys;
 import com.liferay.petra.io.OutputStreamWriter;
@@ -28,6 +30,9 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -60,6 +65,19 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPalette;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.formula.functions.IfFunc;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.osgi.service.component.annotations.Component;
 
 import PortletUtils.portlet.CustomWebCacheItem;
@@ -579,6 +597,314 @@ public class GioLamPortlet extends MVCPortlet {
 		// response.setProperty("hideModalBackdrop", "true");
 
 		response.sendRedirect("/gio-lam");
+
+	}
+
+	// Xử lý xuất báo cáo và dowload báo cáo
+
+	public void OpenExxcel(ActionRequest request, ActionResponse response) throws IOException, PortletException {
+		ServiceContext serviceContext = new ServiceContext();
+		System.out.println("--------------------------------da va dc day ------------------------------ ");
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		long userId = themeDisplay.getUserId();
+
+		Users userBaoCao = UsersLocalServiceUtil.getUserbyUserId(userId);
+		int quyenxuatBaoCao = checkQuyenTruongPhong(userBaoCao);
+		System.out.println("quyenxuatBaoCao ===== " + quyenxuatBaoCao);
+		System.out.println("userId bao cao =========== " + userId);
+		List<List<Map<String, Object>>> danhSachNgayTrongThangcaPhong = new ArrayList<>();
+		List<Map<String, Object>> ListXuatBao = new ArrayList<>();
+		Map<String, Object> XuatbaoCao = new HashMap<>();
+
+		if (year == null) {
+			LocalDate ngayHienTai22 = LocalDate.now();
+			int namHienTai = ngayHienTai22.getYear();
+			year = String.valueOf(namHienTai);
+		} else {
+			year = year;
+		}
+		if (month == null) {
+			LocalDate ngayHienTai22 = LocalDate.now();
+			int thanghientai = ngayHienTai22.getMonthValue();
+			month = String.format("%02d", thanghientai);
+		} else {
+			int numericMonth = Integer.parseInt(month);
+			month = String.format("%02d", numericMonth);
+		}
+		String keyyear = year;
+		String keymonth = month;
+		int thang = Integer.parseInt(keymonth);
+		int nam = Integer.parseInt(keyyear);
+		System.out.println("year dang chon xuat bao cao ==============" + year);
+		System.out.println("month dang chon xuat bao cao =============	 " + month);
+
+		if (quyenxuatBaoCao == 1) {
+			// Xử lý hiện thị cho trưởng phòng hành chính và phụ trách phòng hành chính và
+			// giám đốc
+
+		} else if (quyenxuatBaoCao == 2) {
+			// xử lý trưởng phòng khác
+
+			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(userBaoCao.getPhongban_id());
+			int mothInt = Integer.parseInt(month);
+			int yearInt = Integer.parseInt(year);
+
+			System.out.println("ThanhvienPhong ============== " + ThanhvienPhong);
+			double TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
+			for (Users MoiThanhVienPhong : ThanhvienPhong) {
+				Map<String, Object> XuatbaoCao1111111 = new HashMap<>();
+				List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear,MoiThanhVienPhong.getUserId());
+				System.out.println("danhSachNgayTrongThangMoi ============== " + danhSachNgayTrongThangMoi);
+				double TongdiemHanThang1ThanhVien = 0.0;
+				for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
+					if (map == null) {
+						System.out.println("TongdiemOfThang xu mappp bao cao ===== ");
+						TongdiemHanThang1ThanhVien += 0.0;
+
+					} else {
+						double diemkhacnull = (double) map.get("diem");
+						System.out.println("TongdiemOfThang xu mappp bao cao khac nullll ===== " + diemkhacnull);
+						TongdiemHanThang1ThanhVien += diemkhacnull;
+						System.out.println("TongdiemOfThang xu mappp bao cao khac nullll 222222222222===== "
+								+ TongdiemHanThang1ThanhVien);
+					}
+
+				}
+				double xeploai = TongdiemHanThang1ThanhVien / TongdiemOfThang * 100;
+				xeploai = Math.round(xeploai * 100.0) / 100.0;
+				System.out.println("xeploai =============== " + xeploai);
+				String xeploaiChu = "";
+				if (xeploai >= 85.00) {
+					xeploaiChu = "A";
+				} else if (xeploai >= 70.00 && xeploai < 85.00) {
+					xeploaiChu = "B";
+				} else if (xeploai >= 50.00 && xeploai < 70.00) {
+					xeploaiChu = "C";
+				} else if (xeploai < 50.00) {
+					xeploaiChu = "D";
+				}
+				System.out.println("xeploaiChu =============== " + xeploaiChu);
+
+				System.out.println(
+						"MoiThanhVienPhong.getPhongban_id() =============== " + MoiThanhVienPhong.getPhongban_id());
+
+				//String tenphongbaocao = LaytenPhongquaUserId( (long) MoiThanhVienPhong.getPhongban_id());
+				System.out.println("xeploaiChu =============== 111111kkkkkkkkkkkkk " + xeploaiChu);
+
+				XuatbaoCao1111111.put("hovaten", MoiThanhVienPhong.getHovaten());
+				// XuatbaoCao1111111.put("tenphong", tenphongbaocao);
+				XuatbaoCao1111111.put("diemchamcong", String.valueOf(TongdiemHanThang1ThanhVien));
+				XuatbaoCao1111111.put("xeploai", xeploaiChu);
+				ListXuatBao.add(XuatbaoCao1111111);
+			}
+			System.out.println("ListXuatBao =============== ListXuatBaok------ " + ListXuatBao);
+
+
+		} else if (quyenxuatBaoCao == 3) {
+			double TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
+
+			// lấy tổng điểm của 1 nhân viên
+			List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear,
+					userId);
+			double TongdiemHanThang1ThanhVien = 0;
+			for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
+				if (map == null) {
+					System.out.println("TongdiemOfThang xu bao cao map ============ ===== ");
+					TongdiemHanThang1ThanhVien += 0;
+				} else {
+					TongdiemHanThang1ThanhVien += (Double) map.get("diem");
+				}
+
+			}
+			System.out.println("TongdiemHanThang1ThanhVien xuat bao cao ==== " + TongdiemHanThang1ThanhVien);
+
+			double xeploai = TongdiemHanThang1ThanhVien / TongdiemOfThang * 100;
+			xeploai = Math.round(xeploai * 100.0) / 100.0;
+			// System.out.println("xeploai " + xeploai);
+			String xeploaiChu = "";
+			if (xeploai >= 85.00) {
+				xeploaiChu = "A";
+			} else if (xeploai >= 70.00 && xeploai < 85.00) {
+				xeploaiChu = "B";
+			} else if (xeploai >= 50.00 && xeploai < 70.00) {
+				xeploaiChu = "C";
+			} else if (xeploai < 50.00) {
+				xeploaiChu = "D";
+			}
+			String tenphongbaocao = LaytenPhongquaUserId(userId);
+			XuatbaoCao.put("hovaten", userBaoCao.getHovaten());
+			XuatbaoCao.put("tenphong", tenphongbaocao);
+			XuatbaoCao.put("diemchamcong", String.valueOf(TongdiemHanThang1ThanhVien));
+			XuatbaoCao.put("xeploai", xeploaiChu);
+			ListXuatBao.add(XuatbaoCao);
+		}
+
+		System.out.println(" ListXuatBao ======+++++++++======= " + ListXuatBao);
+		String NameSheet = "Bao Cao Thong Ke";
+
+		// Khởi tạo workbook và tạo một sheet mới
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet(NameSheet);
+
+		// Tạo font chữ hỗ trợ tiếng Việt
+		HSSFFont font = workbook.createFont();
+		font.setFontName("Times New Roman"); // Đổi sang font hỗ trợ tiếng Việt tốt hơn
+		font.setFontHeightInPoints((short) 12);
+
+		// Tạo cell style và gán font chữ
+		HSSFCellStyle style = workbook.createCellStyle();
+		style.setFont(font);
+
+		// Tạo hàng header và áp dụng style cho từng cell
+		HSSFRow headerRow = sheet.createRow(0);
+
+		Cell cell0 = headerRow.createCell(0);
+		cell0.setCellValue("STT");
+		cell0.setCellStyle(style);
+
+		Cell cell1 = headerRow.createCell(1);
+		cell1.setCellValue("H\\u1ECD v\\u00E0 T\\u00EAn");
+		cell1.setCellStyle(style);
+
+		Cell cell2 = headerRow.createCell(2);
+		cell2.setCellValue("Phong Ban");
+		cell2.setCellStyle(style);
+
+		Cell cell3 = headerRow.createCell(3);
+		cell3.setCellValue("Diem Cham Cong");
+		cell3.setCellStyle(style);
+
+		Cell cell4 = headerRow.createCell(4);
+		cell4.setCellValue("Xep Loai");
+		cell4.setCellStyle(style);
+
+		Cell cell5 = headerRow.createCell(5);
+		cell5.setCellValue("Xep Loai Phong");
+		cell5.setCellStyle(style);
+		// Thêm các cột khác nếu cần
+
+		HSSFCellStyle headerCellStyle = workbook.createCellStyle();
+
+		// Tạo một font mới và thiết lập font chữ và màu
+		HSSFFont headerFont = workbook.createFont();
+		headerFont.setFontName("Times New Roman");
+		headerFont.setFontHeightInPoints((short) 12);
+		// headerFont.setColor(IndexedColors.ORANGE.getIndex());
+		headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD); // hoặc headerFont.setBold(true);
+		// thêm chữ màu xanh nhạt đậm
+		HSSFPalette palette = workbook.getCustomPalette();
+		HSSFColor customColor = palette.findSimilarColor(54, 185, 204);
+		short customColorIndex = customColor.getIndex();
+		headerFont.setColor(customColorIndex);
+		// Áp dụng font vào CellStyle
+		headerCellStyle.setFont(headerFont);
+
+		// Thiết lập màu nền cho CellStyle
+		// headerCellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); //
+		// Yellow là một lựa chọn gần giống với
+		// màu của btn-warning
+		// headerCellStyle.setFillPattern((short)
+		// FillPatternType.SOLID_FOREGROUND.ordinal());
+
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // Căn giữa theo chiều ngang
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // Căn giữa theo chiều dọc
+
+		// Thiết lập Wrap Text cho CellStyle
+		headerCellStyle.setWrapText(true);
+
+		String[] headers = { "STT", "H\\u1ECD v\\u00E0 T\\u00EAn", "Phong Ban", "Diem Cham Cong", "Xep Loai",
+				"Xep Loai Phong" };
+
+		for (int i = 0; i < headers.length; i++) {
+			Cell cell = headerRow.createCell(i);
+			cell.setCellValue(headers[i]);
+			cell.setCellStyle(headerCellStyle);
+		}
+
+		// Tự động điều chỉnh độ rộng cột theo nội dung
+		for (int i = 0; i < headers.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+
+		// Áp dụng CellStyle vào các ô trong hàng header
+		for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+			headerRow.getCell(i).setCellStyle(headerCellStyle);
+		}
+
+		// Đặt lại CellStyle để không có màu nền cho dữ liệu
+		HSSFCellStyle dataCellStyle = workbook.createCellStyle();
+		dataCellStyle.setFont(font);
+		dataCellStyle.setWrapText(true);
+		dataCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		dataCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+		// Lặp qua danh sách pets và tạo hàng cho mỗi pet
+		int rowNum = 1; // Bắt đầu từ hàng thứ nhất, vì hàng đầu tiên đã là header
+		for (Map<String, Object> xuatBao : ListXuatBao) {
+			int counter = 1;
+			String hoVaTen = (String) xuatBao.get("hovaten");
+			String tenphong = (String) xuatBao.get("tenphong");
+			String xeploai = (String) xuatBao.get("xeploai");
+			String diemchamcong = (String) xuatBao.get("diemchamcong");
+			HSSFRow row = sheet.createRow(rowNum++);
+			row.createCell(0).setCellValue(counter++); // Ghi số thứ tự
+			row.createCell(1).setCellValue(hoVaTen);
+			row.createCell(2).setCellValue(tenphong);
+			row.createCell(3).setCellValue(diemchamcong);
+			row.createCell(4).setCellValue(xeploai);
+			// Áp dụng style cho các ô trong hàng
+			for (int i = 0; i < 5; i++) {
+				row.getCell(i).setCellStyle(dataCellStyle);
+			}
+		}
+		// Tự động điều chỉnh độ rộng cột theo nội dung
+		for (int i = 0; i < headers.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+		// Lưu workbook vào một file Excel có tên là pet5555555s
+		// String filename = "C:\\Users\\User\\Downloads\\pets.xls";
+
+		long timestamp = System.currentTimeMillis();
+		String tenfile = "BaoCao - " + Long.toString(timestamp);
+		String baseFilePath = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\excel\\";
+		String extension = ".xls";
+		String filename = baseFilePath + tenfile + extension;
+		try (FileOutputStream fileOut = new FileOutputStream(filename)) {
+			workbook.write(fileOut);
+			System.out.println("Excel file has been generated successfully.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// lấy file từ server về và download về có tên là pet5555555s
+		String baseFilePathServer = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\excel\\";
+		String filePath = baseFilePathServer + tenfile + extension;
+		File file = new File(filePath);
+
+		// Kiểm tra nếu file tồn tại
+		if (!file.exists()) {
+			throw new IOException("File not found: " + filePath);
+		}
+
+		// Thiết lập phản hồi HTTP để tải xuống file
+		HttpServletResponse httpResponse = PortalUtil.getHttpServletResponse(response);
+		httpResponse.setContentType("application/vnd.ms-excel");
+		httpResponse.setHeader("Content-Disposition", "attachment; filename=" + tenfile + extension);
+		httpResponse.setContentLength((int) file.length());
+
+		// Ghi nội dung file vào phản hồi HTTP
+		try (FileInputStream inputStream = new FileInputStream(file);
+				OutputStream outputStream = httpResponse.getOutputStream()) {
+			byte[] buffer = new byte[4096];
+			int bytesRead;
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		response.sendRedirect("/home");
 	}
 
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
@@ -590,13 +916,12 @@ public class GioLamPortlet extends MVCPortlet {
 
 		System.out.println("userId****** " + userId);
 		Users user = UsersLocalServiceUtil.getUserbyUserId(userId);
-		System.out.println("user ------ " + user);
-
+		// System.out.println("user ------ " + user);
 		// check quyền user
 
 		// hàm check có phải trưởng phòng ko ???
 		int quyenxemgiolam = checkQuyenTruongPhong(user);
-		System.out.println("quyenxemgiolam ----- )))) " + quyenxemgiolam);
+		// System.out.println("quyenxemgiolam ----- )))) " + quyenxemgiolam);
 		renderRequest.setAttribute("quyenxemgiolam", quyenxemgiolam);
 		// System.out.println("user****** " + user);
 		// XỬ LÝ NÚT CHẤM CÔNG ///
@@ -630,15 +955,6 @@ public class GioLamPortlet extends MVCPortlet {
 		// thực hiện giờ ra chiều
 		LocalTime gioRaChieu = LocalTime.parse(giorachieu, formatter);
 		LocalTime gioChamCongRaChieuFormatted = gioRaChieu.plusMinutes(thoigianramuonchieu);
-
-		// Lấy ngày hiện tại
-		// LocalDate ngayHienTai = LocalDate.now();
-		// DateTimeFormatter ngayHienTaiformatter =
-		// DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//		String ngayHienTaiDinhDang = ngayHienTai.format(ngayHienTaiformatter);
-		// System.out.println("Ngay hien tai:------------- " + ngayHienTaiDinhDang);
-
-		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		LocalTime currentTime = LocalTime.now(zoneId);
 		String gioHienTai = currentTime.format(formatter);
 		LocalTime gioHienTaiDate = LocalTime.parse(gioHienTai, DateTimeFormatter.ofPattern("HH:mm"));
@@ -738,16 +1054,20 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 		String keyyear = year;
 		String keymonth = month;
-		System.out.println("keyyear +++++****** " + keyyear);
-		System.out.println("keymonth +++++****** " + keymonth);
+//		System.out.println("keyyear +++++****** " + keyyear);
+//		System.out.println("keymonth +++++****** " + keymonth);
 
 		renderRequest.setAttribute("monthhienthi", month);
 		renderRequest.setAttribute("yearhienthi", year);
 		List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear, userId);
 
-		System.out.println("danhSachNgayTrongThangMoi*********** " + danhSachNgayTrongThangMoi);
+		// System.out.println("danhSachNgayTrongThangMoi*********** " +
+		// danhSachNgayTrongThangMoi);
 		// Tính Tổng điểm hàng tháng
+
+		double TongdiemOfThang = 0;
 		double TongdiemHanThang1ThanhVien = 0;
+
 		for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
 			if (map == null) {
 				TongdiemHanThang1ThanhVien += 0;
@@ -756,17 +1076,19 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		System.out.println("TongdiemHanThang1ThanhVien*********** " + TongdiemHanThang1ThanhVien);
+		// System.out.println("TongdiemHanThang1ThanhVien*********** " +
+		// TongdiemHanThang1ThanhVien);
 		// Tổng điểm tối đa hàng tháng
-		double TongdiemOfThang = 0;
+
 		int thang = Integer.parseInt(keymonth);
 		int nam = Integer.parseInt(keyyear);
 		TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
-		System.out.println(" TongdiemOfThang " + TongdiemOfThang);
+		// System.out.println(" TongdiemOfThang=================================== " +
+		// TongdiemOfThang);
 		// Xếp Loại
 		double xeploai = TongdiemHanThang1ThanhVien / TongdiemOfThang * 100;
 		xeploai = Math.round(xeploai * 100.0) / 100.0;
-		System.out.println("xeploai " + xeploai);
+		// System.out.println("xeploai " + xeploai);
 		int xeploaiChu = 0;
 		if (xeploai >= 85.00) {
 			xeploaiChu = 1;
@@ -789,7 +1111,7 @@ public class GioLamPortlet extends MVCPortlet {
 		if (quyenxemgiolam == 1) {
 			// Xử lý hiện thị cho trưởng phòng hành chính và phụ trách phòng hành chính và
 			// giám đốc
-			System.out.println("quyenTruongPhong  --- " + quyenxemgiolam);
+			// System.out.println("quyenTruongPhong --- " + quyenxemgiolam);
 			List<Users> TatCaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
 			int mothInt = Integer.parseInt(month);
 			int yearInt = Integer.parseInt(year);
@@ -808,7 +1130,8 @@ public class GioLamPortlet extends MVCPortlet {
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
-			System.out.println("danhSachNgayTrongThangcaPhong ===== " + danhSachNgayTrongThangcaPhong);
+			// System.out.println("danhSachNgayTrongThangcaPhong ===== " +
+			// danhSachNgayTrongThangcaPhong);
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
 
 		} else if (quyenxemgiolam == 2) {
@@ -831,7 +1154,8 @@ public class GioLamPortlet extends MVCPortlet {
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
-			System.out.println("danhSachNgayTrongThangcaPhong ===== " + danhSachNgayTrongThangcaPhong);
+			// System.out.println("danhSachNgayTrongThangcaPhong ===== " +
+			// danhSachNgayTrongThangcaPhong);
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
 
 		} else if (quyenxemgiolam == 3) {
@@ -883,7 +1207,7 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		System.out.println("monthList ************  " + monthList);
+		// System.out.println("monthList ************ " + monthList);
 
 		List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 		for (GioLam x : monthList) {
@@ -943,7 +1267,7 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 		}
 
-		System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+		// System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
 
 		int ngaydautien = 0;
 		if (thuMay == DayOfWeek.MONDAY) {
@@ -1101,7 +1425,7 @@ public class GioLamPortlet extends MVCPortlet {
 				DataCaChieu = 1;
 			} else if ((dimuonchieu > 0 || vesomchieu > 0) && (inChieu == false) && (outChieu == false)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
-				System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+				// System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
 				DataCaChieu = 3;
 			} else if ((inChieu == false) && dimuonchieu <= 0 && (inSang == false || outSang == false)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
@@ -1158,9 +1482,9 @@ public class GioLamPortlet extends MVCPortlet {
 		long chucvu_id = user.getChucvu_id();
 		long phongban_id = user.getPhongban_id();
 		long phu_trach_phong = user.getPhu_trach_phong();
-		System.out.println(" chucvu_id " + chucvu_id);
-		System.out.println(" phongban_id " + phongban_id);
-		System.out.println(" phu_trach_phong " + phu_trach_phong);
+//		System.out.println(" chucvu_id " + chucvu_id);
+//		System.out.println(" phongban_id " + phongban_id);
+//		System.out.println(" phu_trach_phong " + phu_trach_phong);
 		int checkQuyenTruongPhong = 0;
 		if ((chucvu_id == 42602 && phongban_id == 42527) || (phu_trach_phong == 1 && phongban_id == 42527)
 				|| (phongban_id == 42528)) {
@@ -1350,35 +1674,18 @@ public class GioLamPortlet extends MVCPortlet {
 	}
 
 	public double TinhDiemToiDaOfThang(int thang, int nam) {
-		System.out.println("thang la ########## " + thang);
-		System.out.println("nam la ########## " + nam);
+
 		List<Ngaylamviec> listNgaylamviecs = NgaylamviecLocalServiceUtil.getNgaylamviecs(-1, -1);
-		System.out.println("listNgaylamviecs " + listNgaylamviecs);
 		Ngaylamviec NgayLamViec = listNgaylamviecs.stream()
 				.filter(ngaylamviec -> ngaylamviec.getNam() == nam && ngaylamviec.getThang() == thang).findFirst()
 				.orElse(null); // Nếu không tìm thấy thì trả về null
-		System.out.println("NgayLamViec " + NgayLamViec);
 		double TinhDiemToiDaOfThang = 0;
 		if (NgayLamViec == null) {
 			TinhDiemToiDaOfThang = 0;
 		} else {
 			TinhDiemToiDaOfThang = NgayLamViec.getSo_ngay_lam_viec() * 4;
 		}
-		// System.out.println("TinhDiemToiDaOfThang "+ TinhDiemToiDaOfThang);
-		// thực ra đã tính số ngày làm việc của tháng trong modal NgayLamVIEC RỒI NÊN
-		// ĐOẠN SAU THỪA
-//		List<Ngaynghile> AllNgayNghiLe = NgaynghileLocalServiceUtil.getNgaynghiles(-1, -1);
-//		System.out.println("AllNgayNghiLe ---------- " + AllNgayNghiLe);
-//		List<Ngaynghile> listNgayNghiLe = AllNgayNghiLe.stream().filter(ngaynghile -> {
-//			LocalDate localDate = ngaynghile.getNgay_nghi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//
-//			int ngayThang = localDate.getMonthValue();
-//			int ngayNam = localDate.getYear();
-//			boolean cophaichunhta = CoPhaiThu7orChuNhat(ngaynghile.getNgay_nghi());
-//			return ngayThang == thang && ngayNam == nam && !cophaichunhta;
-//		}).collect(Collectors.toList());
-//
-//		System.out.println("listNgayNghiLe ==== "+ listNgayNghiLe);
+
 		return TinhDiemToiDaOfThang;
 	}
 
@@ -1387,4 +1694,21 @@ public class GioLamPortlet extends MVCPortlet {
 		DayOfWeek dayOfWeek = localDatengay_lam.getDayOfWeek();
 		return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 	}
+
+	public String LaytenPhongquaUserId(long userId) {
+		String tenphong = "khong co phong ban";
+		// List<Users> TatCaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
+		List<Phongban> ListPhongBan = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+		Users username = UsersLocalServiceUtil.getUserbyUserId(userId);
+		long maphong = username.getPhongban_id();
+		for (Phongban phongban : ListPhongBan) {
+			if (phongban.getId() == maphong) {
+				tenphong = phongban.getTenphong();
+			} else {
+				tenphong = tenphong;
+			}
+		}
+		return tenphong;
+	}
+
 }
