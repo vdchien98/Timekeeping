@@ -642,18 +642,25 @@ public class GioLamPortlet extends MVCPortlet {
 			// Xử lý hiện thị cho trưởng phòng hành chính và phụ trách phòng hành chính và
 			// giám đốc
 
-		} else if (quyenxuatBaoCao == 2) {
-			// xử lý trưởng phòng khác
+			List<Users> TatcaNhanVien = UsersLocalServiceUtil.getUserses(-1, -1);
+			System.out.println("TatcaNhanVien -------- " + TatcaNhanVien);
+			List<Users> userListtheothutuphong = new ArrayList<>();
+			List<Phongban> danhsachphongban = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
+			System.out.println("danhsachphongban ========== " + danhsachphongban);
+			for (Phongban phongban : danhsachphongban) {
+				for (Users users : TatcaNhanVien) {
+					if (phongban.getId() == users.getPhongban_id()) {
+						userListtheothutuphong.add(users);
+					}
+				}
+			}
+			System.out.println("userListtheothutuphong -------- " + userListtheothutuphong);
 
-			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(userBaoCao.getPhongban_id());
-			int mothInt = Integer.parseInt(month);
-			int yearInt = Integer.parseInt(year);
-
-			System.out.println("ThanhvienPhong ============== " + ThanhvienPhong);
 			double TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
-			for (Users MoiThanhVienPhong : ThanhvienPhong) {
+			for (Users MoiThanhVienPhong : userListtheothutuphong) {
 				Map<String, Object> XuatbaoCao1111111 = new HashMap<>();
-				List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear,MoiThanhVienPhong.getUserId());
+				List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear,
+						MoiThanhVienPhong.getUserId());
 				System.out.println("danhSachNgayTrongThangMoi ============== " + danhSachNgayTrongThangMoi);
 				double TongdiemHanThang1ThanhVien = 0.0;
 				for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
@@ -688,17 +695,72 @@ public class GioLamPortlet extends MVCPortlet {
 				System.out.println(
 						"MoiThanhVienPhong.getPhongban_id() =============== " + MoiThanhVienPhong.getPhongban_id());
 
-				//String tenphongbaocao = LaytenPhongquaUserId( (long) MoiThanhVienPhong.getPhongban_id());
+				String tenphongbaocao = LaytenPhongquaUserId((long) MoiThanhVienPhong.getUserId());
 				System.out.println("xeploaiChu =============== 111111kkkkkkkkkkkkk " + xeploaiChu);
 
 				XuatbaoCao1111111.put("hovaten", MoiThanhVienPhong.getHovaten());
-				// XuatbaoCao1111111.put("tenphong", tenphongbaocao);
+				XuatbaoCao1111111.put("tenphong", tenphongbaocao);
+				XuatbaoCao1111111.put("diemchamcong", String.valueOf(TongdiemHanThang1ThanhVien));
+				XuatbaoCao1111111.put("xeploai", xeploaiChu);
+				ListXuatBao.add(XuatbaoCao1111111);
+			}
+		} else if (quyenxuatBaoCao == 2) {
+			// xử lý trưởng phòng khác
+
+			List<Users> ThanhvienPhong = UsersLocalServiceUtil.getNhanVienPhongBan(userBaoCao.getPhongban_id());
+			int mothInt = Integer.parseInt(month);
+			int yearInt = Integer.parseInt(year);
+
+			System.out.println("ThanhvienPhong ============== " + ThanhvienPhong);
+			double TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
+			for (Users MoiThanhVienPhong : ThanhvienPhong) {
+				Map<String, Object> XuatbaoCao1111111 = new HashMap<>();
+				List<Map<String, Object>> danhSachNgayTrongThangMoi = laydulieugiolamofmotnhanvien(keymonth, keyyear,
+						MoiThanhVienPhong.getUserId());
+				System.out.println("danhSachNgayTrongThangMoi ============== " + danhSachNgayTrongThangMoi);
+				double TongdiemHanThang1ThanhVien = 0.0;
+				for (Map<String, Object> map : danhSachNgayTrongThangMoi) {
+					if (map == null) {
+						System.out.println("TongdiemOfThang xu mappp bao cao ===== ");
+						TongdiemHanThang1ThanhVien += 0.0;
+
+					} else {
+						double diemkhacnull = (double) map.get("diem");
+						System.out.println("TongdiemOfThang xu mappp bao cao khac nullll ===== " + diemkhacnull);
+						TongdiemHanThang1ThanhVien += diemkhacnull;
+						System.out.println("TongdiemOfThang xu mappp bao cao khac nullll 222222222222===== "
+								+ TongdiemHanThang1ThanhVien);
+					}
+
+				}
+				double xeploai = TongdiemHanThang1ThanhVien / TongdiemOfThang * 100;
+				xeploai = Math.round(xeploai * 100.0) / 100.0;
+				System.out.println("xeploai =============== " + xeploai);
+				String xeploaiChu = "";
+				if (xeploai >= 85.00) {
+					xeploaiChu = "A";
+				} else if (xeploai >= 70.00 && xeploai < 85.00) {
+					xeploaiChu = "B";
+				} else if (xeploai >= 50.00 && xeploai < 70.00) {
+					xeploaiChu = "C";
+				} else if (xeploai < 50.00) {
+					xeploaiChu = "D";
+				}
+				System.out.println("xeploaiChu =============== " + xeploaiChu);
+
+				System.out.println(
+						"MoiThanhVienPhong.getPhongban_id() =============== " + MoiThanhVienPhong.getPhongban_id());
+
+				String tenphongbaocao = LaytenPhongquaUserId((long) MoiThanhVienPhong.getUserId());
+				System.out.println("xeploaiChu =============== 111111kkkkkkkkkkkkk " + xeploaiChu);
+
+				XuatbaoCao1111111.put("hovaten", MoiThanhVienPhong.getHovaten());
+				XuatbaoCao1111111.put("tenphong", tenphongbaocao);
 				XuatbaoCao1111111.put("diemchamcong", String.valueOf(TongdiemHanThang1ThanhVien));
 				XuatbaoCao1111111.put("xeploai", xeploaiChu);
 				ListXuatBao.add(XuatbaoCao1111111);
 			}
 			System.out.println("ListXuatBao =============== ListXuatBaok------ " + ListXuatBao);
-
 
 		} else if (quyenxuatBaoCao == 3) {
 			double TongdiemOfThang = TinhDiemToiDaOfThang(thang, nam);
@@ -739,6 +801,10 @@ public class GioLamPortlet extends MVCPortlet {
 			ListXuatBao.add(XuatbaoCao);
 		}
 
+//		String ma_xac_nhan_string = 1+ "";
+//		String message = ma_xac_nhan_string + " : B\\u00E1o c\\u00E1o ch\\u1EA5m c\\u00F4ng";
+//		System.out.println("message ============ " + message);
+
 		System.out.println(" ListXuatBao ======+++++++++======= " + ListXuatBao);
 		String NameSheet = "Bao Cao Thong Ke";
 
@@ -778,9 +844,9 @@ public class GioLamPortlet extends MVCPortlet {
 		cell4.setCellValue("Xep Loai");
 		cell4.setCellStyle(style);
 
-		Cell cell5 = headerRow.createCell(5);
-		cell5.setCellValue("Xep Loai Phong");
-		cell5.setCellStyle(style);
+//		Cell cell5 = headerRow.createCell(5);
+//		cell5.setCellValue("Xep Loai Phong");
+//		cell5.setCellStyle(style);
 		// Thêm các cột khác nếu cần
 
 		HSSFCellStyle headerCellStyle = workbook.createCellStyle();
@@ -812,8 +878,7 @@ public class GioLamPortlet extends MVCPortlet {
 		// Thiết lập Wrap Text cho CellStyle
 		headerCellStyle.setWrapText(true);
 
-		String[] headers = { "STT", "H\\u1ECD v\\u00E0 T\\u00EAn", "Phong Ban", "Diem Cham Cong", "Xep Loai",
-				"Xep Loai Phong" };
+		String[] headers = { "STT", "H\\u1ECD v\\u00E0 T\\u00EAn", "Phong Ban", "Diem Cham Cong", "Xep Loai" };
 
 		for (int i = 0; i < headers.length; i++) {
 			Cell cell = headerRow.createCell(i);
@@ -840,8 +905,8 @@ public class GioLamPortlet extends MVCPortlet {
 
 		// Lặp qua danh sách pets và tạo hàng cho mỗi pet
 		int rowNum = 1; // Bắt đầu từ hàng thứ nhất, vì hàng đầu tiên đã là header
+		int counter = 1;
 		for (Map<String, Object> xuatBao : ListXuatBao) {
-			int counter = 1;
 			String hoVaTen = (String) xuatBao.get("hovaten");
 			String tenphong = (String) xuatBao.get("tenphong");
 			String xeploai = (String) xuatBao.get("xeploai");
