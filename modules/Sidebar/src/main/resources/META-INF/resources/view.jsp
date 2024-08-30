@@ -106,6 +106,8 @@ li.nav-item.vdchien {
 						<a class="collapse-item "
 							href="http://localhost:8080/admin/ngay-lam-viec">Ngày làm
 							việc</a>
+						<a class="collapse-item "
+							href="http://localhost:8080/admin/phieu-diem">Cấu hình phiếu điểm</a>
 
 					</div>
 				</div></li>
@@ -154,7 +156,7 @@ li.nav-item.vdchien {
 					class="fa fa-calendar-check-o" aria-hidden="true"></i>
 					<p class="chien1">Xin Chấm Công</p> </a></li>
 			<li class="nav-item vdchien"><a class="nav-link banggiolam"
-				href="#" id="toggleCollapse"> <i class="fa fa-file-pdf-o"
+				href="http://localhost:8080/phieu-diem" id="toggleCollapse"> <i class="fa fa-file-pdf-o"
 					aria-hidden="true"></i>
 					<p class="chien1">Phiếu điểm</p>
 			</a></li>

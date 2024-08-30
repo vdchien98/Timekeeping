@@ -265,6 +265,69 @@
 			package-path="com.liferay.portlet.asset" />
 	</entity>
 
+	<entity local-service="true" name="Tutiengviet"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="tieu_de_tv"></column>
+		<column type="String" name="tu_tieng_viet"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+
+
+	<entity local-service="true" name="adminphieudiem"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="String" name="uuid"></column>
+		<column type="long" name="user_id"></column>
+		<column type="String" name="nhomcauhoi"></column>
+		<column type="String" name="noidungcauhoi"></column>
+		<column type="int" name="thuocnhomcauhoinao"></column>
+		<column type="double" name="diemtoida"></column>
+		<column type="long" name="trangthaicauhoi"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
+
+
+	<entity local-service="true" name="tudanhgia"
+		remote-service="true" uuid="false">
+		<column type="int" name="id" primary="true"></column>
+		<column type="long" name="user_id"></column>
+		<column type="String" name="thongtintudanhgia"></column>
+		<column type="String" name="ykienkhac"></column>
+		<column type="String" name="file_url"></column>	
+		<column type="double" name="tongdiem"></column>
+		<column type="int" name="trangthaixacnhan"></column>
+		<column type="int" name="trangthaikyso"></column>
+		<column type="int" name="thang"></column>
+		<column type="int" name="nam"></column>
+		<column type="long" name="phongban_id"></column>
+		<column type="String" name="xeploai"></column>
+		<column type="Date" name="created_at"></column>
+		<column type="Date" name="updated_at"></column>
+		<finder name="id" return-type="Collection">
+			<finder-column name="id" />
+		</finder>
+		<reference entity="AssetEntry"
+			package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag"
+			package-path="com.liferay.portlet.asset" />
+	</entity>
 
 
 

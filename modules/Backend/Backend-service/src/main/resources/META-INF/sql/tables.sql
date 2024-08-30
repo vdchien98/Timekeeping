@@ -93,6 +93,14 @@ create table Timekeeping_Phongban (
 	so_thanh_vien LONG
 );
 
+create table Timekeeping_Tutiengviet (
+	id_ INTEGER not null primary key,
+	tieu_de_tv VARCHAR(75) null,
+	tu_tieng_viet VARCHAR(75) null,
+	created_at DATE null,
+	updated_at DATE null
+);
+
 create table Timekeeping_Users (
 	id_ INTEGER not null primary key,
 	hovaten VARCHAR(75) null,
@@ -149,4 +157,34 @@ create table Timekeeping_Xinnghi (
 	updated_at DATE null,
 	phongban_id LONG,
 	trangthai_kyso INTEGER
+);
+
+create table Timekeeping_adminphieudiem (
+	id_ INTEGER not null primary key,
+	uuid_ VARCHAR(75) null,
+	user_id LONG,
+	nhomcauhoi VARCHAR(75) null,
+	noidungcauhoi TEXT null,
+	thuocnhomcauhoinao LONG,
+	diemtoida DOUBLE,
+	trangthaicauhoi LONG,
+	created_at DATE null,
+	updated_at DATE null
+);
+
+create table Timekeeping_tudanhgia (
+	id_ INTEGER not null primary key,
+	user_id LONG,
+	thongtintudanhgia VARCHAR(75) null,
+	ykienkhac TEXT null,
+	file_url VARCHAR(75) null,
+	tongdiem DOUBLE,
+	trangthaixacnhan INTEGER,
+	trangthaikyso INTEGER,
+	thang INTEGER,
+	nam INTEGER,
+	phongban_id LONG,
+	xeploai VARCHAR(75) null,
+	created_at DATE null,
+	updated_at DATE null
 );

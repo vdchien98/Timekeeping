@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.docs.backend.model.adminphieudiem">
+		<field name="id" type="int" />
+		<field name="uuid" type="String" />
+		<field name="user_id" type="long" />
+		<field name="nhomcauhoi" type="String" />
+		<field name="noidungcauhoi" type="String" />
+		<field name="thuocnhomcauhoinao" type="int" />
+		<field name="diemtoida" type="double" />
+		<field name="trangthaicauhoi" type="long" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
 	<model name="com.liferay.docs.backend.model.Calamviec">
 		<field name="id" type="int" />
 		<field name="tencalamviec" type="String" />
@@ -88,6 +100,29 @@
 		<field name="updated_at" type="Date" />
 		<field name="groupId" type="long" />
 		<field name="so_thanh_vien" type="long" />
+	</model>
+	<model name="com.liferay.docs.backend.model.tudanhgia">
+		<field name="id" type="int" />
+		<field name="user_id" type="long" />
+		<field name="thongtintudanhgia" type="String" />
+		<field name="ykienkhac" type="String" />
+		<field name="file_url" type="String" />
+		<field name="tongdiem" type="double" />
+		<field name="trangthaixacnhan" type="int" />
+		<field name="trangthaikyso" type="int" />
+		<field name="thang" type="int" />
+		<field name="nam" type="int" />
+		<field name="phongban_id" type="long" />
+		<field name="xeploai" type="String" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
+	</model>
+	<model name="com.liferay.docs.backend.model.Tutiengviet">
+		<field name="id" type="int" />
+		<field name="tieu_de_tv" type="String" />
+		<field name="tu_tieng_viet" type="String" />
+		<field name="created_at" type="Date" />
+		<field name="updated_at" type="Date" />
 	</model>
 	<model name="com.liferay.docs.backend.model.Users">
 		<field name="id" type="int" />

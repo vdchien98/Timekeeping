@@ -25,10 +25,13 @@ import com.liferay.docs.backend.service.persistence.GioLamPersistence;
 import com.liferay.docs.backend.service.persistence.NgaylamviecPersistence;
 import com.liferay.docs.backend.service.persistence.NgaynghilePersistence;
 import com.liferay.docs.backend.service.persistence.PhongbanPersistence;
+import com.liferay.docs.backend.service.persistence.TutiengvietPersistence;
 import com.liferay.docs.backend.service.persistence.UsersFinder;
 import com.liferay.docs.backend.service.persistence.UsersPersistence;
 import com.liferay.docs.backend.service.persistence.XinchamcongPersistence;
 import com.liferay.docs.backend.service.persistence.XinnghiPersistence;
+import com.liferay.docs.backend.service.persistence.adminphieudiemPersistence;
+import com.liferay.docs.backend.service.persistence.tudanhgiaPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -142,6 +145,9 @@ public abstract class NgaynghileServiceBaseImpl
 	}
 
 	@Reference
+	protected adminphieudiemPersistence adminphieudiemPersistence;
+
+	@Reference
 	protected CalamviecPersistence calamviecPersistence;
 
 	@Reference
@@ -170,6 +176,12 @@ public abstract class NgaynghileServiceBaseImpl
 
 	@Reference
 	protected PhongbanPersistence phongbanPersistence;
+
+	@Reference
+	protected tudanhgiaPersistence tudanhgiaPersistence;
+
+	@Reference
+	protected TutiengvietPersistence tutiengvietPersistence;
 
 	@Reference
 	protected UsersPersistence usersPersistence;
