@@ -18,5 +18,9 @@ dependencies {
  //   compileInclude group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
      compileInclude group: 'com.itextpdf', name: 'kernel', version: '7.0.0'
      compileInclude group: 'com.itextpdf', name: 'layout', version: '7.0.0'
+
+     
+     
+     
 	
 }

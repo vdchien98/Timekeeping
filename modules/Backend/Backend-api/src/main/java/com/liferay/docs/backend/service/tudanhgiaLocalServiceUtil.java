@@ -18,6 +18,7 @@ import com.liferay.docs.backend.model.tudanhgia;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,6 +45,19 @@ public class tudanhgiaLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.docs.backend.service.impl.tudanhgiaLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static tudanhgia addcautraloi(
+			long userid, String thongtintudanhgia, String ykienkhac,
+			String file_url, Double tongdiem, int trangthaixacnhan,
+			int trangthaikyso, int thang, int nam, long phongban_id,
+			String xeploai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().addcautraloi(
+			userid, thongtintudanhgia, ykienkhac, file_url, tongdiem,
+			trangthaixacnhan, trangthaikyso, thang, nam, phongban_id, xeploai,
+			serviceContext);
+	}
 
 	/**
 	 * Adds the tudanhgia to the database. Also notifies the appropriate model listeners.

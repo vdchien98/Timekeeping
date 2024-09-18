@@ -25,4 +25,20 @@ dependencies {
 	compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.3.0'
 	compile group: 'org.apache.poi', name: 'poi', version: '3.7'
 	
+	
+	
+	//Thu vien PDF
+	     compileInclude group: 'com.itextpdf', name: 'kernel', version: '7.0.0'
+     compileInclude group: 'com.itextpdf', name: 'layout', version: '7.0.0'
+      compileInclude group: 'com.itextpdf', name: 'io', version: '7.0.0'
+       compileInclude group: 'com.itextpdf', name: 'forms', version: '7.0.0'
+        compileInclude group: 'com.itextpdf', name: 'pdfa', version: '7.0.0'
+        compileInclude group: 'com.itextpdf', name: 'sign', version: '7.0.0'
+        compileInclude group: 'com.itextpdf', name: 'barcodes', version: '7.0.0'
+        compileInclude group: 'com.itextpdf', name: 'font-asian', version: '7.0.0'
+        compileInclude group: 'com.itextpdf', name: 'hyph', version: '7.0.0'
+        
+       
+        
+	
 }

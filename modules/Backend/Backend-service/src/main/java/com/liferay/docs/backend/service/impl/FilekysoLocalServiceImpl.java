@@ -17,12 +17,16 @@ package com.liferay.docs.backend.service.impl;
 import com.liferay.docs.backend.model.Filekyso;
 import com.liferay.docs.backend.model.Users;
 import com.liferay.docs.backend.model.Xinnghi;
+import com.liferay.docs.backend.model.tudanhgia;
 import com.liferay.docs.backend.service.FilekysoLocalServiceUtil;
 import com.liferay.docs.backend.service.UsersLocalServiceUtil;
 import com.liferay.docs.backend.service.XinnghiLocalServiceUtil;
+import com.liferay.docs.backend.service.tudanhgiaLocalServiceUtil;
 import com.liferay.docs.backend.service.base.FilekysoLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,28 +40,41 @@ public class FilekysoLocalServiceImpl extends FilekysoLocalServiceBaseImpl {
 		// Group group = GroupLocalServiceUtil.getGroup(groupId);
 		// long userId = serviceContext.getUserId();
 		 //Users user_lamdon = userLocalService.getUser(userId);
-		Xinnghi  XinNghitaoRaFileXinNghi = XinnghiLocalServiceUtil.getXinnghi((int)file_id);
-		Users user_NguoiKy = UsersLocalServiceUtil.getUserbyUserId(user_id);
-		System.out.println("user_NguoiKy ===="+ user_NguoiKy);
-		long chucvu = user_NguoiKy.getChucvu_id();
-		System.out.println("chucvu ===== "+ chucvu);
 		int filekysoId = (int) counterLocalService.increment(Filekyso.class.getName());
 
 		Filekyso filekyso = createFilekyso(filekysoId);
-
-		filekyso.setId(filekysoId);
-		filekyso.setFile_id_nosigned(file_id);
-		filekyso.setFileurl_signed(fileUrl);
-		filekyso.setNguoilamdon_id(XinNghitaoRaFileXinNghi.getUser_id());
-		filekyso.setNguoikydon_id(user_id);
-
-		if (chucvu == 42604 || chucvu == 42605) {
-			filekyso.setTrangthai(2);
-		} else if (chucvu == 42602 || user_NguoiKy.getPhu_trach_phong()== 1) {
+		if (file_id ==1998) {
+			Users user_NguoiKy = UsersLocalServiceUtil.getUserbyUserId(user_id);
+			long chucvu = user_NguoiKy.getChucvu_id();
+			filekyso.setId(filekysoId);
+			filekyso.setFile_id_nosigned(file_id);
+			filekyso.setFileurl_signed(fileUrl);
+			filekyso.setNguoikydon_id(user_id);
 			filekyso.setTrangthai(1);
+			
 		} else {
-			filekyso.setTrangthai(0);
+			Xinnghi  XinNghitaoRaFileXinNghi = XinnghiLocalServiceUtil.getXinnghi((int)file_id);
+			Users user_NguoiKy = UsersLocalServiceUtil.getUserbyUserId(user_id);
+			System.out.println("user_NguoiKy ===="+ user_NguoiKy);
+			long chucvu = user_NguoiKy.getChucvu_id();
+			System.out.println("chucvu ===== "+ chucvu);
+			
+
+			filekyso.setId(filekysoId);
+			filekyso.setFile_id_nosigned(file_id);
+			filekyso.setFileurl_signed(fileUrl);
+			filekyso.setNguoilamdon_id(XinNghitaoRaFileXinNghi.getUser_id());
+			filekyso.setNguoikydon_id(user_id);
+
+			if (chucvu == 42604 || chucvu == 42605) {
+				filekyso.setTrangthai(2);
+			} else if (chucvu == 42602 || user_NguoiKy.getPhu_trach_phong()== 1) {
+				filekyso.setTrangthai(1);
+			} else {
+				filekyso.setTrangthai(0);
+			}
 		}
+	
 		
 		
 		

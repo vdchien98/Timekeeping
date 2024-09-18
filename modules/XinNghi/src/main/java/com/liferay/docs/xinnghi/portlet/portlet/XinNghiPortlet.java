@@ -239,7 +239,6 @@ public class XinNghiPortlet extends MVCPortlet {
 		response.sendRedirect("/xin-nghi");
 	}
 
-	// Lấy phần tử thông qua ngày làm của GioLam
 
 	public void saveXinNghiCaNgay(ActionRequest request, ActionResponse response) throws IOException, PortletException {
 
@@ -280,10 +279,8 @@ public class XinNghiPortlet extends MVCPortlet {
 		try {
 			System.out.println("UrlFilePDF ----------------------- ");
 
-			// Lấy Thông Tin từ UserId
 			Users user = UsersLocalServiceUtil.getUserbyUserId(userId);
 			String hovatenNguoiLamDon = user.getHovaten();
-			// Lấy thông tin lãnh đạo
 			Users lanhDaoTrungTamPhuTrach = UsersLocalServiceUtil
 					.LayUserLanhDaoTrungTamtheoPhongBanId(user.getPhongban_id());
 			Users phuTrachPhong = UsersLocalServiceUtil.LayUserLanhDaoPhongtheoPhongBanId(user.getPhongban_id());
@@ -291,7 +288,6 @@ public class XinNghiPortlet extends MVCPortlet {
 			String tenLanhDaoTrungTam = lanhDaoTrungTamPhuTrach.getHovaten();
 			String tenPhuTrachPhong = phuTrachPhong.getHovaten();
 
-			// Lấy Thông tin Ngày tháng năm
 			Date currentDate = new Date();
 			int dayHienTai = currentDate.getDay() + 1;
 			SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
@@ -307,17 +303,13 @@ public class XinNghiPortlet extends MVCPortlet {
 			String strNamHienTai = String.valueOf(namHienTai);
 			String strdayHienTai = String.valueOf(dayHienTai);
 
-			// Lấy tên phòng làm việc
 			String tenPhongLamViec = UsersLocalServiceUtil.LayTenPhongtheoPhongBanId(user.getPhongban_id());
 
-			// Lấy tên chức vụ người làm đơn
 			String tenChucVu = UsersLocalServiceUtil.LayChucVutheoChucVuId((int) user.getChucvu_id());
 
-			// chuyển đổi từ ngày và đến ngày thành dạng dd/yy/MMMM
 			DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
 			String tungayString = dateformat.format(tungay).toString();
 			String denngayString = dateformat.format(denngay).toString();
-			// String ngayhientaiString = dateformat.format(currentDate).toString();
 
 			String songayNghi = String.valueOf(songay);
 
@@ -354,9 +346,7 @@ public class XinNghiPortlet extends MVCPortlet {
 				long timestamp = System.currentTimeMillis();
 				pdfFileName = hovatenNguoiLamDon + "_" + dayOfMonth + "_" + strMonthHienTai + "_" + strNamHienTai + "_"
 						+ timestamp + ".pdf";
-				System.out.println("pdfFileName ========++++++++++======== " + pdfFileName);
 				writer = new PdfWriter("D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\" + pdfFileName);
-				System.out.println("========================++++++++++======== ");
 				pdfDoc = new PdfDocument(writer);
 				document = new com.itextpdf.layout.Document(pdfDoc);
 				// Set font and color
@@ -434,7 +424,6 @@ public class XinNghiPortlet extends MVCPortlet {
 						.setFontSize(11).setMarginTop(10);
 				document.add(paragraphngaythangnam);
 
-				// ĐƠN XIN NGHỈ PHÉP
 				Element phantu2 = divElements.get(1);
 				String donxinnghiphepString = phantu2.text();
 				Paragraph paragraphdonxinnghiphep = new Paragraph(donxinnghiphepString).setFont(font).setMarginLeft(10)
@@ -442,7 +431,6 @@ public class XinNghiPortlet extends MVCPortlet {
 						.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER).setBold();
 				document.add(paragraphdonxinnghiphep);
 
-				// Kính gửi lãnh đạo
 				Element phantu3 = divElements.get(2);
 				String kinhguilanhdaoString = phantu3.text();
 				Paragraph paragraphkinhguilanhdao = new Paragraph(kinhguilanhdaoString).setFont(font).setMarginLeft(10)
@@ -462,27 +450,23 @@ public class XinNghiPortlet extends MVCPortlet {
 						.setMarginTop(10);
 				document.add(paragraphchucvu);
 
-				// Đơn vị công tác
 				Element phantu6 = divElements.get(5);
 				String donvicongtacString = phantu6.text();
 				Paragraph paragraphdobvicongtac = new Paragraph(donvicongtacString).setFont(font).setMarginLeft(10)
 						.setFontSize(13).setMarginTop(10);
 				document.add(paragraphdobvicongtac);
 
-				// Lý do nghỉ phép
 				Element phantu7 = divElements.get(6);
 				String lydonghiphepString = phantu7.text();
 				Paragraph paragraphlydonghiphep = new Paragraph(lydonghiphepString).setFont(font).setMarginLeft(10)
 						.setFontSize(13).setMarginTop(10);
 				document.add(paragraphlydonghiphep);
 
-				// Cảm ơn lãnh đạo
 				Element phantu8 = divElements.get(7);
 				String camonlanhdaoString = phantu8.text();
 				Paragraph paragraphcamonlanhdao = new Paragraph(camonlanhdaoString).setFont(font).setMarginLeft(10)
 						.setFontSize(13).setMarginTop(10);
 				document.add(paragraphcamonlanhdao);
-				// Lời cảm on nhân viên
 				Element phantu9 = divElements.get(8);
 				String loicamonnhanvienString = phantu9.text();
 				Paragraph paragraphloicamonnhanvien = new Paragraph(loicamonnhanvienString).setFont(font)
@@ -490,7 +474,6 @@ public class XinNghiPortlet extends MVCPortlet {
 				document.add(paragraphloicamonnhanvien);
 //	     			
 
-				// chữ ký lãnh đạo cơ quan, lãnh đạo phòng, cá nhân
 
 				Table tablechuky = new Table(new float[] { 33, 33, 34 });
 				tablechuky.setWidthPercent(100);
@@ -498,7 +481,6 @@ public class XinNghiPortlet extends MVCPortlet {
 				Elements lanhdaocoquanphongcanhan = phantu10
 						.select("div.lanhdaotrungtamky, div.lanhdaophongky, div.canhanky");
 
-				// lãnh đạo trung tâm ký
 
 				Element lanhdaotrungtam = lanhdaocoquanphongcanhan.get(0);
 				Elements alllanhdaotrungtamky = lanhdaotrungtam.select(
@@ -525,7 +507,6 @@ public class XinNghiPortlet extends MVCPortlet {
 						.add(paragraphkhoangtronglanhdaotrungtam).add(paragraphtenlanhdaotrungtam)
 						.setBorder(Border.NO_BORDER);
 
-				// lãnh đạo phòng ký
 				Element lanhdaophong = lanhdaocoquanphongcanhan.get(1);
 				Elements alllanhdaophongky = lanhdaophong
 						.select("div.chucvulanhdaophong,div.khoangtronglanhdaophong,div.tenlanhdaophong");
@@ -551,7 +532,6 @@ public class XinNghiPortlet extends MVCPortlet {
 						.add(paragraphkhoangtronglanhdaophong).add(paragraphtenlanhdaophong)
 						.setBorder(Border.NO_BORDER);
 
-				// cá nhân ký
 				Element allcanhan = lanhdaocoquanphongcanhan.get(2);
 				Elements allcanhanky = allcanhan.select("div.chucvucanhan,div.khoangtrongcanhan,div.tencanhan");
 
@@ -607,7 +587,6 @@ public class XinNghiPortlet extends MVCPortlet {
 		String duoiPDFURL = renderRequest.getParameter("file_url");
 		String layve = renderResponse.toString();
 		if (duoiPDFURL != null) {
-			// Xử lý file_url ở đây
 			System.out.println("fileUrl ------------ " + duoiPDFURL);
 			PortletURL portletUrl = null;
 			portletUrl = PortletURLFactoryUtil.create(renderRequest,
@@ -633,30 +612,23 @@ public class XinNghiPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
-	// Hàm trả về List ngày nghỉ
 
 	public List<Xinnghi> listNgayNghiCanLay(long userId) throws PortalException, SystemException {
 
-		// Lấy User theo userId
 		Users usercanlay = UsersLocalServiceUtil.getUserbyUserId(userId);
-		// Lấy toàn bộ xin nghỉ
 		List<Xinnghi> danhsachngaynghi = null;
 		System.out.println("User Nhan Vien ---------- " + userId);
 		if (usercanlay.getChucvu_id() == 42604) {
-			// Đây là giám đốc lấy phòng phụ trách và nhhững phó giám đốc
 			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
 
 		} else if (usercanlay.getChucvu_id() == 42602 || usercanlay.getPhu_trach_phong() == 1) {
-			// đây là trưởng phòng hoặc phụ trách phòng chỉ lấy những nhân viên trong phòng
 			danhsachngaynghi = listNgayNghiofPhong(userId, usercanlay.getPhongban_id());
 			System.out.println("danhsachngaynghi" + danhsachngaynghi);
 
 		} else if (usercanlay.getChucvu_id() == 42605) {
-			// đây là phó giám đốc chỉ lấy những phòng phụ trách
 			danhsachngaynghi = listNgayNghiofPhoLanhDaoquanly(userId, usercanlay.getId());
 
 		} else if (usercanlay.getChucvu_id() == 42601) {
-			// Đây là nhân viên Chỉ lấy danh sách của bản thân nhân viên
 			danhsachngaynghi = listNgayNghiCaNhan(userId);
 
 		}
@@ -664,7 +636,6 @@ public class XinNghiPortlet extends MVCPortlet {
 		return danhsachngaynghi;
 
 	}
-	// Hàm lấy ra List ngày nghỉ của cá nhân
 
 	public List<Xinnghi> listNgayNghiCaNhan(long userId) throws PortalException, SystemException {
 
@@ -675,7 +646,6 @@ public class XinNghiPortlet extends MVCPortlet {
 		return listNgayNghiCaNhan;
 	}
 
-	// Hàm lấy List của những thành viên trong phòng quản lý
 	public List<Xinnghi> listNgayNghiofPhong(long userId, long phongbanId) throws PortalException, SystemException {
 
 		List<Xinnghi> AllXinNghi = XinnghiLocalServiceUtil.getXinnghis(-1, -1);
@@ -686,7 +656,6 @@ public class XinNghiPortlet extends MVCPortlet {
 		return listNgayNghiofPhong;
 	}
 
-	// Hàm lấy List của những thành viên phó lãnh đạo quản lý theo phòng
 	public List<Xinnghi> listNgayNghiofPhoLanhDaoquanly(long userId, int idPhoLanhDao)
 			throws PortalException, SystemException {
 		List<Phongban> phongban = PhongbanLocalServiceUtil.getPhongbans(-1, -1);
@@ -725,12 +694,10 @@ public class XinNghiPortlet extends MVCPortlet {
 		return filekysoCanLay;
 	}
 
-	// Xử lý một action trong portlet
 	public void myAction(ActionRequest actionRequest, ActionResponse actionResponse) {
 		// Xử lý action ở đây
 	}
 
-	// Xử lý một resource request trong portlet
 
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
 		String fileUrl = resourceRequest.getParameter("file_url");
@@ -743,11 +710,9 @@ public class XinNghiPortlet extends MVCPortlet {
 			File pdfFile = new File(pdfDirectory + fileUrl);
 			System.out.println("pdfFile signed     *****   " + pdfFile);
 			System.out.println("da vao dc day roi signed -------------------------" + pdfFile);
-			// Kiểm tra xem tệp PDF có tồn tại không
 			if (pdfFile.exists()) {
 				FileInputStream fileInputStream = new FileInputStream(pdfFile);
 
-				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
 				resourceResponse.setContentType("application/pdf");
 				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
 
@@ -766,15 +731,12 @@ public class XinNghiPortlet extends MVCPortlet {
 		} else if (fileUrl != null && !fileUrl.isEmpty() && fileUrl.endsWith(".signed.pdf")) {
 			String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdfSigned\\";
 
-			// Tạo đối tượng File cho tệp PDF
 			File pdfFile = new File(pdfDirectory + fileUrl);
 			System.out.println("pdfFile signed     *****   " + pdfFile);
 			System.out.println("da vao dc day roi signed -------------------------" + pdfFile);
-			// Kiểm tra xem tệp PDF có tồn tại không
 			if (pdfFile.exists()) {
 				FileInputStream fileInputStream = new FileInputStream(pdfFile);
 
-				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
 				resourceResponse.setContentType("application/pdf");
 				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
 
@@ -787,22 +749,17 @@ public class XinNghiPortlet extends MVCPortlet {
 
 				fileInputStream.close();
 			} else {
-				// Xử lý khi tệp PDF không tồn tại
 				resourceResponse.getWriter().print("Tệp PDF không tồn tại");
 			}
 		} else if (fileUrl != null && !fileUrl.isEmpty()) {
-			// Đường dẫn đến thư mục chứa tệp PDF
 			String pdfDirectory = "D:\\AppTimekeeping\\liferay-ce-portal-7.4.3.42-ga42\\filePdf\\";
 
-			// Tạo đối tượng File cho tệp PDF
 			File pdfFile = new File(pdfDirectory + fileUrl);
 			System.out.println("pdfFile******   " + pdfFile);
 			System.out.println("da vao dc day roi 111111111111--------------------------" + pdfFile);
-			// Kiểm tra xem tệp PDF có tồn tại không
 			if (pdfFile.exists()) {
 				FileInputStream fileInputStream = new FileInputStream(pdfFile);
 
-				// Thiết lập các header cần thiết để trình duyệt hiểu tệp PDF
 				resourceResponse.setContentType("application/pdf");
 				resourceResponse.addProperty("Content-Disposition", "inline; filename=" + fileUrl);
 

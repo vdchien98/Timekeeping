@@ -53,7 +53,13 @@ public class FilekysoServiceImpl extends FilekysoServiceBaseImpl {
 		if (signedFileUrl.endsWith(".signed.signed.pdf")) {
 			XinnghiLocalServiceUtil.upadatefileXinNghi((int) FileId, 2, serviceContext);
 		} else if (signedFileUrl.endsWith(".signed.pdf")) {
-			XinnghiLocalServiceUtil.upadatefileXinNghi((int) FileId, 1, serviceContext);
+			if (FileId == 1998) {
+				// Luu phieu diem
+				System.out.println("Luu phieu diem ====== ");
+			} else {
+				XinnghiLocalServiceUtil.upadatefileXinNghi((int) FileId, 1, serviceContext);
+			}
+			
 		} else {
 			System.out.println("Không khớp định dạng");
 		}

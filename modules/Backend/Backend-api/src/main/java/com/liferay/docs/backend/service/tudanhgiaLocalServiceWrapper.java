@@ -36,6 +36,22 @@ public class tudanhgiaLocalServiceWrapper
 		_tudanhgiaLocalService = tudanhgiaLocalService;
 	}
 
+	@Override
+	public com.liferay.docs.backend.model.tudanhgia addcautraloi(
+			long userid, String thongtintudanhgia, String ykienkhac,
+			String file_url, Double tongdiem, int trangthaixacnhan,
+			int trangthaikyso, int thang, int nam, long phongban_id,
+			String xeploai,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _tudanhgiaLocalService.addcautraloi(
+			userid, thongtintudanhgia, ykienkhac, file_url, tongdiem,
+			trangthaixacnhan, trangthaikyso, thang, nam, phongban_id, xeploai,
+			serviceContext);
+	}
+
 	/**
 	 * Adds the tudanhgia to the database. Also notifies the appropriate model listeners.
 	 *

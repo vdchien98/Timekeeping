@@ -2,3 +2,11 @@ Bundle-Name: PhieuDiem
 Bundle-SymbolicName: com.liferay.docs.phieudiem.portle
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.docs.phieudiem.portle.constants
+
+Import-Package: \
+   !org.bouncycastle.asn1.*,\
+   !org.bouncycastle.cert.*,\
+   !org.bouncycastle.cms.*,\
+   !org.bouncycastle.*,\
+   !org.slf4j.impl.*,\
+  *
