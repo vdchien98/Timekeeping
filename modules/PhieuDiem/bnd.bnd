@@ -2,6 +2,18 @@ Bundle-Name: PhieuDiem
 Bundle-SymbolicName: com.liferay.docs.phieudiem.portle
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.docs.phieudiem.portle.constants
+Include-Resource: @commons-codec-1.5.jar,
+@dom4j-1.6.1.jar,
+@poi-3.8-beta4.jar,
+@poi-ooxml-3.8-beta4.jar,
+@poi-ooxml-schemas-3.8-beta4.jar,
+@stax-api-1.0.1.jar,
+@xml-apis-1.0.b2.jar,
+@xmlbeans-2.3.0.jar
+Private-Package: \
+	org.apache.poi.hssf.usermodel,\
+	org.apache.poi.*,\
+	org.apache.poi.ddf,\
 
 Import-Package: \
    !org.bouncycastle.asn1.*,\
@@ -9,4 +21,16 @@ Import-Package: \
    !org.bouncycastle.cms.*,\
    !org.bouncycastle.*,\
    !org.slf4j.impl.*,\
+	!junit.framework,\
+	!org.apache.xmlbeans.*,\
+	!org.apache.poi.hsmf,\
+	!org.apache.poi.hslf.extractor,\
+	!org.apache.poi.hpbf.extractor,\
+	!org.apache.poi.*,\
+	!org.openxmlformats.schemas.*,\
+	!schemasMicrosoftComOfficeExcel,\
+	!schemasMicrosoftComOfficeOffice,\
+	!schemasMicrosoftComVml,\
+	!junit.textui,\
+	*
   *

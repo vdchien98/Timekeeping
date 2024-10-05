@@ -356,17 +356,23 @@ span#sec {
 					aria-labelledby="profile-tab" tabindex="0">
 					<%-- xử lý bảng trưởng phòng  --%>
 
-                    <%-- Xuất báo cáo --%>
-					<form id="export-excel" class="float-center"
-						action="https://chamcong.bacninh.gov.vn/phieu-diem/export"
-						method="GET">
-						<input type="hidden" name="_token"
-							value="FVwfIO7w2OHYD44wCzVXDrpXp7DG8YgyqePNAKS6"> <input
-							type="hidden" name="searchDate" value="2024-09">
-						<button type="submit" class="btn btn-success">
-							<i class="fas fa-file-excel"></i> Xuất báo cáo
-						</button>
-					</form>
+					<%-- Xuất báo cáo --%>
+					<%-- báo cáo tháng bắt đầu xử lý --%>
+				<portlet:actionURL name="ExcelBaoCao" var="OpenExxcelURL" />
+				<%-- hành động download về máy  --%>
+				<button class="btn btn-info" id="downloadButton" type="submit">
+				<i class="fa fa-file-excel-o iconexcel" aria-hidden="true"></i>Xuất báo cáo phiếu điểm</button>
+				<script type="text/javascript">
+				        document.getElementById('downloadButton').addEventListener('click', function() {
+				            // Khi nút được nhấp, gửi form để tải file
+				            console.log(" đã vào đc đây rồi !!!!!!!!!!!!! ")
+				            var form = document.createElement('form');
+				            form.method = 'POST';
+				            form.action = '<%=OpenExxcelURL.toString()%>';
+				            document.body.appendChild(form);
+				            form.submit();
+				         });
+				</script>
 					<%-- Bảng theo dõi phòng/đơn vị --%>
 					<table class="table table-bordered">
 						<thead>
@@ -414,313 +420,41 @@ span#sec {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td></td>
-								<td class="font-weight-bold">Phòng Phần Mềm</td>
-							</tr>
-							<tr>
-								<td class="text-center">1</td>
-								<td>Phạm Anh Minh</td>
-								<td><a
-									href="phieudiem/db0dfaeb58f237a402d2409e30c721ad.pdf"
-									target="_blank">96.9</a></td>
-								<td><a
-									href="phieudiem/db0dfaeb58f237a402d2409e30c721ad.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/a583395244a9301b48f353fbf6b57a22.pdf"
-									target="_blank">96.9</a></td>
-								<td><a
-									href="phieudiem/a583395244a9301b48f353fbf6b57a22.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/ed9253e60cc823b7d3887d57b84f1b6b.signed.pdf"
-									target="_blank">96.5</a></td>
-								<td><a
-									href="phieudiem/ed9253e60cc823b7d3887d57b84f1b6b.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/8a9ff8c319d3c7044ac4667224ae7abd.signed.pdf"
-									target="_blank">96.7</a></td>
-								<td><a
-									href="phieudiem/8a9ff8c319d3c7044ac4667224ae7abd.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/b32e5aae08509461699d342808542c06.signed.pdf"
-									target="_blank">96.7</a></td>
-								<td><a
-									href="phieudiem/b32e5aae08509461699d342808542c06.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
-							<tr>
-								<td class="text-center">2</td>
-								<td>Vũ Đăng Chiến</td>
-								<td><a
-									href="phieudiem/f72ff57057de4d5ecdf2275dcc2e178f.signed.pdf"
-									target="_blank">86.9</a></td>
-								<td><a
-									href="phieudiem/f72ff57057de4d5ecdf2275dcc2e178f.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/8699e22c2993476d717e457410791ab4.signed.pdf"
-									target="_blank">86.7</a></td>
-								<td><a
-									href="phieudiem/8699e22c2993476d717e457410791ab4.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/b4c3f6525306a722eb789240b09bcc34.signed.pdf"
-									target="_blank">86.7</a></td>
-								<td><a
-									href="phieudiem/b4c3f6525306a722eb789240b09bcc34.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/cf7fd49bf012e3b729b4eb42dd0ac617.signed.pdf"
-									target="_blank">86.7</a></td>
-								<td><a
-									href="phieudiem/cf7fd49bf012e3b729b4eb42dd0ac617.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/97fd192afe95c324ad43d3f1d2985456.signed.pdf"
-									target="_blank">86.8</a></td>
-								<td><a
-									href="phieudiem/97fd192afe95c324ad43d3f1d2985456.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/9033fcefc31ca3475839db773a7c2fb9.signed.pdf"
-									target="_blank">86.6</a></td>
-								<td><a
-									href="phieudiem/9033fcefc31ca3475839db773a7c2fb9.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
-							<tr>
-								<td class="text-center">3</td>
-								<td>Đinh Minh Đức</td>
-								<td><a
-									href="phieudiem/901692bb0f752dcf5c3d52e4e07990b7.signed.pdf"
-									target="_blank">95.4</a></td>
-								<td><a
-									href="phieudiem/901692bb0f752dcf5c3d52e4e07990b7.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/075d07912dc00d0e418f9fdc24e174ef.signed.pdf"
-									target="_blank">95.6</a></td>
-								<td><a
-									href="phieudiem/075d07912dc00d0e418f9fdc24e174ef.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/1cea6e113f43984b6defa8944a0ff9c5.signed.pdf"
-									target="_blank">95.4</a></td>
-								<td><a
-									href="phieudiem/1cea6e113f43984b6defa8944a0ff9c5.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/6847432d3732b75f71bd6beb25985476.signed.pdf"
-									target="_blank">96.3</a></td>
-								<td><a
-									href="phieudiem/6847432d3732b75f71bd6beb25985476.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/7fad6198579f6af1131e3f1b7c5cdae8.signed.pdf"
-									target="_blank">96.1</a></td>
-								<td><a
-									href="phieudiem/7fad6198579f6af1131e3f1b7c5cdae8.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
-							<tr>
-								<td class="text-center">4</td>
-								<td>Nguyễn Văn Định</td>
-								<td><a
-									href="phieudiem/8fbdbbe7ada28e17acefd9d0d12c8d2c.pdf"
-									target="_blank">96.8</a></td>
-								<td><a
-									href="phieudiem/8fbdbbe7ada28e17acefd9d0d12c8d2c.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/f69d6b3ac8a108b3ac2bd2de91afbc72.pdf"
-									target="_blank">96.8</a></td>
-								<td><a
-									href="phieudiem/f69d6b3ac8a108b3ac2bd2de91afbc72.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/3e9417960dda82232df6b4902692355f.pdf"
-									target="_blank">95.1</a></td>
-								<td><a
-									href="phieudiem/3e9417960dda82232df6b4902692355f.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
-							<tr>
-								<td class="text-center">5</td>
-								<td>Ngô Duy Trung</td>
-								<td><a
-									href="phieudiem/db9129ba8bd255fb89fcd38d46bdc9e6.signed.pdf"
-									target="_blank">96.3</a></td>
-								<td><a
-									href="phieudiem/db9129ba8bd255fb89fcd38d46bdc9e6.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/f1314534141b6aad3698942a6eb29bb5.signed.pdf"
-									target="_blank">95.4</a></td>
-								<td><a
-									href="phieudiem/f1314534141b6aad3698942a6eb29bb5.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/45edf5d5284b8ba5a42ae84385489133.signed.pdf"
-									target="_blank">96.4</a></td>
-								<td><a
-									href="phieudiem/45edf5d5284b8ba5a42ae84385489133.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/69cbe943ca074cc0368af4216a1fdf5f.signed.pdf"
-									target="_blank">96.3</a></td>
-								<td><a
-									href="phieudiem/69cbe943ca074cc0368af4216a1fdf5f.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/b285534bf4067297c3611c0ebfe79cb7.signed.pdf"
-									target="_blank">96.4</a></td>
-								<td><a
-									href="phieudiem/b285534bf4067297c3611c0ebfe79cb7.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/ef805dac143c591ea27b60a90fa528aa.signed.pdf"
-									target="_blank">96.2</a></td>
-								<td><a
-									href="phieudiem/ef805dac143c591ea27b60a90fa528aa.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/ae6e3b889e4bc16a938e3d2fe06f68d8.signed.pdf"
-									target="_blank">96.2</a></td>
-								<td><a
-									href="phieudiem/ae6e3b889e4bc16a938e3d2fe06f68d8.signed.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
-							<tr>
-								<td class="text-center">6</td>
-								<td>Vũ Văn Hạnh</td>
-								<td><a
-									href="phieudiem/875ac905aa409ab5d91a5881e7d6ce22.pdf"
-									target="_blank">96.5</a></td>
-								<td><a
-									href="phieudiem/875ac905aa409ab5d91a5881e7d6ce22.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/3e663ec88996de5a9b49786cd40027df.pdf"
-									target="_blank">96.6</a></td>
-								<td><a
-									href="phieudiem/3e663ec88996de5a9b49786cd40027df.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/ddfa20cfbd589ce1fd9281e88f2aa29d.pdf"
-									target="_blank">95.8</a></td>
-								<td><a
-									href="phieudiem/ddfa20cfbd589ce1fd9281e88f2aa29d.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/5e4f75caa0deda1a73189c0d04ba8268.pdf"
-									target="_blank">96</a></td>
-								<td><a
-									href="phieudiem/5e4f75caa0deda1a73189c0d04ba8268.pdf"
-									target="_blank">A</a></td>
-								<td><a
-									href="phieudiem/cd279aa4a70b89a634e46e7aae386a4a.pdf"
-									target="_blank">96.2</a></td>
-								<td><a
-									href="phieudiem/cd279aa4a70b89a634e46e7aae386a4a.pdf"
-									target="_blank">A</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-								<td><a href="" target="_blank">0</a></td>
-								<td><a href="" target="_blank">D</a></td>
-							</tr>
+							<c:forEach var="phongban" items="${danhsachphong}">
+								<tr>
+									<td></td>
+									<td class="font-weight-bold">${phongban.get("tenphong")}</td>
+								</tr>
+								<c:forEach var="canhan" items="${Listlanhdaoquanlyphong}"
+									varStatus="loop1">
+
+
+									<c:set var="phongbanId1" value="${canhan[0].get('phongbanId')}" />
+									<c:set var="phongbanId2" value="${phongban.get('phongbanId')}" />
+
+									<c:if test="${phongbanId1 eq phongbanId2}">
+										<tr>
+											<td class="text-center">${loop1.index + 1}</td>
+											<td>${canhan[0].get("hovaten")}</td>
+											<c:forEach var="x" items="${canhan}">
+												<c:set var="fileurl" value="${x.get('file_url')}" />
+												<td><a
+													href="http://localhost:8080/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm_file_url=${fileurl}"
+													target="_blank">${x.get("diem")}</a></td>
+												<td><a
+													href="http://localhost:8080/xin-nghi?p_p_id=com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm&p_p_lifecycle=2&p_p_resource_id=serveResource&p_p_cacheability=cacheLevelPage&_com_liferay_docs_xinnghi_portlet_XinNghiPortlet_INSTANCE_xplm_file_url=${fileurl}"
+													target="_blank">${x.get("xeploai") }</a></td>
+											</c:forEach>
+										</tr>
+									</c:if>
+
+
+								</c:forEach>
+
+							</c:forEach>
+
 						</tbody>
 					</table>
-
-
-
-
-
-
-
-
-
 
 				</div>
 
@@ -752,7 +486,7 @@ span#sec {
 			"Value" : fileUrl
 		}
 
-		];
+		];	
 		prms["FileUploadHandler"] = " http://localhost:8080/api/jsonws/ks.filekyso/getchukyso";
 		prms["SessionId"] = "";
 		prms["FileName"] = "http://localhost:8080/" + pdfUrl;
