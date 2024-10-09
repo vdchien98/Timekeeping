@@ -58,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -375,7 +376,7 @@ public class GioLamPortlet extends MVCPortlet {
 			connection.setRequestProperty("secret_key", "KGasVgygovT17H1J5P3Z");
 
 			// Chuẩn bị dữ liệu gửi đi
-			String data = "refresh_token=At__Gxzc_pygVVr3l63_FYv__aE_UPPAMWB6KxHvXb1VOS0foNoJFnicu1pbU9eg4GYS9e1eo3z7U8KXaod29r5BW1l7EzHcKN-aKxOxrbqXKT1Mq36JNoaf_LMmRgPfTMlXIv4kk5nbQjfgj1QlJd9qrKAKCOrF0N7NPlWOZ1XhK-5bZ2E_P7zWkrEvBSLOBZMyB-LFxpyB7Q0WyaJsMpWgj6RrH-PXB5k1ITigu4GpLv98tXhHLKjzZ72J1z8EO4cFSAeJsbj2VQ9pa62aH1nwnLJk7fnBVdxOHvS5d3m4QvWqw0t17Gnqm1UU4R9rIcEsVzCIn5aYLebLpXMETmTEzMhDLR9XN1FM0yrTZNKYFDPBrrsuTZSRxLFJNOWk0IMC9ST0uGqgNuSW_IU93Xb3x2xs1vyrDJEXA3TFlddwEm"
+			String data = "refresh_token=ucCB9LZQGnpZOGabMzn37UTZ2YLOnKrQXdf74dsQN56vH4K9KOz8LxOsVp8B_LS0_19HSZlDPXsP3tLIMCLX58TrV4nlf70yXsTA1a6YJKcC6sqIPlGYVRWoC01n_o5acnytEaBw7sMbEL4tV-O3Ih8_6ZXBXr1Xj29s0GtOPsYpA64qRSOp1e456dzOmJ8Jit0cN4cG7Z3rR0TkJAC2BgbY9NGGt2qu-3iT1nI71rtQIGqL0R8_Mk8F8HCLj3DEmbKqBHoN4r3TPoWeVumYICDXBouRdHWSv6O9KpsY0X7wVWn24Oyx1UHK2pOuj3zkr0yk2HA-OJlaLLD9HgvY0AnUH6bQxaupjrLQOr-N4owAI0v-Tl4m9BqE6qLjsLOgrZD6RJlZImdYMmDI9-4Q4ZYFY7yAMSL660"
 					+ "&app_id=2751734353755237620" + "&grant_type=refresh_token";
 
 			// Gửi dữ liệu
@@ -663,7 +664,7 @@ public class GioLamPortlet extends MVCPortlet {
 					} else {
 						double diemkhacnull = (double) map.get("diem");
 						TongdiemHanThang1ThanhVien += diemkhacnull;
-						
+
 					}
 
 				}
@@ -769,8 +770,7 @@ public class GioLamPortlet extends MVCPortlet {
 			ListXuatBao.add(XuatbaoCao);
 		}
 
-
-		String NameSheet ="";
+		String NameSheet = "";
 		String hovatentv = "";
 		String phongbantv = "";
 		String diemchamcongtv = "";
@@ -786,13 +786,11 @@ public class GioLamPortlet extends MVCPortlet {
 			diemchamcongtv = p4.getTu_tieng_viet();
 			Tutiengviet p5 = TutiengvietLocalServiceUtil.getTutiengviet(5);
 			xeploaitv = p5.getTu_tieng_viet();
-			
+
 		} catch (PortalException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-
 
 		// Khởi tạo workbook và tạo một sheet mới
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -855,8 +853,6 @@ public class GioLamPortlet extends MVCPortlet {
 
 		// Thiết lập Wrap Text cho CellStyle
 		headerCellStyle.setWrapText(true);
-
-		
 
 		String[] headers = { "STT", hovatentv, phongbantv, diemchamcongtv, xeploaitv };
 
@@ -1155,6 +1151,7 @@ public class GioLamPortlet extends MVCPortlet {
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
+            System.out.println("danhSachNgayTrongThangcaPhong ------ "+ danhSachNgayTrongThangcaPhong);
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
 
 		} else if (quyenxemgiolam == 2) {
@@ -1177,8 +1174,7 @@ public class GioLamPortlet extends MVCPortlet {
 				danhSachNgayTrongThangcaPhong.add(danhSachNgayTrongThangTungThanvien);
 
 			}
-			// System.out.println("danhSachNgayTrongThangcaPhong ===== " +
-			// danhSachNgayTrongThangcaPhong);
+
 			renderRequest.setAttribute("danhSachNgayTrongThangcaPhong", danhSachNgayTrongThangcaPhong);
 
 		} else if (quyenxemgiolam == 3) {
@@ -1230,8 +1226,8 @@ public class GioLamPortlet extends MVCPortlet {
 			}
 
 		}
-		// System.out.println("monthList ************ " + monthList);
-
+		 
+		System.out.println("monthList -------************ " + monthList);
 		List<Map<String, Object>> newgioLamMapListNhanVien = new ArrayList<>();
 		for (GioLam x : monthList) {
 			Map<String, Object> gioLamMap = new HashMap<>();
@@ -1253,8 +1249,15 @@ public class GioLamPortlet extends MVCPortlet {
 			// Lấy điểm của thành viên
 
 			double diem = TinhDiemcuaMotNhanVienOfMotNgay(x.getUser_id(), x.getNgay_lam());
-			// System.out.println("diem -------- " + diem);
+			
+			// lấy tổng điểm của cả tháng tính đến ngày hiện tại
+ 
+			double tongdiemofthangdenhientai = TinhTongDiemCaThangdenHomnay(x.getUser_id(),mothInt , yearInt);
+			
 
+			
+			
+			
 			if (x == null) {
 				System.out.println("khong vao dc" + x);
 //							gioLamMap.put("ngay_lam", x.getNgay_lam());
@@ -1286,11 +1289,12 @@ public class GioLamPortlet extends MVCPortlet {
 				gioLamMap.put("checkinchieu", x.getCheck_in_chieu());
 				gioLamMap.put("checkoutchieu", x.getCheck_out_chieu());
 				gioLamMap.put("diem", diem);
+				gioLamMap.put("diemcuathang", tongdiemofthangdenhientai);
 				newgioLamMapListNhanVien.add(gioLamMap);
 			}
 		}
 
-		// System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
+	//	System.out.println("newgioLamMapListNhanVien " + newgioLamMapListNhanVien);
 
 		int ngaydautien = 0;
 		if (thuMay == DayOfWeek.MONDAY) {
@@ -1317,10 +1321,9 @@ public class GioLamPortlet extends MVCPortlet {
 			// System.out.println("da vao dc day ------ ");
 		}
 		danhSachNgayTrongThangMoi.addAll(newgioLamMapListNhanVien);
-
+		//System.out.println("danhSachNgayTrongThang ----++++++++++++++ " + danhSachNgayTrongThangMoi);
 		return danhSachNgayTrongThangMoi;
-		// System.out.println("danhSachNgayTrongThang ---- " +
-		// danhSachNgayTrongThangMoi);
+		
 	}
 
 	// Hàm lấy số ngày của 1 tháng
@@ -1385,6 +1388,10 @@ public class GioLamPortlet extends MVCPortlet {
 			if (dimuonsang <= 0 && vesomsang <= 0 && (inSang == false) && (outSang == false)) {
 				// trường hợp đi làm đúng giờ
 				DataCaSang = 1;
+			} else if (dimuonsang > 0 && inSang == false && outSang == true
+					&& ((inChieu == true && outChieu == true))) {
+				// trường hợp ca sáng ko chấm công vào ra
+				DataCaSang = 3;
 			} else if ((inSang == false) && dimuonsang <= 0 && (inChieu == false || outChieu == false)) {
 				// ttrường hợp ca sáng ko chấm công vào ra
 				DataCaSang = 2;
@@ -1446,12 +1453,16 @@ public class GioLamPortlet extends MVCPortlet {
 			if (dimuonchieu <= 0 && vesomchieu <= 0 && (inChieu == false) && (outChieu == false)) {
 				// trường hợp đi làm đúng giờ
 				DataCaChieu = 1;
-			} else if ((dimuonchieu > 0 || vesomchieu > 0) && (inChieu == false) && (outChieu == false)) {
-				// ttrường hợp ca chiều ko chấm công vào ra
-				// System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+			} else if ((inSang == false && outSang == false) && inChieu == true && outChieu == true) {
+				DataCaChieu = 2;
+			} else if ((dimuonchieu > 0 || vesomchieu > 0) && (inChieu == false) && (outChieu == true)) {
 				DataCaChieu = 3;
 			} else if ((inChieu == false) && dimuonchieu <= 0 && (inSang == false || outSang == false)) {
 				// ttrường hợp ca chiều ko chấm công vào ra
+				DataCaChieu = 2;
+			} else if (dimuonchieu >= 0 && (inSang == false && outSang == true) && inChieu == true
+					&& outChieu == true) {
+				// trường hợp ca sáng nghỉ ko phép
 				DataCaChieu = 2;
 			} else if ((inSang == true && outSang == true) && inChieu == true && outChieu == true) {
 				// trường hợp ca sáng nghỉ ko phép
@@ -1694,6 +1705,23 @@ public class GioLamPortlet extends MVCPortlet {
 		}
 
 		return tongdiem1ngay;
+	}
+
+	// tính tổng điểm của 1 thành viên của cả tháng
+	public double TinhTongDiemCaThangdenHomnay(long userid, int thang, int nam) {
+		double TinhDiemOfThangMotNhanVien = 0;
+		List<GioLam> ListGioLamAll = GioLamLocalServiceUtil.getGioLams(-1, -1);
+		List<GioLam> ListGioLamMotNhanVienTheoThang = ListGioLamAll.stream().filter(x -> {
+			LocalDate localDate = x.getNgay_lam().toInstant() // Chuyển sang Instant
+					.atZone(ZoneId.systemDefault()) // Chuyển Instant sang ZonedDateTime dựa trên múi giờ hệ thống
+					.toLocalDate(); // Chuyển về LocalDate
+			return x.getUser_id() == userid && localDate.getMonthValue() == thang && localDate.getYear() == nam;
+		}).collect(Collectors.toList());
+
+		for (GioLam gioLam : ListGioLamMotNhanVienTheoThang) {
+			TinhDiemOfThangMotNhanVien += gioLam.getDiem();
+		}
+		return TinhDiemOfThangMotNhanVien;
 	}
 
 	public double TinhDiemToiDaOfThang(int thang, int nam) {

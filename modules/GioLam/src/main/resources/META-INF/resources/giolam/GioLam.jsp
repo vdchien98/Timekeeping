@@ -34,9 +34,11 @@
 	margin-bottom: -10px;
 	/* flex-direction: row; */
 }
+
 i.fa.fa-file-excel-o.iconexcel {
-    margin-right: 9px;
+	margin-right: 9px;
 }
+
 p.box1 {
 	margin-right: 5px;
 	font-size: 20px;
@@ -60,10 +62,12 @@ p.box3 {
 label.col-form-label.mxn {
 	font-size: 20px;
 }
+
 .pb-2.chamcongvabaocao {
-    display: flex;
-    justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 }
+
 .input-group.mb-3.row.justify-content-center.thangnam {
 	/* display: contents; */
 	display: flex;
@@ -223,7 +227,9 @@ span#sec {
 				<portlet:actionURL name="OpenExxcel" var="OpenExxcelURL" />
 				<%-- hành động download về máy  --%>
 				<button class="btn btn-info" id="downloadButton" type="submit">
-				<i class="fa fa-file-excel-o iconexcel" aria-hidden="true"></i>Báo Cáo Tháng</button>
+					<i class="fa fa-file-excel-o iconexcel" aria-hidden="true"></i>Báo
+					Cáo Tháng
+				</button>
 				<script type="text/javascript">
 				        document.getElementById('downloadButton').addEventListener('click', function() {
 				            // Khi nút được nhấp, gửi form để tải file
@@ -568,6 +574,7 @@ span#sec {
 												class="text-center sorting" tabindex="0"
 												aria-controls="example" rowspan="1" colspan="1"
 												aria-label="Đ: activate to sort column ascending">Đ</th>
+											<%--  
 											<th style="padding: 0px; width: 0px;"
 												class="text-center sorting" tabindex="0"
 												aria-controls="example" rowspan="1" colspan="1"
@@ -576,6 +583,7 @@ span#sec {
 												class="text-center sorting" tabindex="0"
 												aria-controls="example" rowspan="1" colspan="1"
 												aria-label="S: activate to sort column ascending">S</th>
+												--%>
 										</tr>
 									</thead>
 									<tbody>
@@ -618,18 +626,18 @@ span#sec {
 																			<c:when test="${calamsang == 1}">
 																				<div class="bg-success border" style="height: 10px"
 																					data-toggle="tooltip" data-html="true" title=""
-																					data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+																					data-original-title="Ca sáng <br> Giờ vào: ${gio_lam_tungthanhvien.checkinsang } | Giờ ra: ${gio_lam_tungthanhvien.checkoutsang }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamsang == 2}">
 																				<div class="bg-secondary border"
 																					style="height: 10px" data-toggle="tooltip"
 																					data-html="true" title=""
-																					data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+																					data-original-title="Ca sáng <br> Giờ vào: ${gio_lam_tungthanhvien.checkinsang } | Giờ ra: ${gio_lam_tungthanhvien.checkoutsang }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamsang == 3}">
 																				<div class="bg-warning border" style="height: 10px"
 																					data-toggle="tooltip" data-html="true"
-																					data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+																					data-original-title="Ca sáng <br> Giờ vào: ${gio_lam_tungthanhvien.checkinsang } | Giờ ra: ${gio_lam_tungthanhvien.checkoutsang }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamsang == 4}">
 																				<div class="bg-danger border" style="height: 10px"
@@ -648,18 +656,18 @@ span#sec {
 
 																				<div class="bg-success border" style="height: 10px"
 																					data-toggle="tooltip" data-html="true" title=""
-																					data-original-title="Ca sáng <br> Giờ vào: 07:38:32 | Giờ ra: 11:15:00">&nbsp;</div>
+																					data-original-title="Ca chiều <br> Giờ vào: ${gio_lam_tungthanhvien.checkinchieu } | Giờ ra: ${gio_lam_tungthanhvien.checkoutchieu }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamchieu == 2}">
 																				<div class="bg-secondary border"
 																					style="height: 10px" data-toggle="tooltip"
 																					data-html="true" title=""
-																					data-original-title="Ca sáng <br> Giờ vào: 07:07:29 | Giờ ra: ">&nbsp;</div>
+																					data-original-title="Ca chiều <br> Giờ vào: ${gio_lam_tungthanhvien.checkinchieu } | Giờ ra: ${gio_lam_tungthanhvien.checkoutchieu }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamchieu == 3}">
 																				<div class="bg-warning border" style="height: 10px"
 																					data-toggle="tooltip" data-html="true" title=""
-																					data-original-title="Ca sáng <br> Giờ vào: 07:45:21 | Giờ ra: 11:15:00">&nbsp;</div>
+																					data-original-title="Ca chiều <br> Giờ vào: ${gio_lam_tungthanhvien.checkinchieu } | Giờ ra: ${gio_lam_tungthanhvien.checkoutchieu }">&nbsp;</div>
 																			</c:when>
 																			<c:when test="${calamchieu == 4}">
 																				<div class="bg-danger border" style="height: 10px"
@@ -679,7 +687,12 @@ span#sec {
 														</c:when>
 													</c:choose>
 												</c:forEach>
-												<td>1998</td>
+												<c:forEach var="gio_lam_tungthanhvien"
+													items="${tungthanhvien}" varStatus="loop2">
+													<c:if test="${loop2.index == 9}">
+														<td class="sorting_1">${gio_lam_tungthanhvien.get('diemcuathang')}</td>
+													</c:if>
+												</c:forEach>
 											</tr>
 
 										</c:forEach>
